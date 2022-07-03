@@ -26,7 +26,7 @@ OBJ			=	$(SRC:.c=.o)
 all : $(NAME) 
 
 %.o : %.c
-	@$(CC) $(CFLAGS) -c $< -o $@ $(RLFLAGS)
+	@$(CC) $(CFLAGS) -c $< -o $@ -I /opt/homebrew/opt/readline/include
 
 $(NAME) : $(OBJ)
 	@$(MAKE) -C $(LIB_DIR)
