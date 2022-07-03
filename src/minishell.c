@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/03 19:44:13 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/04 00:06:55 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int main(void)
 {
-    char *line;
+    char    *line;
+    char    **cmd_token;
 
     signal(SIGINT, h_INT);      // ctrl + c
     signal(SIGQUIT, h_QUIT);    // ctrl + '\'
@@ -24,16 +25,18 @@ int main(void)
         if (line)
         {
             add_history(line);
-
 			// error check
-            check_pipe(line);
             if (!check_quote(line))
-    			printf("error: quote\n");
-            else
-                printf("%s%s\n", PRMPT, line);
-
+    			err_prompt("quote");
+            // else
+            //     printf("%s%s\n", PRMPT, line);
+            cmd_token = ft_split(line, ' ');
+            if (cmd_token[0] && !check_pipe(cmd_token))
+                err_prompt("pipe");
             free(line);
+            free_all(cmd_token);
             line = NULL;
+            cmd_token = NULL;
         }
         else // ctrl + d
         {
