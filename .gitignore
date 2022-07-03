@@ -1,0 +1,2 @@
+# find . -type f -name ".DS*" -print -delete 
+.DS_Store
