@@ -19,14 +19,14 @@ GNL_DIR		=	./gnl/
 GNL_NAME	=	gnl.a
 GNLS		=	$(addprefix $(GNL_DIR), $(GNL_NAME))
 
-SRC			=	src/
+SRC			=	src/minishell.c
 				
 OBJ			=	$(SRC:.c=.o)
 
 all : $(NAME) 
 
 %.o : %.c
-	@$(CC) $(CFLAGS) $(RLFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@ $(RLFLAGS)
 
 $(NAME) : $(OBJ)
 	@$(MAKE) -C $(LIB_DIR)
@@ -47,6 +47,8 @@ fclean :
 	@$(RM) $(NAME)
 	@echo "$(RED)fcleaned$(DFT)"
 
-re : fclean all
+re : 
+	@$(MAKE) fclean
+	@$(MAKE) all
 
 PHONY	: all clean fclean re
