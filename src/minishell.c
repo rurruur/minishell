@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/03 17:23:49 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/03 19:44:13 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ int main(void)
             add_history(line);
 
 			// error check
+            check_pipe(line);
             if (!check_quote(line))
-    			printf("quote error\n");
+    			printf("error: quote\n");
             else
                 printf("%s%s\n", PRMPT, line);
 
