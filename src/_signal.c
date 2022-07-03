@@ -1,37 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   _signal.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/03 17:03:44 by nakkim           ###   ########.fr       */
+/*   Created: 2022/07/03 17:02:57 by nakkim            #+#    #+#             */
+/*   Updated: 2022/07/03 17:03:59 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <unistd.h>
-
-# include "../gnl/get_next_line.h"
-# include "../libft/libft.h"
-
-# define PRMPT "( ´Д`)> "
-
-// minishell.c
-
-// _signal.c
 void h_INT(int signum);
 void h_QUIT(int signum);
 
-// _check.c
-int	check_quote(char *line);
+void h_INT(int signum)
+{
+    if (signum != SIGINT)
+        return;
+    printf("ctrl + c print a new prompt on a newline\n");
+    rl_on_new_line();
+    rl_replace_line("", 1);
+    rl_redisplay();
+}
 
-#endif
+void h_QUIT(int signum)
+{
+    if (signum != SIGQUIT)
+        return;
+    printf("ctrl + \\ do nothing\n");
+    rl_on_new_line();
+    rl_replace_line("", 1);
+    rl_redisplay();
+}
