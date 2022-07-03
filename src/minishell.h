@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/03 18:02:55 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/04 00:07:33 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,24 @@
 
 # define PRMPT "( ´Д`)> "
 
+typedef struct s_cmd
+{
+	
+} t_cmd;
+
 // minishell.c
 
 // _signal.c
-void h_INT(int signum);
-void h_QUIT(int signum);
+void	h_INT(int signum);
+void	h_QUIT(int signum);
 
 // _check.c
-int	check_quote(char *line);
-int	check_pipe(char *line);
-int	check_RDR(char *line);
+int		check_quote(char *line);
+int		check_pipe(char **cmd_token);
+int		check_RDR(char *line);
+
+// _utils.c
+void	free_all(char **str);
+void	err_prompt(char *str);
 
 #endif
