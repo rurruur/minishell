@@ -28,7 +28,7 @@ int	check_quote(char *line)
 		if (ft_strncmp(line, "\\'", 2) == 0 || ft_strncmp(line, "\\\"", 2) == 0)
 		{
 			line += 2;
-			continue;
+			continue ;
 		}
 		if (dq_flag > 0 && *line == '\'')
 			sq_flag = -sq_flag;

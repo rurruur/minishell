@@ -33,8 +33,8 @@ typedef struct s_cmd
 // minishell.c
 
 // _signal.c
-void	h_INT(int signum);
-void	h_QUIT(int signum);
+void	h_sigint(int signum);
+void	h_sigquit(int signum);
 
 // _check.c
 int		check_quote(char *line);
@@ -43,6 +43,6 @@ int		check_RDR(char *line);
 
 // _utils.c
 void	free_all(char **str);
-void	err_prompt(char *str);
+void	err_msg(char *str);
 
 #endif

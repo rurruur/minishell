@@ -13,15 +13,15 @@
 #include "minishell.h"
 
 void	free_all(char **str);
-void	err_prompt(char *str);
+void	err_msg(char *str);
 
 void	free_all(char **str)
 {
-	int idx;
+	int	idx;
 
 	idx = 0;
 	if (!str)
-		return;
+		return ;
 	while (str[idx])
 	{
 		free(str[idx]);
@@ -30,7 +30,7 @@ void	free_all(char **str)
 	free(str);
 }
 
-void	err_prompt(char *str)
+void	err_msg(char *str)
 {
 	printf("error: %s\n", str);
 }
