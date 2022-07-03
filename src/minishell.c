@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/03 17:04:06 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/03 17:23:49 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ int main(void)
         line = readline(PRMPT);
         if (line)
         {
-            // printf("%s%s\n", PRMPT, line);
             add_history(line);
 
 			// error check
-			printf("%d\n", check_quote(line));
+            if (!check_quote(line))
+    			printf("quote error\n");
+            else
+                printf("%s%s\n", PRMPT, line);
 
             free(line);
             line = NULL;
