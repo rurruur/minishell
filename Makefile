@@ -19,7 +19,9 @@ GNL_DIR		=	./gnl/
 GNL_NAME	=	gnl.a
 GNLS		=	$(addprefix $(GNL_DIR), $(GNL_NAME))
 
-SRC			=	src/minishell.c
+SRC			=	src/minishell.c \
+				src/_check.c \
+				src/_signal.c
 				
 OBJ			=	$(SRC:.c=.o)
 
