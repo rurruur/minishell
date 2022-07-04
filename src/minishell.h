@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/04 18:58:04 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/04 19:44:18 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_chunk
 } 	t_chunk;
 // char **의 경우 배열의 마지막은 NULL (ft_split처럼)
 // 여기까지가 parser로부터의 선물입니다.
+// thank you from executor
 
 // minishell.c
 
