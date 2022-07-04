@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/04 00:09:17 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/05 01:58:34 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	main(void)
 {
-	char	*line;
-	char	**cmd_token;
+	char		*line;
+	t_toklst	*toklst;
 
 	signal(SIGINT, h_sigint);      // ctrl + c
 	signal(SIGQUIT, h_sigquit);    // ctrl + '\'
@@ -25,18 +25,13 @@ int	main(void)
 		if (line)
 		{
 			add_history(line);
-			// error check
-			if (!check_quote(line))
-				err_msg("quote");
-            // else
-            //     printf("%s%s\n", PRMPT, line);
-			cmd_token = ft_split(line, ' ');
-			if (cmd_token[0] && !check_pipe(cmd_token))
-				err_msg("pipe");
+			toklst = (t_toklst *)malloc(sizeof(t_toklst));
+			if (!toklst)
+				err_msg("allocation");
+			// parser_main(line, toklst);
+			printf("%s%s\n", PRMPT, line);
 			free(line);
-			free_all(cmd_token);
 			line = NULL;
-			cmd_token = NULL;
 		}
 		else // ctrl + d
 		{
