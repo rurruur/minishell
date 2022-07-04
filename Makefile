@@ -8,7 +8,8 @@ DFT			= 	\033[0;37m
 
 CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra
-RLFLAGS		=	-L /opt/homebrew/opt/readline/lib -I /opt/homebrew/opt/readline/include -lreadline
+# RLFLAGS		=	-L /opt/homebrew/opt/readline/lib -I /opt/homebrew/opt/readline/include -lreadline
+RLFLAGS		=	-L /Users/jrim/.brew/opt/readline/lib -I /Users/jrim/.brew/opt/readline/include -lreadline
 AR			=	ar rcs
 RM			=	rm -f
 
@@ -29,7 +30,8 @@ OBJ			=	$(SRC:.c=.o)
 all : $(NAME) 
 
 %.o : %.c
-	@$(CC) $(CFLAGS) -c $< -o $@ -I /opt/homebrew/opt/readline/include
+	@$(CC) $(CFLAGS) -c $< -o $@ -I /Users/jrim/.brew/opt/readline/include
+	#/opt/homebrew/opt/readline/include
 
 $(NAME) : $(OBJ)
 	@$(MAKE) -C $(LIB_DIR)
