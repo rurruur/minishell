@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 17:01:52 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/04 00:06:22 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/04 16:21:41 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int	check_quote(char *line);
 int	check_pipe(char **cmd_token);
 int	check_RDR(char *line);
+
+// check_bracket? -> bonus part
 
 int	check_quote(char *line)
 {
