@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 14:21:55 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/05 16:17:14 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,35 @@
 
 # define PRMPT "( ´Д`)> "
 # define QUOTE "'\""
+# define RDR
 
-typedef struct s_tokcnt
+// typedef struct s_tokcnt
+// {
+// 	int	pipe;
+// 	int	sq_cnt;
+// 	int	dq_cnt;
+// } 		t_tokcnt;
+
+typedef struct s_strlst
 {
-	int	pipe;
-	int	rdr_in;
-	int	rdr_out;
-	int	rdr_app;
-	int	sq_cnt;
-	int	dq_cnt;
-} 		t_tokcnt;
+	char			*str;
+	struct s_strlst *next;
+} 	t_strlst;
 
 // parser가 executor에게 주는 선물은 다음과 같습니다...
 typedef struct s_token
 {
-	int		rdr_in;		//	< 유무
-	char	**infile;	//	infile name
-	char	*cmd;		//	cmd일 것으로 예상되는 str
-	char	**param;	//	cmd 뒤에 오는 str들의 배열
-	int		rdr_out;	//	> 유무
-	char	**outfile;	//	outfile name
-	int		rdr_app;	//	>> 유무
-	char	**appfile;	//	append 되어야할 file name
-} 			t_token;
+	char		*cmd;		//	cmd일 것으로 예상되는 str
+	t_strlst	**param;	//	cmd 뒤에 오는 str들의 배열
+	int			rdr_in;		//	< 유무
+	t_strlst	**infile;	//	infile name
+	int			rdr_out;	//	> 유무
+	t_strlst	**outfile;	//	outfile name
+	int			here_doc;	//	>> 유무
+	t_strlst	**hd_str;	//	here_doc에 들어가는 str들
+	int			rdr_app;	//	>> 유무
+	t_strlst	**appfile;	//	append 되어야할 file name
+} 				t_token;
 
 typedef struct s_toklst
 {
@@ -65,10 +71,11 @@ void	h_sigint(int signum);
 void	h_sigquit(int signum);
 
 // _check.c
-void	checker_main(char *line, t_tokcnt *checker);
-int		check_quote(char *line);
-int		check_pipe(char *line);
-int		check_RDR(char *line);
+void	checker_main(char *line);
+int		check_quote(char *line, char *key);
+void	fill_key(char *line, char *key);
+int		check_pipe(char *key);
+int		check_rdr(char *key);
 
 // _parser.c
 void	parser_main(char *line, t_toklst *toklst);
@@ -82,5 +89,6 @@ void	add_token(t_toklst *toklst, t_token *tok);
 // _utils.c
 void	free_all(char **str);
 void	err_msg(char *str);
+int		skip_space(char *str);
 
 #endif
