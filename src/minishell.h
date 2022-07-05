@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 18:27:21 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/05 21:09:34 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <readline/history.h>
 # include <unistd.h>
 
-# include "../gnl/get_next_line.h"
 # include "../libft/libft.h"
 
 # define PRMPT "( ´Д`)> "
@@ -77,15 +76,15 @@ typedef struct s_toklst
 void	h_sigint(int signum);
 void	h_sigquit(int signum);
 
-// _check.c
-void	checker_main(char *line, char *key);
-int		check_quote(char *line, char *key);
-void	fill_key(char *line, char *key);
-int		check_pipe(char *key);
-int		check_rdr(char *key);
-
 // _parser.c
 void	parser_main(char *line, t_toklst *toklst);
+int		check_quote(char *line);
+
+// _tokenizer.c
+void	tokenizer(char *line);
+char	**tok_split(char const *s, char c);
+int		count_str(char const *s, char c);
+void	make_strs(char **strs, int idx, char **ptr, char c);
 
 // _token.c
 void	init_token(t_token *tok);
@@ -96,8 +95,5 @@ void	add_token(t_toklst *toklst, t_token *tok);
 // _utils.c
 void	free_all(char **str);
 void	err_msg(char *str);
-int		skip_space(char *str);
-void	init_flag(t_flag *flag);
-void	init_key(char *line, char *key);
 
 #endif
