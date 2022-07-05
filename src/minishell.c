@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 01:58:34 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/05 14:22:09 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(void)
 			if (!toklst)
 				err_msg("allocation");
 			// parser_main(line, toklst);
+			// executor(toklst);
 			printf("%s%s\n", PRMPT, line);
 			free(line);
 			line = NULL;

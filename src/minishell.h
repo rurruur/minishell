@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 01:51:17 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/05 14:21:55 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_token
 	char	**outfile;	//	outfile name
 	int		rdr_app;	//	>> 유무
 	char	**appfile;	//	append 되어야할 file name
-} 	t_token;
+} 			t_token;
 
 typedef struct s_toklst
 {
