@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 22:29:27 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/06 01:44:02 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,11 @@ void	make_strs(char **strs, int idx, char **ptr, char c);
 t_token *trim_pretok(char **pretok, int *idx, t_toknd *toklst);
 t_toknd	*init_toknd(t_token *content);
 void	add_token(t_toknd **toklst, t_toknd *new);
+char	*quote_trim(char *str);
 
 // _utils.c
 void	free_all(char **str);
 void	err_msg(char *str);
+char	*ft_strndup(char *str, int n);
 
 #endif
