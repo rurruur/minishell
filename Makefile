@@ -25,7 +25,7 @@ SRC			=	src/minishell.c \
 				src/_signal.c \
 				src/_utils.c \
 				src/_parser.c \
-				src/_token.c
+				src/_toklst.c
 				
 OBJ			=	$(SRC:.c=.o)
 
