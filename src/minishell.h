@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 21:09:34 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/05 22:29:27 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,6 @@
 # define PRMPT "( ´Д`)> "
 # define QUOTE "'\""
 # define RDR "<>"
-
-# define OFF 0
-# define ON 1
-# define IN 1
-# define OUT 2
-# define HD 3
-# define AP 4
-
-typedef struct s_flag
-{
-	int	cmd	;	//0, 1, 2
-	int	quote;	//0, 1, 2
-	int rdr;	//0, 1, 2, 3, 4
-} 		t_flag;
 
 typedef struct s_strlst
 {
@@ -61,11 +47,11 @@ typedef struct s_token
 	t_strlst	**appfile;	//	append 되어야할 file name
 } 				t_token;
 
-typedef struct s_toklst
+typedef struct s_toknd
 {
-	t_token			node;	//	각 노드는 |를 기준으로 나누어져있습니다.
-	struct s_tklst	*next;
-} 	t_toklst;
+	t_token			*content;	//	각 노드는 |를 기준으로 나누어져있습니다.
+	struct s_tkoknd	*next;
+} 	t_toknd;
 // char **의 경우 배열의 마지막은 NULL (ft_split처럼)
 // 여기까지가 parser로부터의 선물입니다.
 // thank you from executor
@@ -77,20 +63,18 @@ void	h_sigint(int signum);
 void	h_sigquit(int signum);
 
 // _parser.c
-void	parser_main(char *line, t_toklst *toklst);
+void	parser_main(char *line, t_toknd *toklst);
 int		check_quote(char *line);
 
 // _tokenizer.c
-void	tokenizer(char *line);
 char	**tok_split(char const *s, char c);
 int		count_str(char const *s, char c);
 void	make_strs(char **strs, int idx, char **ptr, char c);
 
 // _token.c
-void	init_token(t_token *tok);
-void	tok_rdr(t_token *tok, int rdr_flag, char *content);
-void	tok_cmd(t_token *tok, int cmd_flag, char *content);
-void	add_token(t_toklst *toklst, t_token *tok);
+t_token *trim_pretok(char **pretok, int *idx, t_toknd *toklst);
+t_toknd	*init_toknd(t_token *content);
+void	add_token(t_toknd **toklst, t_toknd *new);
 
 // _utils.c
 void	free_all(char **str);

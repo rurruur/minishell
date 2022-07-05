@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 16:12:05 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/05 22:09:06 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(void)
 {
 	char		*line;
-	t_toklst	*toklst;
+	t_toknd		*toklst;
 
 	signal(SIGINT, h_sigint);      // ctrl + c
 	signal(SIGQUIT, h_sigquit);    // ctrl + '\'
@@ -25,12 +25,9 @@ int	main(void)
 		if (line)
 		{
 			add_history(line);
-			toklst = (t_toklst *)malloc(sizeof(t_toklst));
-			if (!toklst)
-				err_msg("allocation");
+			toklst = NULL;
 			parser_main(line, toklst);
 			// executor(toklst);
-			// printf("%s%s\n", PRMPT, line);
 			free(line);
 			line = NULL;
 		}

@@ -6,31 +6,37 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:15:11 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 21:09:02 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/05 22:28:29 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parser_main(char *line, t_toklst *toklst);
+void	parser_main(char *line, t_toknd *toklst);
 int		check_quote(char *line);
 
-void	parser_main(char *line, t_toklst *toklst)
+void	parser_main(char *line, t_toknd *toklst)
 {
-	char	**tokens;
+	char	**pretok;
+	int 	idx;
+	t_token *content;
 
+	idx = 0;
 	if (!check_quote(line))
 		err_msg("quote");
-	tokens = tok_split(line, ' ');
-	for (int i = 0; tokens[i]; i++)
-		printf("%s\n", tokens[i]);
-	// while(*line)
-	// {
-	// 	// 일반 문자일 때 + escape 문자 error처리는 어떻게?
-	// 	line++;
-	// }
-	free_all(tokens);
-	tokens = NULL;
+	pretok = tok_split(line, ' ');
+	for (int i = 0; pretok[i]; i++)
+		printf("%s\n", pretok[i]);
+	content = NULL;
+	while (pretok[idx])
+	{
+		if (pretok[idx][0] != '|')
+			content = trim_pretok(pretok, &idx, toklst);
+		add_token(&toklst, init_token(content));
+		idx++;
+	}
+	free_all(pretok);
+	pretok = NULL;
 	if (toklst)
 		return;
 }

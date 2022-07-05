@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:16:27 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 21:07:08 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/05 21:53:30 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,9 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-void	tokenizer(char *line);
 char	**tok_split(char const *s, char c);
 int		count_str(char const *s, char c);
 void	make_strs(char **strs, int idx, char **ptr, char c);
-
-void	tokenizer(char *line)
-{
-	// ft_split 먼저 해서 받은 결과를 제대로된 토큰으로 만들어야함
-	// quote 부분은 strjoin을 해서 리스트에 추가해야함
-	// 리스트에 추가할 때는 flag를 통해서 해당 노드의 속성을 나타내주도록 해야함.
-	char	**tokens;
-
-	tokens = tok_split(line, ' ');
-	for (int i = 0; tokens[i]; i++)
-		printf("%s\n", tokens[i]);
-	free_all(tokens);
-	tokens = NULL;
-}
 
 char	**tok_split(char const *s, char c)
 {
