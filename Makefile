@@ -21,7 +21,7 @@ GNL_NAME	=	gnl.a
 GNLS		=	$(addprefix $(GNL_DIR), $(GNL_NAME))
 
 SRC			=	src/minishell.c \
-				src/_check.c \
+				src/_tokenizer.c \
 				src/_signal.c \
 				src/_utils.c \
 				src/_parser.c \
