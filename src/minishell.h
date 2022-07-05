@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 16:17:14 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/05 17:54:38 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,21 @@
 
 # define PRMPT "( ´Д`)> "
 # define QUOTE "'\""
-# define RDR
+# define RDR "<>"
 
-// typedef struct s_tokcnt
-// {
-// 	int	pipe;
-// 	int	sq_cnt;
-// 	int	dq_cnt;
-// } 		t_tokcnt;
+# define OFF 0
+# define ON 1
+# define IN 1
+# define OUT 2
+# define HD 3
+# define AP 4
+
+typedef struct s_flag
+{
+	int	cmd	;	//0, 1, 2
+	int	quote;	//0, 1, 2
+	int rdr;	//0, 1, 2, 3, 4
+} 		t_flag;
 
 typedef struct s_strlst
 {
@@ -44,7 +51,7 @@ typedef struct s_strlst
 typedef struct s_token
 {
 	char		*cmd;		//	cmd일 것으로 예상되는 str
-	t_strlst	**param;	//	cmd 뒤에 오는 str들의 배열
+	t_strlst	*param;	//	cmd 뒤에 오는 str들의 배열
 	int			rdr_in;		//	< 유무
 	t_strlst	**infile;	//	infile name
 	int			rdr_out;	//	> 유무
@@ -71,7 +78,7 @@ void	h_sigint(int signum);
 void	h_sigquit(int signum);
 
 // _check.c
-void	checker_main(char *line);
+void	checker_main(char *line, char *key);
 int		check_quote(char *line, char *key);
 void	fill_key(char *line, char *key);
 int		check_pipe(char *key);
@@ -90,5 +97,7 @@ void	add_token(t_toklst *toklst, t_token *tok);
 void	free_all(char **str);
 void	err_msg(char *str);
 int		skip_space(char *str);
+void	init_flag(t_flag *flag);
+void	init_key(char *line, char *key);
 
 #endif

@@ -6,48 +6,30 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 17:01:52 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/05 16:25:14 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/05 17:19:32 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	checker_main(char *line);
+void	checker_main(char *line, char *key);
 int		check_quote(char *line, char *key);
 void	fill_key(char *line, char *key);
 int		check_pipe(char *key);
 int		check_rdr(char *key);
 
-void	checker_main(char *line)
+void	checker_main(char *line, char *key)
 {
-	char	*key;
-	size_t	idx;
-
-	// (start) key_init
-	key = (char *)malloc((ft_strlen(line) + 1) * sizeof(char));
-	if (!key)
-		err_msg("allocation");
-	idx = 0;
-	while (idx < ft_strlen(line))
-	{
-		*(key + idx) = '-';
-		idx++;
-	}
-	*(key + idx) = '\0';
-	// (end) key_init
-	
+	init_key(line, key);
 	if (!check_quote(line, key))
 		err_msg("quote");
 	else
-	{
 		fill_key(line, key);
-		if (!check_pipe(key))
-			err_msg("pipe");
-		if (!check_rdr(key))
-			err_msg("rdr");
-		else
-			printf("key : %s\n", key);
-	}
+	if (!check_pipe(key))
+		err_msg("pipe");
+	if (!check_rdr(key))
+		err_msg("rdr");
+	printf("key : %s\n", key);
 }
 
 
@@ -108,9 +90,9 @@ void	fill_key(char *line, char *key)
 
 int		check_pipe(char *key)
 {
-	// line += skip_space(line);
 	// | cmd : parse error near `|'
 	// | : parse error near `|'
+	key += skip_space(key);
 	if (*key == '|')
 	{
 		key++;
@@ -129,9 +111,9 @@ int		check_pipe(char *key)
 
 int		check_rdr(char *key)
 {
-	if (!ft_strnstr(key, "<<<", ft_strlen(key)))
+	if (ft_strnstr(key, "<<<", ft_strlen(key)))
 		return (0);
-	if (!ft_strnstr(key, ">>>", ft_strlen(key)))
+	if (ft_strnstr(key, ">>>", ft_strlen(key)))
 		return (0);
 	return (1);
 }
