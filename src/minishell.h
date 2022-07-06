@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 14:29:22 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/06 18:13:17 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,15 @@
 # define QUOTE "'\""
 # define RDR "<>"
 
+# define OFF 0;
+
 // parser가 executor에게 주는 선물은 다음과 같습니다...
 typedef struct s_toklst
 {
 	t_token			*cmd;		//	cmd와 뒤에 오는 str들
 	t_token			*infile;	//	< : infile name
 	t_token			*outfile;	//	> : outfile name
-	t_token			*here_doc;	//	<< : here_doc에 들어가는 str들
+	t_token			*heredoc;	//	<< : here_doc에 들어가는 str들
 	t_token			*append;	//	>> : append 되어야할 file name
 	struct s_toklst	*next;
 } 					t_toklst;
@@ -53,19 +55,23 @@ void	h_sigint(int signum);
 void	h_sigquit(int signum);
 
 // _parser.c
-void	parser_main(char *line, t_toknd *toklst);
+void	parser_main(char *line, t_toklst *toklst);
 int		check_quote(char *line);
 
-// _tokenizer.c
+// _pretok.c
 char	**tok_split(char const *s, char c);
 int		count_str(char const *s, char c);
 void	make_strs(char **strs, int idx, char **ptr, char c);
 
-// _token.c
-t_token *trim_pretok(char **pretok, int *idx, t_toknd *toklst);
-t_toknd	*init_toknd(t_token *content);
-void	add_token(t_toknd **toklst, t_toknd *new);
+// _tokenizer.c
+void	tokenizer(char **pretok, int *idx, t_toklst *toklst);
 char	*quote_trim(char *str);
+
+// _toklst.c
+t_token		*init_token(void);
+void		add_to_strlst(t_token **strlst, t_token *new);
+t_toklst	*init_toklst(void);
+void		add_to_toklst(t_toklst **toklst, t_toklst *new);
 
 // _utils.c
 void	free_all(char **str);

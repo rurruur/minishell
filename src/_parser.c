@@ -6,20 +6,20 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:15:11 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 22:28:29 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/06 18:15:37 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parser_main(char *line, t_toknd *toklst);
+void	parser_main(char *line, t_toklst *toklst);
 int		check_quote(char *line);
 
-void	parser_main(char *line, t_toknd *toklst)
+void	parser_main(char *line, t_toklst *toklst)
 {
-	char	**pretok;
-	int 	idx;
-	t_token *content;
+	char		**pretok;
+	int 		idx;
+	t_toklst	*new;
 
 	idx = 0;
 	if (!check_quote(line))
@@ -27,18 +27,20 @@ void	parser_main(char *line, t_toknd *toklst)
 	pretok = tok_split(line, ' ');
 	for (int i = 0; pretok[i]; i++)
 		printf("%s\n", pretok[i]);
-	content = NULL;
 	while (pretok[idx])
 	{
 		if (pretok[idx][0] != '|')
-			content = trim_pretok(pretok, &idx, toklst);
-		add_token(&toklst, init_token(content));
-		idx++;
+		{
+			new = init_toklst();
+			tokenizer(pretok, &idx, new);
+			add_token(&toklst, new);
+		}
+		else
+			idx++;
 	}
 	free_all(pretok);
 	pretok = NULL;
-	if (toklst)
-		return;
+	return;
 }
 
 int	check_quote(char *line)

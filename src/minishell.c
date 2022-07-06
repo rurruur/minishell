@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 22:09:06 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/06 17:18:33 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	main(void)
 {
 	char		*line;
-	t_toknd		*toklst;
+	t_toklst	*toklst;
 
 	signal(SIGINT, h_sigint);      // ctrl + c
 	signal(SIGQUIT, h_sigquit);    // ctrl + '\'
