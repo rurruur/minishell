@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 18:18:44 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/06 18:53:03 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,38 @@ char	*quote_trim(char *str);
 
 void	tokenizer(char **pretok, int *idx, t_toklst *new)
 {
-	t_token	*tmp;
+	char	*tmp;
 	
 	tmp = NULL;
 	while (pretok[*idx] && pretok[*idx][0] != '|')
 	{
 		if (pretok[*idx][0] == '<')
 		{
-			tmp->str = ft_strdup(pretok[*idx + 1]);
+			tmp = ft_strdup(pretok[*idx + 1]);
 			if (pretok[*idx][1] == '<')
-				add_to_strlst(&(new->heredoc), tmp); 
+				add_to_strlst(&(new->heredoc), init_token(tmp)); 
 			else
-				add_to_strlst(&(new->infile), tmp); 
+				add_to_strlst(&(new->infile), init_token(tmp)); 
 			(*idx)++;
 		}
 		else if (pretok[*idx][0] == '>')
 		{
-			tmp->str = ft_strdup(pretok[*idx + 1]);
+			tmp = ft_strdup(pretok[*idx + 1]);
 			if (pretok[*idx][1] == '>')
-				add_to_strlst(&(new->append), tmp); 
+				add_to_strlst(&(new->append), init_token(tmp)); 
 			else
-				add_to_strlst(&(new->outfile), tmp); 
+				add_to_strlst(&(new->outfile), init_token(tmp)); 
 			(*idx)++;
 		}
 		else if (pretok[*idx][0] == '\'' || pretok[*idx][0] == '"')
 		{
-			tmp->str = quote_trim(pretok[*idx]);
-			add_to_strlst(&(new->cmd), tmp); 
+			tmp = quote_trim(pretok[*idx]);
+			add_to_strlst(&(new->cmd), init_token(tmp)); 
 		}
 		else
 		{
-			tmp->str = ft_strdup(pretok[*idx]);
-			add_to_strlst(&(new->cmd), tmp); 
+			tmp = ft_strdup(pretok[*idx]);
+			add_to_strlst(&(new->cmd), init_token(tmp)); 
 		}
 		(*idx)++;
 	}

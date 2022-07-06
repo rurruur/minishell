@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 18:18:05 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/06 18:51:49 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	tokenizer(char **pretok, int *idx, t_toklst *toklst);
 char	*quote_trim(char *str);
 
 // _toklst.c
-t_token		*init_token(void);
+t_token		*init_token(char *content);
 void		add_to_strlst(t_token **strlst, t_token *new);
 t_toklst	*init_toklst(void);
 void		add_to_toklst(t_toklst **toklst, t_toklst *new);
