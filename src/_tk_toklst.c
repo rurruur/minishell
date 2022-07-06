@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 19:36:15 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/06 20:11:48 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ t_toklst	*init_toklst(void)
 	new = (t_toklst *)malloc(sizeof(t_toklst));
 	if (!new)
 		err_msg("token list allocation");
-	new->cmd = init_token(NULL);
-	new->infile = init_token(NULL);
-	new->outfile = init_token(NULL);
-	new->heredoc = init_token(NULL);
-	new->append = init_token(NULL);
+	new->cmd = NULL;
+	new->infile = NULL;
+	new->outfile = NULL;
+	new->heredoc = NULL;
+	new->append = NULL;
 	new->next = NULL;
 	return (new);
 }
