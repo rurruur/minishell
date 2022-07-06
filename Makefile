@@ -20,9 +20,9 @@ LIBS		=	$(addprefix $(LIB_DIR), $(LIB_NAME))
 SRC			=	src/minishell.c \
 				src/_signal.c \
 				src/_parser.c \
-				src/_tokenizer.c \
-				src/_token.c \
-				src/_toklst.c \
+				src/_tk_pretok.c \
+				src/_tk_token.c \
+				src/_tk_toklst.c \
 				src/_utils.c \
 				
 OBJ			=	$(SRC:.c=.o)
