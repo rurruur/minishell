@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:15:11 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 18:22:17 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/06 19:44:20 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	parser_main(char *line, t_toklst *toklst)
 	if (!check_quote(line))
 		err_msg("quote");
 	pretok = tok_split(line, ' ');
-	for (int i = 0; pretok[i]; i++)
-		printf("%s\n", pretok[i]);
+	// for (int i = 0; pretok[i]; i++)
+	// 	printf("%s\n", pretok[i]);
 	while (pretok[idx])
 	{
 		if (pretok[idx][0] != '|')

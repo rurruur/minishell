@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 18:51:49 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/06 19:08:27 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,9 @@ void		add_to_toklst(t_toklst **toklst, t_toklst *new);
 void	free_all(char **str);
 void	err_msg(char *str);
 char	*ft_strndup(char *str, int n);
+
+// _utils_display.c
+void	display_toklst(t_toklst *toklst);
+void	display_strlst(t_token *strlst);
 
 #endif

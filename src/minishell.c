@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 17:18:33 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/06 19:10:49 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ int	main(void)
 		if (line)
 		{
 			add_history(line);
-			toklst = NULL;
+			toklst = init_toklst();
 			parser_main(line, toklst);
+			display_toklst(toklst);
 			// executor(toklst);
 			free(line);
 			line = NULL;
