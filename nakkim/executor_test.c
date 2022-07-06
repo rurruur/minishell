@@ -7,6 +7,8 @@
 # include <fcntl.h>
 # include "../libft/libft.h"
 
+FILE	*fp;
+
 // typedef struct s_token
 // {
 // 	int		rdr_in;		//	< 유무
@@ -64,33 +66,46 @@ int	main(int argc, char **argv, char **env)
 	t_toklst	*first = init_node();
 	t_toklst	*second = init_node();
 
-	first->cmd->str = "grep";
+	first->cmd->str = "cat";
 	first->cmd->next = (t_token *)malloc(sizeof(t_token));
-	first->cmd->next->str = "hi";
+	first->cmd->next->str = "infile";
 	first->cmd->next->next = NULL;
-	first->infile->str = "infile";
-	first->infile->next = NULL;
-	first->outfile->str = "outfile";
-	first->outfile->next = NULL;
+	first->infile = NULL;
+	first->outfile = NULL;
 	first->here_doc = NULL;
 	first->append = NULL;
-	first->next = NULL;
+	first->next = second;
+
+	second->cmd->str = "cat";
+	second->cmd->next = NULL;
+	second->infile = NULL;
+	second->outfile->str = "outfile";
+	second->outfile->next = NULL;
+	second->here_doc = NULL;
+	second->append = NULL;
+	second->next = NULL;
+
+	fp = fopen("/Users/kimnakyeong/minishell/nakkim/fprintf", "w");
 
 	executor(first, env);
 
+	fclose(fp);
 	return (0);
 }
 
 void	executor(t_toklst *list, char **env)
 {
 	int			end[2];
-	int			exit_status;
 	pid_t		child;
 	int			status;
+	int			flag;
 
 	// 환경변수 PATH
 	char	*env_path = ft_substr(env[4], 5, ft_strlen(env[4]));
 	char	**path = ft_split(env_path, ':');
+
+	pipe(end);
+	flag = 0;
 
 	while (list != NULL)
 	{
@@ -117,7 +132,25 @@ void	executor(t_toklst *list, char **env)
 				// STDIN을 마지막 파일로 설정
 				fd = open(curr_file->str, O_RDONLY);
 				if (dup2(fd, STDIN_FILENO) < 0)
+					perror("dup2 - infile");
+				fprintf(fp, "dup2 - in(file)\n");
+				close(fd);
+			}
+			else if (flag)
+			{
+				if (dup2(end[0], STDIN_FILENO) < 0)
 					perror("dup2 - in");
+				flag = 0;
+				fprintf(fp, "dup2 - in(flag 0)\n");
+				close(end[0]);
+			}
+			else
+			{
+				if (dup2(end[1], STDIN_FILENO) < 0)
+					perror("dup2 - in");
+				flag = 1;
+				fprintf(fp, "dup2 - in(flag 0)\n");
+				close(end[1]);
 			}
 			// STDOUT 설정
 			if (list->outfile) {
@@ -139,7 +172,22 @@ void	executor(t_toklst *list, char **env)
 				// STDOUT을 마지막 파일로 설정
 				fd = open(curr_file->str, O_WRONLY);
 				if (dup2(fd, STDOUT_FILENO) < 0)
+					perror("dup2 - outfile");
+				fprintf(fp, "dup2 - out(file)\n");
+			}
+			else if (flag)
+			{
+				if (dup2(end[0], STDOUT_FILENO) < 0)
 					perror("dup2 - out");
+				flag = 0;
+				fprintf(fp, "dup2 - out(flag 1)\n");
+			}
+			else
+			{
+				if (dup2(end[1], STDOUT_FILENO) < 0)
+					perror("dup2 - out");
+				flag = 1;
+				fprintf(fp, "dup2 - out(flag 0)\n");
 			}
 			if (list->cmd)
 			{
@@ -148,6 +196,7 @@ void	executor(t_toklst *list, char **env)
 				if (!cmd)
 					perror("command not found");
 				// 명령 실행
+				fprintf(fp, "%s 실행\n", list->cmd->str);
 				char **cmd_line = list_to_arr(list->cmd);
 				execve(cmd, cmd_line, env);
 				perror("execve");

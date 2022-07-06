@@ -45,18 +45,31 @@ typedef struct s_token
 	(next == NULL)
 */
 
-	// first_token.rdr_in = 1;
-	// first_token.infile = infiles;
-	// first_token.cmd = "grep";
-	// first_token.param = param;
-	// first_token.rdr_out = 1;
-	// first_token.outfile = outfiles;
-	// first_token.rdr_app = 0;
+/* test input2
+cat infile | cat > outfile
+1st node
+	cmd 		: cat	->	infile	->	NULL
+	infile 		: NULL
+	outfile 	: NULL
+	here_doc	: NULL
+	append		: NULL
+	(next == 2nd node)
+2nd node
+	cmd 		: cat	->	NULL
+	infile 		: NULL
+	outfile 	: outfile	->	NULL
+	here_doc	: NULL
+	append		: NULL
+	(next == NULL)
+*/
 
-	// // first_token.rdr_in = 1;
-	// // first_token.infile = infiles;
-	// // first_token.cmd = "grep";
-	// // first_token.param = param;
-	// // first_token.rdr_out = 0;
-	// // first_token.outfile = outfiles;
-	// // first_token.rdr_app = 0;
+/* test input3
+cat infile | > outfile : outfile empty
+1st node
+	cmd 		: grep	->	hi	->	NULL
+	infile 		: infile	->	NULL
+	outfile 	: outfile	->	NULL	
+	here_doc	: NULL
+	append		: NULL
+	(next == NULL)
+*/
