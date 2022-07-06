@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 18:13:58 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/06 18:18:44 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	tokenizer(char **pretok, int *idx, t_toklst *new)
 		}
 		(*idx)++;
 	}
-	return (new);
 }
 
 char	*quote_trim(char *str)

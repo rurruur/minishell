@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 18:13:53 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/06 18:19:25 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ t_token		*init_token(void)
 
 	new = (t_token *)malloc(sizeof(t_token));
 	if (!new)
-		errmsg("token allocation");
+		err_msg("token allocation");
 	new->str = NULL;
 	new->next = NULL;
+	return (new);
 }
 
 void		add_to_strlst(t_token **strlst, t_token *new)
@@ -46,7 +47,7 @@ t_toklst	*init_toklst(void)
 
 	new = (t_toklst *)malloc(sizeof(t_toklst));
 	if (!new)
-		errmsg("token list allocation");
+		err_msg("token list allocation");
 	new->cmd = NULL;
 	new->infile = NULL;
 	new->outfile = NULL;

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:15:11 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 18:15:37 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/06 18:22:17 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	parser_main(char *line, t_toklst *toklst)
 		{
 			new = init_toklst();
 			tokenizer(pretok, &idx, new);
-			add_token(&toklst, new);
+			add_to_toklst(&toklst, new);
 		}
 		else
 			idx++;

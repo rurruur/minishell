@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 18:12:05 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 01:39:19 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/06 18:20:45 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	err_msg(char *str)
 
 char	*ft_strndup(char *str, int n)
 {
-	unsigned int	idx;
-	unsigned int	src_len;
-	char			*dupstr;
+	int		idx;
+	int		src_len;
+	char	*dupstr;
 
-	src_len = gnl_strlen(str);
+	src_len = (int)ft_strlen(str);
 	if (src_len < n)
 		dupstr = (char *)malloc((src_len + 1) * sizeof(char));
 	else
