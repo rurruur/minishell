@@ -1,5 +1,0 @@
-file open
-wait start
-child1
-child2
-wait end

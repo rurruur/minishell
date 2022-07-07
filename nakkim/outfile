@@ -1,4 +1,10 @@
-qwer
-asdfwqerhiewq
-sdf
-hi
+Makefile
+executor
+executor_test.c
+executor_test.o
+fork_test.c
+infile
+outfile
+pipe_test.c
+struct.h
+test
