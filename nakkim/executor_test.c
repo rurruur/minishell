@@ -11,24 +11,6 @@
 # define IN 0
 # define OUT 1
 
-// typedef struct s_token
-// {
-// 	int		rdr_in;		//	< 유무
-// 	char	**infile;	//	infile name
-// 	char	*cmd;		//	cmd일 것으로 예상되는 str
-// 	char	**param;	//	cmd 뒤에 오는 str들의 배열
-// 	int		rdr_out;	//	> 유무
-// 	char	**outfile;	//	outfile name
-// 	int		rdr_app;	//	>> 유무
-// 	char	**appfile;	//	append 되어야할 file name
-// } 			t_token;
-
-// typedef struct s_toklst
-// {
-// 	t_token			node;	//	각 노드는 |를 기준으로 나누어져있습니다.
-// 	struct s_toklst	*next;
-// } 	t_toklst;
-
 typedef struct s_token
 {
 	char			*str;
@@ -47,9 +29,15 @@ typedef struct s_toklst
 	struct s_toklst	*next;
 } 					t_toklst;
 
-char	*get_valid_cmd_path(char *cmd);
+int		set_file_redirection(t_token *files, int mode);
+void	set_redirection(t_toklst *list, int *end);
+void	child_process(t_toklst *list, int *end, char **env);
+void	parent_process(pid_t child, int *end);
 void	executor(t_toklst *list, char **env);
-char	**list_to_arr(t_token *list);
+int		get_cmd_count(t_token *cmds);
+char	**list_to_arr(t_token *cmds);
+char	*double_strjoin(char *start, char *middle, char *end);
+char	*get_valid_cmd_path(char *cmd);
 
 t_toklst	*init_node(void)
 {
