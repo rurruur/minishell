@@ -6,17 +6,17 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:16:27 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/08 13:09:41 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 14:36:47 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*tok_split(char *ptr, char c);
-char	*make_strs(char **ptr, char c);
-int		cnt_len(char **ptr, char c);
+t_token	*tok_split(char *ptr, char *delim);
+char	*make_strs(char **ptr, char *delim);
+int		cnt_len(char **ptr, char *delim);
 
-t_token	*tok_split(char *ptr, char c)
+t_token	*tok_split(char *ptr, char *delim)
 {
 	char	*tmp;
 	t_token	*strlst;
@@ -24,49 +24,67 @@ t_token	*tok_split(char *ptr, char c)
 	strlst = NULL;
 	while (*ptr != '\0')
 	{
-		while (*ptr == c && *ptr != '\0')
+		while (ft_strchr(delim, *ptr) && *ptr != '\0')
+		{
+			if (*ptr == '|')
+				add_to_strlst(&strlst, init_token("|"));
+			else if (*ptr == '<')
+			{
+				if (*(ptr + 1) == '<')
+				{
+					add_to_strlst(&strlst, init_token("<<"));
+					ptr++;
+				}
+				else
+					add_to_strlst(&strlst, init_token("<"));
+			}
+			else if (*ptr == '>')
+			{
+				if (*(ptr + 1) == '>')
+				{
+					add_to_strlst(&strlst, init_token(">>"));
+					ptr++;
+				}
+				else
+					add_to_strlst(&strlst, init_token(">"));
+			}
 			ptr++;
-		tmp = make_strs(&ptr, c);
+		}
+		// printf("%s\n", ptr);
+		tmp = make_strs(&ptr, delim);
 		add_to_strlst(&strlst, init_token(tmp));
 	}
+	display_strlst(strlst);
 	return (strlst);
 }
 
-char	*make_strs(char **ptr, char c)
+char	*make_strs(char **ptr, char *delim)
 {
 	int		len;
 	char	*str;
 
-	len = cnt_len(ptr, c);
-	// if (**ptr == '"' || **ptr == '\'')
-	// {
-	// 	len++;
-	// 	while ((*ptr)[len] != **ptr)
-	// 		len++;
-	// 	len++; //closing quote
-	// }
-	// else
-	// {
-	// 	while ((*ptr)[len] != c && (*ptr)[len] != '"' && (*ptr)[len] != '\'' && (*ptr)[len] != '\0')
-	// 		len++;
-	// }
+	len = cnt_len(ptr, delim);
 	str = ft_strndup(*ptr, len);
 	(*ptr) += len;
 	return (str);
 }
 
-int		cnt_len(char **ptr, char c)
+int		cnt_len(char **ptr, char *delim)
 {
 	int len;
 
 	len = 0;
 	if (**ptr != '"' && **ptr != '\'')
-		while ((*ptr)[len] != c && (*ptr)[len] != '\0')
+	{
+		while (!ft_strchr(delim, (*ptr)[len]) && (*ptr)[len] != '\0')
 			len++;
+	}
 	else
 	{
 		len++;
 		while ((*ptr)[len] != **ptr)
+			len++;
+		while (!ft_strchr(delim, (*ptr)[len]) && (*ptr)[len] != '\0')
 			len++;
 		len++;
 	}

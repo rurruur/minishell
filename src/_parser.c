@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:15:11 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/08 13:26:48 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 13:47:19 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	parser_main(char *line, t_toklst *toklst)
 	idx = 0;
 	if (!check_quote(line))
 		err_msg("quote");
-	pretok = tok_split(line, ' ');
+	pretok = tok_split(line, " |<>");
 	// display_strlst(pretok);
 	while (pretok)
 	{
@@ -40,7 +40,7 @@ void	parser_main(char *line, t_toklst *toklst)
 		}
 		pretok = pretok->next;
 	}
-	printf("out\n");
+	// printf("out\n");
 	display_toklst(toklst);
 	//free_all(pretok);
 	//pretok = NULL;

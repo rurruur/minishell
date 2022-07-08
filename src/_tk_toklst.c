@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/08 13:22:22 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 14:17:24 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 t_token		*init_token(char *content);
 void		add_to_strlst(t_token **strlst, t_token *new);
+void		add_flag(t_token *new);
 t_toklst	*init_toklst(void);
 void		add_to_toklst(t_toklst **toklst, t_toklst *new);
 
@@ -25,6 +26,7 @@ t_token		*init_token(char *content)
 	if (!new)
 		err_msg("token allocation");
 	new->str = content;
+	new->flag = OFF;
 	new->next = NULL;
 	return (new);
 }
@@ -33,6 +35,7 @@ void		add_to_strlst(t_token **strlst, t_token *new)
 {
 	t_token *tmp;
 	
+	// add_flag(new);
 	if (*strlst == NULL)
 		(*strlst) = new;
 	else
@@ -43,6 +46,22 @@ void		add_to_strlst(t_token **strlst, t_token *new)
 			*strlst = (*strlst)->next;
 		(*strlst)->next = new;
 		*strlst = tmp;
+	}
+}
+
+void		add_flag(t_token *new)
+{
+	if (new->str[0] == '<')
+	{
+		new->flag = 1;
+		if (new->str[1] == '<')
+			new->flag = 3;
+	}
+	else if (new->str[0] == '>')
+	{
+		new->flag = 2;
+		if (new->str[1] == '>')
+			new->flag = 4;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/08 13:08:38 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 14:03:44 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@
 # define RDR "<>"
 
 # define OFF 0;
+# define RD_IN 1;
+# define RD_OUT 2;
+# define RD_HD 3;
+# define RD_AP 4;
+# define END -1;
 
 // parser가 executor에게 주는 선물은 다음과 같습니다...
 typedef struct s_token
@@ -60,8 +65,8 @@ void	parser_main(char *line, t_toklst *toklst);
 int		check_quote(char *line);
 
 // _pretok.c
-t_token	*tok_split(char *ptr, char c);
-char	*make_strs(char **ptr, char c);
+t_token	*tok_split(char *ptr, char *delim);
+char	*make_strs(char **ptr, char *delim);
 // char	**tok_split(char const *s, char c);
 // int		count_str(char const *s, char c);
 // void	make_strs(char **strs, int idx, char **ptr, char c);
