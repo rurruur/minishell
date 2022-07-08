@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/08 14:03:44 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 15:30:48 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,12 @@
 # define RDR "<>"
 
 # define OFF 0;
-# define RD_IN 1;
-# define RD_OUT 2;
-# define RD_HD 3;
-# define RD_AP 4;
-# define END -1;
 
 // parser가 executor에게 주는 선물은 다음과 같습니다...
 typedef struct s_token
 {
 	char			*str;
-	int				flag;
+	int				size;
 	struct s_token	*next;
 } 					t_token;
 
@@ -67,6 +62,7 @@ int		check_quote(char *line);
 // _pretok.c
 t_token	*tok_split(char *ptr, char *delim);
 char	*make_strs(char **ptr, char *delim);
+void	pretokenizer(t_token *pretok);
 // char	**tok_split(char const *s, char c);
 // int		count_str(char const *s, char c);
 // void	make_strs(char **strs, int idx, char **ptr, char c);
@@ -78,6 +74,7 @@ char	*quote_trim(char *str);
 // _toklst.c
 t_token		*init_token(char *content);
 void		add_to_strlst(t_token **strlst, t_token *new);
+void		del_from_strlst(t_token *strlst);
 t_toklst	*init_toklst(void);
 void		add_to_toklst(t_toklst **toklst, t_toklst *new);
 

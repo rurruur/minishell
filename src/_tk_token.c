@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/08 14:26:00 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 16:00:27 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ char	*quote_trim(char *str)
 	char	*trimmed;
 
 	len = (int)ft_strlen(str);
-	if (*str == '"' || *str == '\'')
-		trimmed = ft_strndup(str + 1, len - 2);
-	else
+	// if ((*str == '"' || *str == '\'') && str[len - 1] == *str)
+	// 	trimmed = ft_strndup(str + 1, len - 2);
+	// else
 		trimmed = ft_strndup(str, len);
 	return (trimmed);
 }
