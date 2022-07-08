@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 20:11:48 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 11:50:38 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@ t_token		*init_token(char *content)
 
 void		add_to_strlst(t_token **strlst, t_token *new)
 {
+	t_token *tmp;
+	
 	if (*strlst == NULL)
 		(*strlst) = new;
 	else
 	{
+		tmp = *strlst;
 		while ((*strlst)->next)
 			*strlst = (*strlst)->next;
 		(*strlst)->next = new;
+		*strlst = tmp;
 	}
 }
 

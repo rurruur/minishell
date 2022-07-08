@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:15:11 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 20:07:50 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 11:39:45 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	parser_main(char *line, t_toklst *toklst)
 	{
 		if (pretok[idx][0] != '|')
 		{
+			//printf("bf tokenizer\n");
 			new = init_toklst();
 			tokenizer(pretok, &idx, new);
 			add_to_toklst(&toklst, new);

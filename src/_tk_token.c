@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 20:15:58 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 11:51:06 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	tokenizer(char **pretok, int *idx, t_toklst *new)
 	{
 		if (pretok[*idx][0] == '<')
 		{
+			// printf("< in\n");
 			tmp = quote_trim(pretok[*idx + 1]);
+			// printf("tmp1 : %s\n", tmp);
 			if (pretok[*idx][1] == '<')
 				add_to_strlst(&(new->heredoc), init_token(tmp)); 
 			else
@@ -33,7 +35,9 @@ void	tokenizer(char **pretok, int *idx, t_toklst *new)
 		}
 		else if (pretok[*idx][0] == '>')
 		{
+			// printf("> in\n");
 			tmp = quote_trim(pretok[*idx + 1]);
+			// printf("tmp2 : %s\n", tmp);
 			if (pretok[*idx][1] == '>')
 				add_to_strlst(&(new->append), init_token(tmp)); 
 			else
@@ -42,8 +46,12 @@ void	tokenizer(char **pretok, int *idx, t_toklst *new)
 		}
 		else
 		{
+			// printf("else in\n");
 			tmp = quote_trim(pretok[*idx]);
+			// printf("tmp3 : %s\n", tmp);
 			add_to_strlst(&(new->cmd), init_token(tmp)); 
+			// display_strlst(new->cmd);
+			// printf("cmd : %s\n", new->cmd->str);
 		}
 		(*idx)++;
 	}
