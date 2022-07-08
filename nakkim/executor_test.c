@@ -8,6 +8,9 @@
 # include "../libft/libft.h"
 # include <sys/stat.h>
 
+# define IN 0
+# define OUT 1
+
 // typedef struct s_token
 // {
 // 	int		rdr_in;		//	< 유무
@@ -32,7 +35,7 @@ typedef struct s_token
 	struct s_token	*next;
 } 					t_token;
 
-int	fd;
+int	g_fd;
 
 typedef struct s_toklst
 {
@@ -44,7 +47,7 @@ typedef struct s_toklst
 	struct s_toklst	*next;
 } 					t_toklst;
 
-char	*get_cmd_path(char *cmd, char **path);
+char	*get_valid_cmd_path(char *cmd);
 void	executor(t_toklst *list, char **env);
 char	**list_to_arr(t_token *list);
 
@@ -98,232 +101,171 @@ int	main(int argc, char **argv, char **env)
 	// third->outfile = NULL;
 	third->outfile->str = "outfile";
 	third->outfile->next = NULL;
+	// third->outfile->next = (t_token *)malloc(sizeof(t_token));
+	// third->outfile->next->str = "outfile2";
+	// third->outfile->next->next = NULL;
 	third->here_doc = NULL;
 	third->append = NULL;
 	third->next = NULL;
 
-	fd = open("test", O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	dprintf(fd, "file open\n");
+	g_fd = open("test", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	dprintf(g_fd, "file open\n");
 
 	executor(first, env);
 
-	close(fd);
+	close(g_fd);
 	return (0);
+}
+
+// in, out 나눠 말아...
+int	set_file_redirection(t_token *files, int mode)
+{
+	int	fd;
+	int	result;
+
+	while (files)
+	{
+		if (mode == IN)
+			fd = open(files->str, O_RDONLY);
+		else
+			fd = open(files->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		if (fd < 0)	//infile 하나라도 없는 경우: 해당 노드는 실행 x
+			return (0);
+		if (files->next == NULL)
+			break ;
+		close(fd);
+		files = files->next;
+	}
+	if (mode == IN)
+		dup2(fd, STDIN_FILENO);
+	else
+		dup2(fd, STDOUT_FILENO);
+	if (result < 0)
+		return (0);
+	dprintf(g_fd, "%s redirection set\n", mode == IN ? "IN" : "OUT");
+	close(fd);
+	return (1);
+}
+
+void	set_redirection(t_toklst *list, int *end)
+{
+
+	// STDIN 설정
+	if (list->infile && !set_file_redirection(list->infile, IN))
+		perror("redirection error");
+	// STDOUT 설정
+	if (list->outfile && !set_file_redirection(list->outfile, OUT))
+		perror("redirection error");
+	else if (list->next != NULL)	// out redirection 없고, 마지막 명령어가 아닐 경우 파이프로 표준출력
+	{
+		close(end[0]);
+		if (dup2(end[1], STDOUT_FILENO) < 0)
+			perror("dup2");
+	}
+}
+
+void	child_process(t_toklst *list, int *end, char **env)
+{
+	char	*cmd;
+	char	**cmd_line;
+
+	dprintf(g_fd, "\nchild process\n");
+	set_redirection(list, end);
+	if (list->cmd)
+	{
+		cmd = get_valid_cmd_path(list->cmd->str);	// free? + cmd == NULL 처리
+		cmd_line = list_to_arr(list->cmd);	// 각각 free 필요?
+		dprintf(g_fd, "실행: %s, %s, %s\n", cmd, cmd_line[0], cmd_line[1]);
+		if (!execve(cmd, cmd_line, env))
+			perror("execve");
+	}
+}
+
+void	parent_process(pid_t child, int *end)
+{
+	int		status;
+
+	close(end[1]);
+	dup2(end[0], STDIN_FILENO);
+	waitpid(child, &status, 0);
 }
 
 void	executor(t_toklst *list, char **env)
 {
-	int			end[2];
-	pid_t		child;
-	int			status;
-	int			result;
-
-	// 환경변수 PATH
-	char	**path = ft_split(getenv("PATH"), ':');
-
+	int		end[2];
+	pid_t	child;
+	
 	while (list != NULL)
 	{
-		if (list->next != NULL)
-		{
-			pipe(end);
-			child = fork();
-			if (child == 0)
-			{
-				dprintf(fd, "\nchild process\n");
-				// STDIN 설정
-				if (list->infile) {
-					// 인파일들 존재 확인
-					int		fd;
-					t_token	*curr_file;
-
-					curr_file = list->infile;
-					while (curr_file)
-					{
-						fd = open(curr_file->str, O_RDONLY);
-						if (fd < 0)	//infile 하나라도 없는 경우: 해당 노드는 실행 x
-							perror("file open error");
-						close(fd);
-						if (curr_file->next == NULL)
-							break ;
-						curr_file = curr_file->next;
-					}
-					// STDIN을 마지막 파일로 설정
-					fd = open(curr_file->str, O_RDONLY);
-					result = dup2(fd, STDIN_FILENO);
-					// close(fd);
-					if (result < 0)
-						perror("dup2 - infile");
-				}
-				// STDOUT 설정
-				if (list->outfile) {
-					// 인파일들 존재 확인
-					int		fd;
-					t_token	*curr_file;
-
-					curr_file = list->outfile;
-					while (curr_file)
-					{
-						fd = open(curr_file->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);	//outfile 하나라도 없는 경우: 생성
-						if (fd < 0)
-							perror("file open error");
-						close(fd);
-						if (curr_file->next == NULL)
-							break ;
-						curr_file = curr_file->next;
-					}
-					// STDOUT을 마지막 파일로 설정
-					fd = open(curr_file->str, O_WRONLY);
-					result = dup2(fd, STDOUT_FILENO);
-					// close(fd);
-					if (result < 0)
-						perror("dup2 - outfile");
-				}
-				else
-				{
-					close(end[0]);
-					result = dup2(end[1], STDOUT_FILENO);
-					if (result < 0)
-						perror("dup2 - out");
-				}
-				if (list->cmd)
-				{
-					// 명령어 경로 찾기
-					char	*cmd = get_cmd_path(list->cmd->str, path);
-					if (!cmd)
-						perror("command not found");
-					// 명령 실행
-					char **cmd_line = list_to_arr(list->cmd);
-					dprintf(fd, "실행: %s, %s, %s\n", cmd, cmd_line[0], cmd_line[1]);
-					if (!execve(cmd, cmd_line, env))
-						perror("execve");
-				}
-			}
-			else
-			{
-				close(end[1]);
-				dup2(end[0], STDIN_FILENO);
-				waitpid(child, &status, 0);
-			}
-		}
+		pipe(end);
+		child = fork();
+		if (child == 0)
+			child_process(list, end, env);
 		else
-		{
-			dprintf(fd, "\nlast cmd\n");
-			child = fork();
-			if (child == 0)
-			{
-				dprintf(fd, "child process\n");
-				// STDIN 설정
-				if (list->infile) {
-					// 인파일들 존재 확인
-					int		fd;
-					t_token	*curr_file;
-
-					curr_file = list->infile;
-					while (curr_file)
-					{
-						fd = open(curr_file->str, O_RDONLY);
-						if (fd < 0)	//infile 하나라도 없는 경우: 해당 노드는 실행 x
-							perror("file open error");
-						else
-							close(fd);
-						if (curr_file->next == NULL)
-							break ;
-						curr_file = curr_file->next;
-					}
-					// STDIN을 마지막 파일로 설정
-					fd = open(curr_file->str, O_RDONLY);
-					result = dup2(fd, STDIN_FILENO);
-					// close(fd);
-					if (result < 0)
-						perror("dup2 - infile");
-				}
-				// STDOUT 설정
-				if (list->outfile) {
-					// 인파일들 존재 확인
-					int		fd;
-					t_token	*curr_file;
-
-					curr_file = list->outfile;
-					while (curr_file)
-					{
-						fd = open(curr_file->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);	//outfile 하나라도 없는 경우: 생성
-						if (fd < 0)
-							perror("file open error");
-						close(fd);
-						if (curr_file->next == NULL)
-							break ;
-						curr_file = curr_file->next;
-					}
-					// STDOUT을 마지막 파일로 설정
-					fd = open(curr_file->str, O_WRONLY);
-					result = dup2(fd, STDOUT_FILENO);
-					// close(fd);
-					if (result < 0)
-						perror("dup2 - outfile");
-				}
-				if (list->cmd)
-				{
-					// 명령어 경로 찾기
-					char	*cmd = get_cmd_path(list->cmd->str, path);
-					if (!cmd)
-						perror("command not found");
-					// 명령 실행
-					char **cmd_line = list_to_arr(list->cmd);
-					dprintf(fd, "실행: %s, %s, %s\n", cmd, cmd_line[0], cmd_line[1]);
-					if (!execve(cmd, cmd_line, env))
-						perror("execve");
-				}
-			}
-			else
-			{
-				close(end[1]);
-				dup2(end[0], STDIN_FILENO);
-				waitpid(child, &status, 0);
-			}
-		}
+			parent_process(child, end);
 		list = list->next;
 	}
 }
 
-char	**list_to_arr(t_token *list)
+int	get_cmd_count(t_token *cmds)
 {
-	char	**arr;
-	int		size;
-	t_token	*curr;
+	int	size;
 
 	size = 0;
-	curr = list;
-	while (curr)
+	while (cmds)
 	{
-		curr = curr->next;
+		cmds = cmds->next;
 		size++;
 	}
-	arr = (char **)malloc(sizeof(char *) * (size + 1));
-	arr[size] = NULL;
-	size = 0;
-	while (list)
+	return (size);
+}
+
+char	**list_to_arr(t_token *cmds)
+{
+	char	**arr;
+	int		count;
+
+	count = get_cmd_count(cmds);
+	arr = (char **)malloc(sizeof(char *) * (count + 1));
+	arr[count] = NULL;
+	count = 0;
+	while (cmds)
 	{
-		arr[size++] = ft_strdup(list->str);
-		list = list->next;
+		arr[count++] = ft_strdup(cmds->str);
+		cmds = cmds->next;
 	}
 	return (arr);
 }
 
-char	*get_cmd_path(char *cmd, char **path)
+char	*double_strjoin(char *start, char *middle, char *end)
 {
-	int		i;
-	char 	*cmd_path;
-	struct stat	stat_result;
+	char	*tmp;
+	char	*result;
 
-	for (i = 0; path[i]; i++) {
-		char *str = ft_strjoin(path[i], "/");
-		cmd_path = ft_strjoin(str, cmd);
-		free(str);
+	tmp = ft_strjoin(start, middle);
+	result = ft_strjoin(tmp, end);
+	free(tmp);
+	return (result);
+}
+
+char	*get_valid_cmd_path(char *cmd)
+{
+	struct stat	stat_result;
+	char 		*cmd_path;
+	char		**path;
+	int			i;
+	
+	// PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+	path = ft_split(getenv("PATH"), ':');	// free?
+	i = -1;
+	while (path[++i])
+	{
+		cmd_path = double_strjoin(path[i], "/", cmd);
 		if (stat(cmd_path, &stat_result) != -1)
 			break ;
-		// free(cmd_path);
+		free(cmd_path);
 	}
-	if (!path[i]) {
+	if (!path[i]) {	// 여기 에러 처리 좀 더 고민
 		free(cmd_path);
 		return (0);
 	}

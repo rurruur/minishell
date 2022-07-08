@@ -6,6 +6,6 @@ child process
 child process
 실행: /usr/bin/grep, grep, hi
 
-last cmd
 child process
+OUT redirection set
 실행: /usr/bin/grep, grep, asdf

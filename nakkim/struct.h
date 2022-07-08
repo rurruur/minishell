@@ -34,42 +34,21 @@ typedef struct s_token
 	(next == NULL)
 */
 
-/* test input
-< infile grep hi > outfile
-1st node
-	cmd 		: grep	->	hi	->	NULL
-	infile 		: infile	->	NULL
-	outfile 	: outfile	->	NULL	
-	here_doc	: NULL
-	append		: NULL
-	(next == NULL)
-*/
+/**
+ * test input1
+ * ls >> outfile > outfile2
+ * outfile 내용 그대로 있고 outfile2에 새로(다 지우고) 출력
+ */
 
-/* test input2
-cat infile | cat > outfile
-1st node
-	cmd 		: cat	->	infile	->	NULL
-	infile 		: NULL
-	outfile 	: NULL
-	here_doc	: NULL
-	append		: NULL
-	(next == 2nd node)
-2nd node
-	cmd 		: cat	->	NULL
-	infile 		: NULL
-	outfile 	: outfile	->	NULL
-	here_doc	: NULL
-	append		: NULL
-	(next == NULL)
-*/
+/**
+ * test intpu2
+ * ls > outfile >> outfile2
+ * outfile 지우고 새로 생성(내용 삭제)
+ * outfile2: 내용 그대로 + 덧붙임
+ */
 
-/* test input3
-cat infile | > outfile : outfile empty
-1st node
-	cmd 		: grep	->	hi	->	NULL
-	infile 		: infile	->	NULL
-	outfile 	: outfile	->	NULL	
-	here_doc	: NULL
-	append		: NULL
-	(next == NULL)
-*/
+/**
+ * 결론: >는 지우고 새로 생성한다. >>는 내용 그대로 두고 덧붙인다.
+ * => stdout redirection의 open 옵션에서 O_TRUNC 지우면 될듯
+ * 마지막에 오는 > or >> 파일로 STDOUT 설정
+ */
