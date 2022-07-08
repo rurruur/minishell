@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 18:12:05 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/08 12:48:24 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 19:18:01 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	free_all(char **str);
 void	err_msg(char *str);
 char	*ft_strndup(char *str, int n);
+int		cnt_quote(char *str);
 
 void	free_all(char **str)
 {
@@ -57,4 +58,18 @@ char	*ft_strndup(char *str, int n)
 	}
 	dupstr[idx] = '\0';
 	return (dupstr);
+}
+
+int	cnt_quote(char *str)
+{
+	int cnt;
+
+	cnt = 0;
+	while (*str)
+	{
+		if (*str == '\'' || *str == '"')
+			cnt++;
+		str++;
+	}
+	return (cnt);
 }

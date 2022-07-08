@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/08 15:30:48 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 19:17:28 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,39 +52,38 @@ typedef struct s_toklst
 // minishell.c
 
 // _signal.c
-void	h_sigint(int signum);
-void	h_sigquit(int signum);
+void		h_sigint(int signum);
+void		h_sigquit(int signum);
 
 // _parser.c
-void	parser_main(char *line, t_toklst *toklst);
-int		check_quote(char *line);
+void		parser_main(char *line, t_toklst *toklst);
+int			check_quote(char *line);
 
-// _pretok.c
-t_token	*tok_split(char *ptr, char *delim);
-char	*make_strs(char **ptr, char *delim);
-void	pretokenizer(t_token *pretok);
-// char	**tok_split(char const *s, char c);
-// int		count_str(char const *s, char c);
-// void	make_strs(char **strs, int idx, char **ptr, char c);
+// _tk_pretok.c
+t_token		*tok_split(char *ptr, char *delim);
+void		skip_delim(char **ptr, char *delim, t_token **strlst);
+char		*make_strs(char **ptr, char *delim);
+int			cnt_len(char **ptr, char *delim);
+int			cnt_quote(char *str);
 
-// _tokenizer.c
-void	tokenizer(t_token **pretok, t_toklst *new);
-char	*quote_trim(char *str);
+// _tk_token.c
+void		tokenizer(t_token **pretok, t_toklst *new);
+char		*trim_quote(char *str);
 
 // _toklst.c
 t_token		*init_token(char *content);
 void		add_to_strlst(t_token **strlst, t_token *new);
-void		del_from_strlst(t_token *strlst);
 t_toklst	*init_toklst(void);
 void		add_to_toklst(t_toklst **toklst, t_toklst *new);
 
 // _utils.c
-void	free_all(char **str);
-void	err_msg(char *str);
-char	*ft_strndup(char *str, int n);
+void		free_all(char **str);
+void		err_msg(char *str);
+char		*ft_strndup(char *str, int n);
+int			cnt_quote(char *str);
 
 // _utils_display.c
-void	display_toklst(t_toklst *toklst);
-void	display_strlst(t_token *strlst);
+void		display_toklst(t_toklst *toklst);
+void		display_strlst(t_token *strlst);
 
 #endif

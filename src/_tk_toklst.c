@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/08 15:33:36 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 19:14:32 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 t_token		*init_token(char *content);
 void		add_to_strlst(t_token **strlst, t_token *new);
-// void		add_flag(t_token *new);
-void		del_from_strlst(t_token *strlst);
 t_toklst	*init_toklst(void);
 void		add_to_toklst(t_toklst **toklst, t_toklst *new);
 
@@ -36,12 +34,10 @@ void		add_to_strlst(t_token **strlst, t_token *new)
 {
 	t_token *tmp;
 	
-	// add_flag(new);
 	if (*strlst == NULL)
 		(*strlst) = new;
 	else
 	{
-		// printf("in\n");		
 		tmp = *strlst;
 		while ((*strlst)->next)
 			*strlst = (*strlst)->next;
@@ -50,33 +46,6 @@ void		add_to_strlst(t_token **strlst, t_token *new)
 	}
 	(*strlst)->size++;
 }
-
-void		del_from_strlst(t_token *strlst)
-{
-	t_token *tmp;
-
-	// 현재 -> 지울 노드 -> 그 다음
-	tmp = strlst->next;
-	strlst->next = strlst->next->next;
-	free(tmp->str);
-	free(tmp);
-}
-
-// void		add_flag(t_token *new)
-// {
-// 	if (new->str[0] == '<')
-// 	{
-// 		new->flag = 1;
-// 		if (new->str[1] == '<')
-// 			new->flag = 3;
-// 	}
-// 	else if (new->str[0] == '>')
-// 	{
-// 		new->flag = 2;
-// 		if (new->str[1] == '>')
-// 			new->flag = 4;
-// 	}
-// }
 
 t_toklst	*init_toklst(void)
 {
