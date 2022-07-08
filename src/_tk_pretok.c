@@ -6,116 +6,70 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:16:27 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/06 18:14:10 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 13:09:41 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**tok_split(char const *s, char c);
-int		count_str(char const *s, char c);
-void	make_strs(char **strs, int idx, char **ptr, char c);
+t_token	*tok_split(char *ptr, char c);
+char	*make_strs(char **ptr, char c);
+int		cnt_len(char **ptr, char c);
 
-char	**tok_split(char const *s, char c)
+t_token	*tok_split(char *ptr, char c)
 {
-	char	**strs;
-	char	*ptr;
-	int		idx;
-	int		str_cnt;
+	char	*tmp;
+	t_token	*strlst;
 
-	if (!s)
-		return (0);
-	ptr = (char *)s;
-	str_cnt = count_str(s, c) + 1;
-	strs = (char **)malloc(str_cnt * sizeof(char *));
-	if (!(strs))
-		return (0);
-	idx = 0;
-	while (idx < str_cnt - 1 && *ptr != '\0')
+	strlst = NULL;
+	while (*ptr != '\0')
 	{
 		while (*ptr == c && *ptr != '\0')
 			ptr++;
-		// printf("str : %s\n", ptr);
-		make_strs(strs, idx, &ptr, c);
-		if (!(strs))
-			return (0);
-		idx++;
+		tmp = make_strs(&ptr, c);
+		add_to_strlst(&strlst, init_token(tmp));
 	}
-	strs[idx] = 0;
-	return (strs);
+	return (strlst);
 }
 
-int	count_str(char const *s, char c)
+char	*make_strs(char **ptr, char c)
 {
-	int	idx;
-	int	cnt;
-	int	flag;
-	int quote;
+	int		len;
+	char	*str;
 
-	idx = 0;
-	cnt = 0;
-	flag = 1;
-	quote = 0;
-	while (s[idx] != '\0')
-	{
-		if (quote == 0 && (s[idx] == '"' || s[idx] == '\''))
-		{
-			cnt++;
-			quote = 1;
-		}
-		else if (s[idx] != c && flag == 1 && quote == 0)
-		{
-			cnt++;
-			flag = 0;
-		}
-		else if (s[idx] == c && flag == 0 && quote == 0)
-			flag = 1;
-		else if (quote == 1 && (s[idx] == '"' || s[idx] == '\''))
-		{
-			quote = 0;
-			flag = 1;
-		}
-		idx++;
-	}
-	// printf("cnt : %d\n", cnt);
-	return (cnt);
+	len = cnt_len(ptr, c);
+	// if (**ptr == '"' || **ptr == '\'')
+	// {
+	// 	len++;
+	// 	while ((*ptr)[len] != **ptr)
+	// 		len++;
+	// 	len++; //closing quote
+	// }
+	// else
+	// {
+	// 	while ((*ptr)[len] != c && (*ptr)[len] != '"' && (*ptr)[len] != '\'' && (*ptr)[len] != '\0')
+	// 		len++;
+	// }
+	str = ft_strndup(*ptr, len);
+	(*ptr) += len;
+	return (str);
 }
 
-void	make_strs(char **strs, int idx, char **ptr, char c)
+int		cnt_len(char **ptr, char c)
 {
-	int	len;
-	int	x;
+	int len;
 
 	len = 0;
-	if (**ptr == '"' || **ptr == '\'')
+	if (**ptr != '"' && **ptr != '\'')
+		while ((*ptr)[len] != c && (*ptr)[len] != '\0')
+			len++;
+	else
 	{
 		len++;
 		while ((*ptr)[len] != **ptr)
 			len++;
-		len++; //closing quote
-	}
-	else
-	{
-		while ((*ptr)[len] != c && (*ptr)[len] != '"' && (*ptr)[len] != '\'' && (*ptr)[len] != '\0')
-			len++;
+		len++;
 	}
 	// printf("len : %d\n", len);
-	
-	strs[idx] = (char *)malloc((len + 1) * sizeof(char));
-	if (!(strs[idx]))
-	{
-		while (idx-- > 0)
-			free (strs[idx]);
-		free (strs);
-		return ;
-	}
-	
-	x = 0;
-	while (x < len)
-	{
-		strs[idx][x] = **(ptr);
-		x++;
-		(*ptr)++;
-	}
-	strs[idx][x] = '\0';
+	return (len);	
 }

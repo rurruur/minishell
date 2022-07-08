@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/08 11:50:38 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 13:22:22 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void		add_to_strlst(t_token **strlst, t_token *new)
 		(*strlst) = new;
 	else
 	{
+		// printf("in\n");		
 		tmp = *strlst;
 		while ((*strlst)->next)
 			*strlst = (*strlst)->next;
@@ -63,12 +64,16 @@ t_toklst	*init_toklst(void)
 
 void	add_to_toklst(t_toklst **toklst, t_toklst *new)
 {
+	t_toklst *tmp;
+
 	if (*toklst == NULL)
 		(*toklst) = new;
 	else
 	{
+		tmp = *toklst;
 		while ((*toklst)->next)
 			*toklst = (*toklst)->next;
 		(*toklst)->next = new;
+		*toklst = tmp;
 	}
 }

@@ -6,55 +6,57 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/08 11:51:06 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 13:24:50 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	tokenizer(char **pretok, int *idx, t_toklst *new);
+void	tokenizer(t_token **pretok, t_toklst *new);
 char	*quote_trim(char *str);
 
-void	tokenizer(char **pretok, int *idx, t_toklst *new)
+void	tokenizer(t_token **pretok, t_toklst *new)
 {
 	char	*tmp;
 	
 	tmp = NULL;
-	while (pretok[*idx] && pretok[*idx][0] != '|')
+	while ((*pretok) && (*pretok)->str[0] != '|')
 	{
-		if (pretok[*idx][0] == '<')
+		// display_strlst(*pretok);
+		if ((*pretok)->str[0] == '<')
 		{
 			// printf("< in\n");
-			tmp = quote_trim(pretok[*idx + 1]);
+			tmp = quote_trim((*pretok)->next->str);
 			// printf("tmp1 : %s\n", tmp);
-			if (pretok[*idx][1] == '<')
+			if ((*pretok)->str[1] == '<')
 				add_to_strlst(&(new->heredoc), init_token(tmp)); 
 			else
 				add_to_strlst(&(new->infile), init_token(tmp)); 
-			(*idx)++;
+			(*pretok) = (*pretok)->next;
 		}
-		else if (pretok[*idx][0] == '>')
+		else if ((*pretok)->str[0] == '>')
 		{
 			// printf("> in\n");
-			tmp = quote_trim(pretok[*idx + 1]);
+			tmp = quote_trim((*pretok)->next->str);
 			// printf("tmp2 : %s\n", tmp);
-			if (pretok[*idx][1] == '>')
+			if ((*pretok)->str[1] == '>')
 				add_to_strlst(&(new->append), init_token(tmp)); 
 			else
 				add_to_strlst(&(new->outfile), init_token(tmp)); 
-			(*idx)++;
+			(*pretok) = (*pretok)->next;
 		}
 		else
 		{
 			// printf("else in\n");
-			tmp = quote_trim(pretok[*idx]);
+			tmp = quote_trim((*pretok)->str);
 			// printf("tmp3 : %s\n", tmp);
 			add_to_strlst(&(new->cmd), init_token(tmp)); 
 			// display_strlst(new->cmd);
 			// printf("cmd : %s\n", new->cmd->str);
 		}
-		(*idx)++;
+		(*pretok) = (*pretok)->next;
 	}
+	// display_strlst(*pretok);
 }
 
 char	*quote_trim(char *str)

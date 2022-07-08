@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/08 11:49:32 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 13:08:38 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 typedef struct s_token
 {
 	char			*str;
+	int				flag;
 	struct s_token	*next;
 } 					t_token;
 
@@ -59,12 +60,14 @@ void	parser_main(char *line, t_toklst *toklst);
 int		check_quote(char *line);
 
 // _pretok.c
-char	**tok_split(char const *s, char c);
-int		count_str(char const *s, char c);
-void	make_strs(char **strs, int idx, char **ptr, char c);
+t_token	*tok_split(char *ptr, char c);
+char	*make_strs(char **ptr, char c);
+// char	**tok_split(char const *s, char c);
+// int		count_str(char const *s, char c);
+// void	make_strs(char **strs, int idx, char **ptr, char c);
 
 // _tokenizer.c
-void	tokenizer(char **pretok, int *idx, t_toklst *toklst);
+void	tokenizer(t_token **pretok, t_toklst *new);
 char	*quote_trim(char *str);
 
 // _toklst.c

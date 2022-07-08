@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:15:11 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/08 11:39:45 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/08 13:26:48 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		check_quote(char *line);
 
 void	parser_main(char *line, t_toklst *toklst)
 {
-	char		**pretok;
+	t_token		*pretok;
 	int 		idx;
 	t_toklst	*new;
 
@@ -25,22 +25,25 @@ void	parser_main(char *line, t_toklst *toklst)
 	if (!check_quote(line))
 		err_msg("quote");
 	pretok = tok_split(line, ' ');
-	// for (int i = 0; pretok[i]; i++)
-	// 	printf("%s\n", pretok[i]);
-	while (pretok[idx])
+	// display_strlst(pretok);
+	while (pretok)
 	{
-		if (pretok[idx][0] != '|')
+		if (pretok->str[0] != '|')
 		{
 			//printf("bf tokenizer\n");
 			new = init_toklst();
-			tokenizer(pretok, &idx, new);
+			tokenizer(&pretok, new);
+			// printf("in\n");
 			add_to_toklst(&toklst, new);
+			if (!pretok)
+				break;
 		}
-		else
-			idx++;
+		pretok = pretok->next;
 	}
-	free_all(pretok);
-	pretok = NULL;
+	printf("out\n");
+	display_toklst(toklst);
+	//free_all(pretok);
+	//pretok = NULL;
 	return;
 }
 
