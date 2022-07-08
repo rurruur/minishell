@@ -1,0 +1,11 @@
+file open
+
+child process
+실행: /bin/cat, cat, infile
+
+child process
+실행: /usr/bin/grep, grep, hi
+
+last cmd
+child process
+실행: /usr/bin/grep, grep, asdf

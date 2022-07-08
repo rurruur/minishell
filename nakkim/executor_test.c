@@ -88,19 +88,21 @@ int	main(int argc, char **argv, char **env)
 	// second->outfile->next = NULL;  
 	second->here_doc = NULL;
 	second->append = NULL;
-	second->next = NULL;
+	second->next = third;
 
-	third->cmd->str = "exit";
-	third->cmd->next = NULL;
+	third->cmd->str = "grep";
+	third->cmd->next = (t_token *)malloc(sizeof(t_token));
+	third->cmd->next->str = "asdf";
+	third->cmd->next->next = NULL;
 	third->infile = NULL;
-	third->outfile = NULL;
-	// third->outfile->str = "outfile";
-	// third->outfile->next = NULL;
+	// third->outfile = NULL;
+	third->outfile->str = "outfile";
+	third->outfile->next = NULL;
 	third->here_doc = NULL;
 	third->append = NULL;
 	third->next = NULL;
 
-	fd = open("test", O_WRONLY | O_CREAT);
+	fd = open("test", O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	dprintf(fd, "file open\n");
 
 	executor(first, env);
@@ -117,9 +119,7 @@ void	executor(t_toklst *list, char **env)
 	int			result;
 
 	// 환경변수 PATH
-	char	*env_path = ft_substr(env[4], 5, ft_strlen(env[4]));
-	char	**path = ft_split(env_path, ':');
-
+	char	**path = ft_split(getenv("PATH"), ':');
 
 	while (list != NULL)
 	{
@@ -129,6 +129,7 @@ void	executor(t_toklst *list, char **env)
 			child = fork();
 			if (child == 0)
 			{
+				dprintf(fd, "\nchild process\n");
 				// STDIN 설정
 				if (list->infile) {
 					// 인파일들 존재 확인
@@ -162,7 +163,7 @@ void	executor(t_toklst *list, char **env)
 					curr_file = list->outfile;
 					while (curr_file)
 					{
-						fd = open(curr_file->str, O_WRONLY | O_CREAT);	//outfile 하나라도 없는 경우: 생성
+						fd = open(curr_file->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);	//outfile 하나라도 없는 경우: 생성
 						if (fd < 0)
 							perror("file open error");
 						close(fd);
@@ -192,6 +193,7 @@ void	executor(t_toklst *list, char **env)
 						perror("command not found");
 					// 명령 실행
 					char **cmd_line = list_to_arr(list->cmd);
+					dprintf(fd, "실행: %s, %s, %s\n", cmd, cmd_line[0], cmd_line[1]);
 					if (!execve(cmd, cmd_line, env))
 						perror("execve");
 				}
@@ -205,9 +207,11 @@ void	executor(t_toklst *list, char **env)
 		}
 		else
 		{
+			dprintf(fd, "\nlast cmd\n");
 			child = fork();
 			if (child == 0)
 			{
+				dprintf(fd, "child process\n");
 				// STDIN 설정
 				if (list->infile) {
 					// 인파일들 존재 확인
@@ -220,7 +224,8 @@ void	executor(t_toklst *list, char **env)
 						fd = open(curr_file->str, O_RDONLY);
 						if (fd < 0)	//infile 하나라도 없는 경우: 해당 노드는 실행 x
 							perror("file open error");
-						close(fd);
+						else
+							close(fd);
 						if (curr_file->next == NULL)
 							break ;
 						curr_file = curr_file->next;
@@ -241,7 +246,7 @@ void	executor(t_toklst *list, char **env)
 					curr_file = list->outfile;
 					while (curr_file)
 					{
-						fd = open(curr_file->str, O_WRONLY | O_CREAT);	//outfile 하나라도 없는 경우: 생성
+						fd = open(curr_file->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);	//outfile 하나라도 없는 경우: 생성
 						if (fd < 0)
 							perror("file open error");
 						close(fd);
@@ -264,9 +269,16 @@ void	executor(t_toklst *list, char **env)
 						perror("command not found");
 					// 명령 실행
 					char **cmd_line = list_to_arr(list->cmd);
+					dprintf(fd, "실행: %s, %s, %s\n", cmd, cmd_line[0], cmd_line[1]);
 					if (!execve(cmd, cmd_line, env))
 						perror("execve");
 				}
+			}
+			else
+			{
+				close(end[1]);
+				dup2(end[0], STDIN_FILENO);
+				waitpid(child, &status, 0);
 			}
 		}
 		list = list->next;
@@ -301,14 +313,15 @@ char	*get_cmd_path(char *cmd, char **path)
 {
 	int		i;
 	char 	*cmd_path;
+	struct stat	stat_result;
 
 	for (i = 0; path[i]; i++) {
 		char *str = ft_strjoin(path[i], "/");
 		cmd_path = ft_strjoin(str, cmd);
 		free(str);
-		if (open(cmd_path, O_RDONLY) != -1)	// stat?
+		if (stat(cmd_path, &stat_result) != -1)
 			break ;
-		free(cmd_path);
+		// free(cmd_path);
 	}
 	if (!path[i]) {
 		free(cmd_path);
