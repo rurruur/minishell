@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 14:00:01 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/09 14:22:21 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,43 +58,37 @@ typedef struct s_toklst
 // 여기까지가 parser로부터의 선물입니다.
 // thank you from executor
 
-// minishell.c
-
 // _signal.c
 void		h_sigint(int signum);
 void		h_sigquit(int signum);
 
-// _parser.c
-void		parser_main(char *line, t_toklst *toklst);
-int			check_quote(char *line);
+// _token01.c
+void		tokenizer(char *line, t_toklst *toklst);
+void		tok_to_lst(t_token **pretok, t_toklst *new);
 
-// _tk_pretok.c
+// _token02.c
 t_token		*tok_split(char *ptr, char *delim);
 void		skip_delim(char **ptr, char *delim, t_token **strlst);
 char		*make_strs(char **ptr, char *delim);
 int			cnt_len(char **ptr, char *delim);
-int			cnt_quote(char *str);
 
-// _tk_token.c
-void		tokenizer(t_token **pretok, t_toklst *new);
-
-// _quote.c
-char	*trim_quote(char *str);
-int		check_len(char *str);
-
-// _toklst.c
+// _lst.c
 t_token		*init_token(char *content);
 void		add_to_strlst(t_token **strlst, t_token *new);
 t_toklst	*init_toklst(void);
 void		add_to_toklst(t_toklst **toklst, t_toklst *new);
 
+// _quote.c
+int			check_quote(char *line);
+char		*trim_quote(char *str);
+int			check_len(char *str);
+
 // _utils.c
 void		free_all(char **str);
 void		err_msg(char *str);
 char		*ft_strndup(char *str, int n);
-int			cnt_quote(char *str);
 
-// _utils_display.c
+// __display.c
 void		display_toklst(t_toklst *toklst);
 void		display_strlst(t_token *strlst);
 
