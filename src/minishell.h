@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/08 19:17:28 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/09 14:00:01 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,24 @@
 
 # define PRMPT "( ´Д`)> "
 # define QUOTE "'\""
+# define STR_DQ "\""
+# define STR_SQ "\'"
 # define RDR "<>"
 
-# define OFF 0;
+# define CLOSED -1
+# define OPEN 1
+
+enum e_flag
+{
+	OFF		// = 0
+};
 
 // parser가 executor에게 주는 선물은 다음과 같습니다...
 typedef struct s_token
 {
 	char			*str;
 	int				size;
+	enum e_flag		type;
 	struct s_token	*next;
 } 					t_token;
 
@@ -68,7 +77,10 @@ int			cnt_quote(char *str);
 
 // _tk_token.c
 void		tokenizer(t_token **pretok, t_toklst *new);
-char		*trim_quote(char *str);
+
+// _quote.c
+char	*trim_quote(char *str);
+int		check_len(char *str);
 
 // _toklst.c
 t_token		*init_token(char *content);

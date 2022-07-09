@@ -24,7 +24,8 @@ SRC			=	src/minishell.c \
 				src/_tk_token.c \
 				src/_tk_toklst.c \
 				src/_utils.c \
-				src/_utils_display.c
+				src/_utils_display.c \
+				src/_quote.c
 				
 OBJ			=	$(SRC:.c=.o)
 
