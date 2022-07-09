@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 23:46:13 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/09 23:52:21 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	tokenizer(char *line, t_toklst *toklst)
 	pretok = tmp;
 	free_strlst(&pretok);
 	display_toklst(toklst);
+	// 여기 문제를 해결해야합니다...
 	return;
 }
 
