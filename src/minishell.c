@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 14:31:02 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/09 23:44:53 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(void)
 			// executor(toklst);
 			free(line);
 			line = NULL;
+			// free_toklst(&toklst);
 		}
 		else // ctrl + d
 		{

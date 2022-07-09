@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 14:52:30 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/09 23:46:13 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,15 @@ void	tok_to_lst(t_token **pretok, t_toklst *new);
 void	tokenizer(char *line, t_toklst *toklst)
 {
 	t_token		*pretok;
+	t_token		*tmp;
 	t_toklst	*new;
 
 	pretok = split_tok(line, " |<>");
-	// 여기서 전체적으로 quote 자르기
+	trim_pretok(pretok);
+	// if (!check_pipe(pretok))
+	// 	return ;
+	// display_strlst(pretok);
+	tmp = pretok;
 	while (pretok)
 	{
 		if (pretok->str[0] != '|')
@@ -35,36 +40,35 @@ void	tokenizer(char *line, t_toklst *toklst)
 		pretok = pretok->next;
 	}
 	display_toklst(toklst);
-	//free_all(pretok);
-	//pretok = NULL;
+	pretok = tmp;
+	free_strlst(&pretok);
+	display_toklst(toklst);
 	return;
 }
 
 void	tok_to_lst(t_token **pretok, t_toklst *new)
 {
 	char	*tmp;
-	
-	tmp = NULL;
+
 	while ((*pretok) && (*pretok)->str[0] != '|')
 	{
-		if ((*pretok)->str[0] == '<' || (*pretok)->str[0] == '>')
+		tmp = (*pretok)->str;
+		if (tmp[0] == '<' || tmp[0] == '>')
 		{
-			tmp = trim_quote((*pretok)->next->str);
-			if ((*pretok)->str[1] == '<')
-				add_to_strlst(&(new->heredoc), init_token(tmp));
-			else if ((*pretok)->str[1] == '>')
-				add_to_strlst(&(new->append), init_token(tmp)); 
-			else if ((*pretok)->str[0] == '<')
-				add_to_strlst(&(new->infile), init_token(tmp)); 
-			else if ((*pretok)->str[0] == '>')
-				add_to_strlst(&(new->outfile), init_token(tmp)); 
 			(*pretok) = (*pretok)->next;
+			if (tmp[1] == '<')
+				add_to_strlst(&(new->heredoc), init_strlst((*pretok)->str)); 
+			else if (tmp[1] == '>')
+				add_to_strlst(&(new->append), init_strlst((*pretok)->str)); 
+			else if (tmp[0] == '<')
+				add_to_strlst(&(new->infile), init_strlst((*pretok)->str)); 
+			else if (tmp[0] == '>')
+				add_to_strlst(&(new->outfile), init_strlst((*pretok)->str)); 
 		}
 		else
 		{
-			tmp = trim_quote((*pretok)->str);
-			add_to_strlst(&(new->cmd), init_token(tmp)); 
+			add_to_strlst(&(new->cmd), init_strlst((*pretok)->str));
+			(*pretok) = (*pretok)->next;
 		}
-		(*pretok) = (*pretok)->next;
 	}
 }

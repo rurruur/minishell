@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 14:43:57 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/09 23:43:30 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ enum e_flag
 typedef struct s_token
 {
 	char			*str;
-	int				size;
 	enum e_flag		type;
 	struct s_token	*next;
 } 					t_token;
@@ -63,9 +62,8 @@ void		h_sigint(int signum);
 void		h_sigquit(int signum);
 
 // _check.c
-int			check_main(char *line);
 int			check_quote(char *line);
-int			check_pipe(char *line);
+int			check_pipe(t_token *pretok);
 int			check_redir(char *line);
 
 // _token01.c
@@ -77,14 +75,19 @@ t_token		*split_tok(char *line, char *delim);
 void		skip_delim(char **line, char *delim, t_token **strlst);
 char		*make_strs(char **line, char *delim);
 
-// _lst.c
-t_token		*init_token(char *content);
+// _lst01.c
+t_token		*init_strlst(char *content);
 void		add_to_strlst(t_token **strlst, t_token *new);
+void		free_strlst(t_token **strlst);
+
+// _lst02.c
 t_toklst	*init_toklst(void);
 void		add_to_toklst(t_toklst **toklst, t_toklst *new);
+void		free_toklst(t_toklst **toklst);
 
 // _quote.c
-char		*trim_quote(char *str);
+void		trim_pretok(t_token *pretok);
+char		*trim_quote(char *str, int *quote);
 int			check_len(char *str);
 
 // _utils.c

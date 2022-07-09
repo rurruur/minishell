@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 14:46:54 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/09 23:12:11 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 // line에 대한 체크 -> quote
 // strlst에 대한 체크 -> pipe, reidir
 
-int			check_main(char *line);
 int			check_quote(char *line);
-int			check_pipe(char *line);
+int			check_pipe(t_token *pretok);
 int			check_redir(char *line);
 
 int	check_quote(char *line)
@@ -41,4 +40,21 @@ int	check_quote(char *line)
 		line++;
 	}
 	return (sq_flag + dq_flag > 0); // flag가 -1이면 quote가 안닫혔다는 의미
+}
+
+int	check_pipe(t_token *pretok)
+{
+	int	check;
+
+	check = 1;
+	if (pretok && pretok->str[0] == '|' && !pretok->next)
+		check = 0;
+	while (pretok)
+	{	
+		
+		pretok = pretok->next;
+	}
+	if (!check)
+		err_msg("pipe");
+	return (check);
 }

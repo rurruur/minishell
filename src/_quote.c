@@ -6,23 +6,50 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:58:07 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 14:44:27 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/09 22:01:05 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*trim_quote(char *str);
+void	trim_pretok(t_token *pretok);
+char	*trim_quote(char *str, int *quote);
 int		check_len(char *str);
 
-char	*trim_quote(char *str)
+void	trim_pretok(t_token *pretok)
 {
+	char	*new;
+	char	*tmp;
+	int		quote;
+
+	while (pretok)
+	{
+		quote = 0;
+		tmp = pretok->str;
+		new = trim_quote(pretok->str, &quote);
+		if (quote == 1)
+		{
+			pretok->str = new;
+			free(tmp);
+		}
+		tmp = NULL;
+		pretok = pretok->next;
+	}
+}
+
+char	*trim_quote(char *str, int *quote)
+{
+	int		old_len;
 	int		new_len;
 	int		idx;
 	char	*new;
 
+	old_len = ft_strlen(str);
 	new_len = check_len(str);
+	if (old_len == new_len)
+		return (str);
 	idx = 0;
+	*quote = 1;
 	new = (char	*)malloc((new_len + 1) * sizeof(char));
 	while (idx < new_len)
 	{
