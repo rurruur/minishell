@@ -19,13 +19,12 @@ LIBS		=	$(addprefix $(LIB_DIR), $(LIB_NAME))
 
 SRC			=	src/minishell.c \
 				src/_signal.c \
-				src/_parser.c \
-				src/_tk_pretok.c \
-				src/_tk_token.c \
-				src/_tk_toklst.c \
+				src/_token01.c \
+				src/_token02.c \
+				src/_lst.c \
+				src/_quote.c \
 				src/_utils.c \
-				src/_utils_display.c \
-				src/_quote.c
+				src/__display.c 
 				
 OBJ			=	$(SRC:.c=.o)
 
