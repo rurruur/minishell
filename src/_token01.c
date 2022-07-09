@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 14:17:14 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/09 14:52:30 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,8 @@ void	tokenizer(char *line, t_toklst *toklst)
 	t_token		*pretok;
 	t_toklst	*new;
 
-	if (!check_quote(line))
-		err_msg("quote");
-	pretok = tok_split(line, " |<>");
+	pretok = split_tok(line, " |<>");
+	// 여기서 전체적으로 quote 자르기
 	while (pretok)
 	{
 		if (pretok->str[0] != '|')
@@ -48,21 +47,16 @@ void	tok_to_lst(t_token **pretok, t_toklst *new)
 	tmp = NULL;
 	while ((*pretok) && (*pretok)->str[0] != '|')
 	{
-		if ((*pretok)->str[0] == '<')
+		if ((*pretok)->str[0] == '<' || (*pretok)->str[0] == '>')
 		{
 			tmp = trim_quote((*pretok)->next->str);
 			if ((*pretok)->str[1] == '<')
-				add_to_strlst(&(new->heredoc), init_token(tmp)); 
-			else
-				add_to_strlst(&(new->infile), init_token(tmp)); 
-			(*pretok) = (*pretok)->next;
-		}
-		else if ((*pretok)->str[0] == '>')
-		{
-			tmp = trim_quote((*pretok)->next->str);
-			if ((*pretok)->str[1] == '>')
+				add_to_strlst(&(new->heredoc), init_token(tmp));
+			else if ((*pretok)->str[1] == '>')
 				add_to_strlst(&(new->append), init_token(tmp)); 
-			else
+			else if ((*pretok)->str[0] == '<')
+				add_to_strlst(&(new->infile), init_token(tmp)); 
+			else if ((*pretok)->str[0] == '>')
 				add_to_strlst(&(new->outfile), init_token(tmp)); 
 			(*pretok) = (*pretok)->next;
 		}

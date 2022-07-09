@@ -1,43 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _utils_quote.c                                     :+:      :+:    :+:   */
+/*   _quote.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:58:07 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 14:14:09 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/09 14:44:27 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		check_quote(char *line);
 char	*trim_quote(char *str);
 int		check_len(char *str);
-
-int	check_quote(char *line)
-{
-	int	sq_flag;	// single quote flag
-	int	dq_flag;	// double quote flag
-
-	sq_flag = 1;
-	dq_flag = 1;
-	while (*line)
-	{
-		if (ft_strncmp(line, "\\'", 2) == 0 || ft_strncmp(line, "\\\"", 2) == 0)
-		{
-			line += 2;
-			continue ;
-		}
-		if (dq_flag > 0 && *line == '\'')
-			sq_flag = -sq_flag;
-		if (sq_flag > 0 && *line == '"')
-			dq_flag = -dq_flag;
-		line++;
-	}
-	return (sq_flag + dq_flag > 0); // flag가 -1이면 quote가 안닫혔다는 의미
-}
 
 char	*trim_quote(char *str)
 {

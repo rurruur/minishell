@@ -19,6 +19,7 @@ LIBS		=	$(addprefix $(LIB_DIR), $(LIB_NAME))
 
 SRC			=	src/minishell.c \
 				src/_signal.c \
+				src/_check.c \
 				src/_token01.c \
 				src/_token02.c \
 				src/_lst.c \
