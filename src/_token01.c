@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/10 22:47:55 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/10 23:02:12 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	tok_to_lst(t_token **pretok, t_toklst *new)
 	while ((*pretok) && (*pretok)->str[0] != '|')
 	{
 		type = (*pretok)->type;
-		if (type != OFF)
+		if (type > OFF)
 		{
 			lst_to_lst(pretok, &(new->rdr));
 			if (type == RDR_IN)
