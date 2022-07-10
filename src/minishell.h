@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/10 23:07:37 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/10 23:23:35 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # include "../libft/libft.h"
 
-# define PRMPT "( ´Д`)> "
+# define PRMPT "\033[0;33m( ´Д`)>\033[0;37m "
 # define QUOTE "'\""
 # define STR_DQ "\""
 # define STR_SQ "\'"
