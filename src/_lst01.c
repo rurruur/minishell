@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 23:33:12 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/10 20:59:17 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 t_token		*init_strlst(char *content);
 void		add_to_strlst(t_token **strlst, t_token *new);
+void		lst_to_lst(t_token **old, t_token **new);
 void		free_strlst(t_token **strlst);
 
 t_token		*init_strlst(char *content)
@@ -44,6 +45,16 @@ void		add_to_strlst(t_token **strlst, t_token *new)
 		*strlst = tmp;
 	}
 	// (*strlst)->size++;
+}
+
+void		lst_to_lst(t_token **old, t_token **new)
+{
+	t_token	*tmp;
+
+	tmp = (*old);
+	(*old) = (*old)->next;
+	tmp->next = NULL;
+	add_to_strlst(new, tmp);
 }
 
 void	free_strlst(t_token **strlst)

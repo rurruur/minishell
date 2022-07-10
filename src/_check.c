@@ -6,18 +6,15 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 23:12:11 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/10 22:46:57 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// line에 대한 체크 -> quote
-// strlst에 대한 체크 -> pipe, reidir
-
 int			check_quote(char *line);
-int			check_pipe(t_token *pretok);
-int			check_redir(char *line);
+int			check_pretok(t_token *pretok);
+void		check_type(t_token *pretok);
 
 int	check_quote(char *line)
 {
@@ -42,19 +39,44 @@ int	check_quote(char *line)
 	return (sq_flag + dq_flag > 0); // flag가 -1이면 quote가 안닫혔다는 의미
 }
 
-int	check_pipe(t_token *pretok)
+int			check_pretok(t_token *pretok)
 {
-	int	check;
-
-	check = 1;
-	if (pretok && pretok->str[0] == '|' && !pretok->next)
-		check = 0;
-	while (pretok)
+	int flag;
+	
+	flag = 1;
+	check_type(pretok);
+	if (pretok->type == PIPE)
+		flag = 0;
+	while (pretok && flag == 1)
 	{	
-		
+		if (pretok->type != OFF && pretok->next && pretok->next->type != OFF)
+			flag = 0;
 		pretok = pretok->next;
 	}
-	if (!check)
-		err_msg("pipe");
-	return (check);
+	if (flag == 0)
+		err_msg("pipe or RDR");
+	return (flag);
+}
+
+void	check_type(t_token *pretok)
+{
+	char	*str;
+
+	while (pretok)
+	{
+		str = pretok->str;
+		if (!ft_strncmp(str, ">", ft_strlen(str)))
+			pretok->type = RDR_IN;
+		else if (!ft_strncmp(str, ">>", ft_strlen(str)))
+			pretok->type = RDR_HD;
+		else if (!ft_strncmp(str, "<", ft_strlen(str)))
+			pretok->type = RDR_OUT;
+		else if (!ft_strncmp(str, "<<", ft_strlen(str)))
+			pretok->type = RDR_AP;
+		else if (!ft_strncmp(str, "|", ft_strlen(str)))
+			pretok->type = PIPE;
+		else
+			pretok->type = OFF;
+		pretok = pretok->next;
+	}
 }

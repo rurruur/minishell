@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 23:43:30 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/10 22:47:02 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,19 @@
 # define QUOTE "'\""
 # define STR_DQ "\""
 # define STR_SQ "\'"
-# define RDR "<>"
+// # define RDR "<>"
 
 # define CLOSED -1
 # define OPEN 1
 
 enum e_flag
 {
-	OFF		// = 0
+	OFF,
+	RDR_IN,
+	RDR_HD,
+	RDR_OUT,
+	RDR_AP,
+	PIPE
 };
 
 // parser가 executor에게 주는 선물은 다음과 같습니다...
@@ -47,9 +52,10 @@ typedef struct s_token
 typedef struct s_toklst
 {
 	t_token			*cmd;		//	cmd와 뒤에 오는 str들
+	t_token			*rdr;
 	t_token			*infile;	//	< : infile name
-	t_token			*outfile;	//	> : outfile name
 	t_token			*heredoc;	//	<< : here_doc에 들어가는 str들
+	t_token			*outfile;	//	> : outfile name
 	t_token			*append;	//	>> : append 되어야할 file name
 	struct s_toklst	*next;
 } 					t_toklst;
@@ -63,8 +69,8 @@ void		h_sigquit(int signum);
 
 // _check.c
 int			check_quote(char *line);
-int			check_pipe(t_token *pretok);
-int			check_redir(char *line);
+int			check_pretok(t_token *pretok);
+void		check_type(t_token *pretok);
 
 // _token01.c
 void		tokenizer(char *line, t_toklst *toklst);
@@ -78,6 +84,7 @@ char		*make_strs(char **line, char *delim);
 // _lst01.c
 t_token		*init_strlst(char *content);
 void		add_to_strlst(t_token **strlst, t_token *new);
+void		lst_to_lst(t_token **old, t_token **new);
 void		free_strlst(t_token **strlst);
 
 // _lst02.c

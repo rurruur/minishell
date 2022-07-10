@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 23:44:53 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/10 21:03:51 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(void)
 				err_msg("quote");	// escape 처리는?
 			toklst = init_toklst();
 			tokenizer(line, toklst);
+			display_toklst(toklst);
 			// executor(toklst);
 			free(line);
 			line = NULL;

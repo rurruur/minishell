@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 23:35:29 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/10 20:55:57 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ t_toklst	*init_toklst(void)
 	if (!new)
 		err_msg("token list allocation");
 	new->cmd = NULL;
+	new->rdr = NULL;
 	new->infile = NULL;
-	new->outfile = NULL;
 	new->heredoc = NULL;
+	new->outfile = NULL;
 	new->append = NULL;
 	new->next = NULL;
 	return (new);
