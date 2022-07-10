@@ -1,0 +1,24 @@
+executor
+	- pipe()
+	- fork()
+
+child_process
+	set_redirection
+		set_file_redirection
+			- open()
+			- dup2()
+		- dup2()
+	get_valid_cmd_path
+		- ft_split()?
+		double_strjoin
+			- ft_strjoin()?
+		- cmd_path(리턴값) free
+		- path free
+	list_to_arr
+		- arr(리턴값) free
+		- malloc NULL check
+		- ft_strdup()
+	- execve()
+
+parent_process
+	- dup2()

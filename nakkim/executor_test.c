@@ -8,14 +8,17 @@
 # include "../libft/libft.h"
 # include <sys/stat.h>
 
-# define IN 0
-# define OUT 1
+enum e_rdr
+{
+	IN,
+	OUT
+};
 
 typedef struct s_token
 {
 	char			*str;
 	struct s_token	*next;
-} 					t_token;
+}	t_token;
 
 int	g_fd;
 
@@ -27,9 +30,9 @@ typedef struct s_toklst
 	t_token			*here_doc;	//	<< : here_doc에 들어가는 str들
 	t_token			*append;	//	>> : append 되어야할 file name
 	struct s_toklst	*next;
-} 					t_toklst;
+}	t_toklst;
 
-int		set_file_redirection(t_token *files, int mode);
+int		set_file_redirection(t_token *files, enum e_rdr mode);
 void	set_redirection(t_toklst *list, int *end);
 void	child_process(t_toklst *list, int *end, char **env);
 void	parent_process(pid_t child, int *end);
@@ -106,7 +109,7 @@ int	main(int argc, char **argv, char **env)
 }
 
 // in, out 나눠 말아...
-int	set_file_redirection(t_token *files, int mode)
+int	set_file_redirection(t_token *files, enum e_rdr mode)
 {
 	int	fd;
 	int	result;
@@ -137,7 +140,6 @@ int	set_file_redirection(t_token *files, int mode)
 
 void	set_redirection(t_toklst *list, int *end)
 {
-
 	// STDIN 설정
 	if (list->infile && !set_file_redirection(list->infile, IN))
 		perror("redirection error");
@@ -182,7 +184,7 @@ void	executor(t_toklst *list, char **env)
 {
 	int		end[2];
 	pid_t	child;
-	
+
 	while (list != NULL)
 	{
 		pipe(end);
@@ -239,7 +241,7 @@ char	*double_strjoin(char *start, char *middle, char *end)
 char	*get_valid_cmd_path(char *cmd)
 {
 	struct stat	stat_result;
-	char 		*cmd_path;
+	char		*cmd_path;
 	char		**path;
 	int			i;
 	
