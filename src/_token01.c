@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/10 23:02:12 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/10 23:15:12 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	tokenizer(char *line, t_toklst *toklst)
 	pretok = split_tok(line, " |<>");
 	trim_pretok(pretok);
 	if (!check_pretok(pretok))
-		return ;
 	// tmp = pretok;
 	while (pretok)
 	{

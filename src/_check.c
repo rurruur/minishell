@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/10 23:09:13 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/10 23:16:20 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int			check_pretok(t_token *pretok)
 	int flag;
 	
 	flag = 1;
+	if (!pretok)
+		return (0);
 	check_type(pretok);
 	if (pretok->type == PIPE)
 		flag = 0;
