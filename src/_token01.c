@@ -6,17 +6,17 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 22:49:25 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 23:28:26 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	tokenizer(char *line, t_toklst *toklst);
+int		tokenizer(char *line, t_toklst *toklst);
 void	del_empty_tok(t_token *pretok);
 void	tok_to_lst(t_token **pretok, t_toklst *new);
 
-void	tokenizer(char *line, t_toklst *toklst)
+int	tokenizer(char *line, t_toklst *toklst)
 {
 	t_token		*pretok;
 	t_toklst	*new;
@@ -25,7 +25,7 @@ void	tokenizer(char *line, t_toklst *toklst)
 	trim_pretok(pretok);				// _token03.c
 	del_empty_tok(pretok);
 	if (!pretok || !check_pretok(pretok))
-		return ;
+		return (0);
 	while (pretok)
 	{
 		if (pretok->type != T_PIPE)
@@ -40,7 +40,7 @@ void	tokenizer(char *line, t_toklst *toklst)
 	}
 	// free_strlst(&pretok);
 	pretok = NULL;
-	return;
+	return (1);
 }
 
 void	del_empty_tok(t_token *pretok)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 23:03:10 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/11 23:28:16 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			check_quote(char *line);
 int			check_pretok(t_token *pretok);
 
 // _token01.c
-void		tokenizer(char *line, t_toklst *toklst);
+int			tokenizer(char *line, t_toklst *toklst);
 void		del_empty_tok(t_token *pretok);
 void		tok_to_lst(t_token **pretok, t_toklst *new);
 

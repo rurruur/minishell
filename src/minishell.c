@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 23:05:16 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/11 23:28:55 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	main(int argc, char **argv, char **env)
 			else
 			{
 				toklst = init_toklst();
-				tokenizer(line, toklst);
+				if (tokenizer(line, toklst))
+					executor(toklst, env);
 				// display_toklst(toklst);
-				executor(toklst, env);
 			}
 			free(line);
 			line = NULL;
