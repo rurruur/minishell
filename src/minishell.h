@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 21:09:34 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 21:38:34 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,78 +22,87 @@
 
 # include "../libft/libft.h"
 
-# define PRMPT "( ´Д`)> "
+# define PRMPT "\033[0;33m( ´Д`)>\033[0;37m "
 # define QUOTE "'\""
-# define RDR "<>"
+# define STR_DQ "\""
+# define STR_SQ "\'"
+// # define RDR "<>"
 
-# define OFF 0
-# define ON 1
-# define IN 1
-# define OUT 2
-# define HD 3
-# define AP 4
+# define CLOSED -1
+# define OPEN 1
 
-typedef struct s_flag
+enum e_type
 {
-	int	cmd	;	//0, 1, 2
-	int	quote;	//0, 1, 2
-	int rdr;	//0, 1, 2, 3, 4
-} 		t_flag;
+	T_OFF,
+	T_RDR_IN,
+	T_RDR_HD,
+	T_RDR_OUT,
+	T_RDR_AP,
+	T_PIPE
+};
 
-typedef struct s_strlst
-{
-	char			*str;
-	struct s_strlst *next;
-} 	t_strlst;
-
-// parser가 executor에게 주는 선물은 다음과 같습니다...
 typedef struct s_token
 {
-	char		*cmd;		//	cmd일 것으로 예상되는 str
-	t_strlst	*param;	//	cmd 뒤에 오는 str들의 배열
-	int			rdr_in;		//	< 유무
-	t_strlst	**infile;	//	infile name
-	int			rdr_out;	//	> 유무
-	t_strlst	**outfile;	//	outfile name
-	int			here_doc;	//	>> 유무
-	t_strlst	**hd_str;	//	here_doc에 들어가는 str들
-	int			rdr_app;	//	>> 유무
-	t_strlst	**appfile;	//	append 되어야할 file name
-} 				t_token;
+	char			*str;
+	enum e_type		type;
+	struct s_token	*next;
+} 					t_token;
 
 typedef struct s_toklst
 {
-	t_token			node;	//	각 노드는 |를 기준으로 나누어져있습니다.
-	struct s_tklst	*next;
-} 	t_toklst;
-// char **의 경우 배열의 마지막은 NULL (ft_split처럼)
-// 여기까지가 parser로부터의 선물입니다.
-// thank you from executor
-
-// minishell.c
+	t_token			*cmd;		//	cmd와 뒤에 오는 str들
+	t_token			*rdr;
+	t_token			*infile;	//	< : infile name
+	t_token			*heredoc;	//	<< : here_doc에 들어가는 str들
+	t_token			*outfile;	//	> : outfile name
+	t_token			*append;	//	>> : append 되어야할 file name
+	struct s_toklst	*next;
+} 					t_toklst;
 
 // _signal.c
-void	h_sigint(int signum);
-void	h_sigquit(int signum);
+void		h_sigint(int signum);
+void		h_sigquit(int signum);
 
-// _parser.c
-void	parser_main(char *line, t_toklst *toklst);
-int		check_quote(char *line);
+// _check.c
+int			check_quote(char *line);
+int			check_pretok(t_token *pretok);
 
-// _tokenizer.c
-void	tokenizer(char *line);
-char	**tok_split(char const *s, char c);
-int		count_str(char const *s, char c);
-void	make_strs(char **strs, int idx, char **ptr, char c);
+// _token01.c
+void		tokenizer(char *line, t_toklst *toklst);
+void		del_empty_tok(t_token *pretok);
+void		tok_to_lst(t_token **pretok, t_toklst *new);
 
-// _token.c
-void	init_token(t_token *tok);
-void	tok_rdr(t_token *tok, int rdr_flag, char *content);
-void	tok_cmd(t_token *tok, int cmd_flag, char *content);
-void	add_token(t_toklst *toklst, t_token *tok);
+// _token02.c
+t_token		*split_tok(char *line, char *delim);
+void		parse_delim(char **line, char *delim, t_token **strlst);
+void		assort_delim(t_token **new, char **line, int flag);
+char		*make_strs(char **line, char *delim);
+
+// _token03.c
+void		trim_pretok(t_token *pretok);
+char		*trim_quote(char *str);
+int			check_len(char *str);
+
+// _lst01.c
+t_token		*init_strlst(char *content);
+void		add_to_strlst(t_token **strlst, t_token *new);
+void		del_from_strlst(t_token **strlst);
+void		lst_to_lst(t_token **old, t_token **new);
+void		free_strlst(t_token **strlst);
+
+// _lst02.c
+t_toklst	*init_toklst(void);
+void		add_to_toklst(t_toklst **toklst, t_toklst *new);
+void		free_toklst(t_toklst **toklst);
 
 // _utils.c
-void	free_all(char **str);
-void	err_msg(char *str);
+void		free_all(char **str);
+void		err_msg(char *str);
+char		*ft_strndup(char *str, int n);
+char		*msh_strjoin(char *s1, char *s2);
+
+// __display.c
+void		display_toklst(t_toklst *toklst);
+void		display_strlst(t_token *strlst);
 
 #endif

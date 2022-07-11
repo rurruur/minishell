@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 16:12:05 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 22:49:12 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,18 @@ int	main(void)
 		if (line)
 		{
 			add_history(line);
-			toklst = (t_toklst *)malloc(sizeof(t_toklst));
-			if (!toklst)
-				err_msg("allocation");
-			parser_main(line, toklst);
-			// executor(toklst);
-			// printf("%s%s\n", PRMPT, line);
+			if (!check_quote(line))	// 짝 안맞는 따옴표는 미리 거르기
+				err_msg("quote");	// escape 처리는?
+			else
+			{
+				toklst = init_toklst();
+				tokenizer(line, toklst);
+				// display_toklst(toklst);
+				// executor(toklst);
+			}
 			free(line);
 			line = NULL;
+			// free_toklst(&toklst);
 		}
 		else // ctrl + d
 		{

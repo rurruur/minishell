@@ -1,39 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _parser.c                                          :+:      :+:    :+:   */
+/*   _check.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/05 00:15:11 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/05 21:09:02 by jrim             ###   ########.fr       */
+/*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
+/*   Updated: 2022/07/11 15:47:04 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parser_main(char *line, t_toklst *toklst);
-int		check_quote(char *line);
-
-void	parser_main(char *line, t_toklst *toklst)
-{
-	char	**tokens;
-
-	if (!check_quote(line))
-		err_msg("quote");
-	tokens = tok_split(line, ' ');
-	for (int i = 0; tokens[i]; i++)
-		printf("%s\n", tokens[i]);
-	// while(*line)
-	// {
-	// 	// 일반 문자일 때 + escape 문자 error처리는 어떻게?
-	// 	line++;
-	// }
-	free_all(tokens);
-	tokens = NULL;
-	if (toklst)
-		return;
-}
+int	check_quote(char *line);
+int	check_pretok(t_token *pretok);
 
 int	check_quote(char *line)
 {
@@ -56,4 +36,22 @@ int	check_quote(char *line)
 		line++;
 	}
 	return (sq_flag + dq_flag > 0); // flag가 -1이면 quote가 안닫혔다는 의미
+}
+
+int	check_pretok(t_token *pretok)
+{
+	int flag;
+	
+	flag = 1;
+	if (pretok->type == T_PIPE)
+		flag = 0;
+	while (pretok && flag == 1)
+	{	
+		if (pretok->type != T_OFF && (!pretok->next || pretok->next->type != T_OFF))
+			flag = 0;
+		pretok = pretok->next;
+	}
+	if (flag == 0)
+		err_msg("pipe or RDR");
+	return (flag);
 }
