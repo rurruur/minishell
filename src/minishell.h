@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 15:26:14 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 15:42:58 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ t_token		*split_tok(char *line, char *delim);
 void		skip_delim(char **line, char *delim, t_token **strlst);
 char		*make_strs(char **line, char *delim);
 
+// _token03.c
+void		trim_pretok(t_token *pretok);
+char		*trim_quote(char *str, int *quote);
+int			check_len(char *str);
+
 // _lst01.c
 t_token		*init_strlst(char *content);
 void		add_to_strlst(t_token **strlst, t_token *new);
@@ -92,10 +97,6 @@ t_toklst	*init_toklst(void);
 void		add_to_toklst(t_toklst **toklst, t_toklst *new);
 void		free_toklst(t_toklst **toklst);
 
-// _quote.c
-void		trim_pretok(t_token *pretok);
-char		*trim_quote(char *str, int *quote);
-int			check_len(char *str);
 
 // _utils.c
 void		free_all(char **str);
