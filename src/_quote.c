@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:58:07 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 22:01:05 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 12:52:46 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ void	trim_pretok(t_token *pretok)
 {
 	char	*new;
 	char	*tmp;
+	t_token	*ptr;
 	int		quote;
 
+	ptr = pretok;
 	while (pretok)
 	{
 		quote = 0;
@@ -34,6 +36,14 @@ void	trim_pretok(t_token *pretok)
 		}
 		tmp = NULL;
 		pretok = pretok->next;
+	}
+	pretok = ptr;
+	while (pretok)
+	{
+		if (pretok->next && pretok->next->str[0] == '\0')
+			del_from_strlst(&pretok);
+		else
+			pretok = pretok->next;
 	}
 }
 

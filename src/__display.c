@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 18:56:57 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/10 23:19:45 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 12:59:55 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	display_strlst(t_token *strlst)
 		if (strlst->next)
 			printf(" | ");
 		else
-			printf("\n");
+			printf(" \033[0;33m.\033[0;37m\n");
 		strlst = strlst->next;
 	}
 }

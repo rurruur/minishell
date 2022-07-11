@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/10 21:03:51 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 12:58:11 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,13 @@ int	main(void)
 			add_history(line);
 			if (!check_quote(line))	// 짝 안맞는 따옴표는 미리 거르기
 				err_msg("quote");	// escape 처리는?
-			toklst = init_toklst();
-			tokenizer(line, toklst);
-			display_toklst(toklst);
-			// executor(toklst);
+			else
+			{
+				toklst = init_toklst();
+				tokenizer(line, toklst);
+				display_toklst(toklst);
+				// executor(toklst);
+			}
 			free(line);
 			line = NULL;
 			// free_toklst(&toklst);

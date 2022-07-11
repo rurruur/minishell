@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:16:27 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/09 23:34:53 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 12:48:31 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,43 @@ t_token	*split_tok(char *line, char *delim)
 
 void	skip_delim(char **line, char *delim, t_token **strlst)
 {
+	t_token	*new;
+
 	while (ft_strchr(delim, **line) && **line != '\0')
 	{
+		new = NULL;
 		if (**line == '|')
-			add_to_strlst(strlst, init_strlst("|"));
+		{
+			new = init_strlst(ft_strdup("|"));
+			new->type = PIPE;
+			add_to_strlst(strlst, new);
+		}
 		else if (ft_strncmp(*line, "<<", 2) == 0)
 		{
-			add_to_strlst(strlst, init_strlst("<<"));
+			new = init_strlst(ft_strdup("<<"));
+			new->type = RDR_HD;
+			add_to_strlst(strlst, new);
 			(*line)++;
 		}
 		else if (ft_strncmp(*line, ">>", 2) == 0)
 		{
-			add_to_strlst(strlst, init_strlst(">>"));
+			new = init_strlst(ft_strdup(">>"));
+			new->type = RDR_AP;
+			add_to_strlst(strlst, new);
 			(*line)++;
 		}
 		else if (**line == '<')
-			add_to_strlst(strlst, init_strlst("<"));
+		{
+			new = init_strlst(ft_strdup("<"));
+			new->type = RDR_IN;
+			add_to_strlst(strlst, new);
+		}
 		else if (**line == '>')
-			add_to_strlst(strlst, init_strlst(">"));
+		{
+			new = init_strlst(ft_strdup(">"));
+			new->type = RDR_OUT;
+			add_to_strlst(strlst, new);
+		}
 		(*line)++;
 	}
 }
@@ -64,10 +83,8 @@ char	*make_strs(char **line, char *delim)
 
 	len = 0;
 	if (**line != '"' && **line != '\'')
-	{
 		while (!ft_strchr(delim, (*line)[len]) && !ft_strchr(QUOTE, (*line)[len]) && (*line)[len] != '\0')
 			len++;
-	}
 	else
 	{
 		len++;

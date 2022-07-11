@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/10 20:59:17 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 12:54:43 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 t_token		*init_strlst(char *content);
 void		add_to_strlst(t_token **strlst, t_token *new);
+void		del_from_strlst(t_token **strlst);
 void		lst_to_lst(t_token **old, t_token **new);
 void		free_strlst(t_token **strlst);
 
@@ -30,7 +31,7 @@ t_token		*init_strlst(char *content)
 	return (new);
 }
 
-void		add_to_strlst(t_token **strlst, t_token *new)
+void	add_to_strlst(t_token **strlst, t_token *new)
 {
 	t_token *tmp;
 	
@@ -47,7 +48,18 @@ void		add_to_strlst(t_token **strlst, t_token *new)
 	// (*strlst)->size++;
 }
 
-void		lst_to_lst(t_token **old, t_token **new)
+void	del_from_strlst(t_token **strlst)
+{
+	t_token	*del;
+
+	del = (*strlst)->next;
+	(*strlst)->next = (*strlst)->next->next;
+	del->next = NULL;
+	free(del->str);
+	free(del);
+}
+
+void	lst_to_lst(t_token **old, t_token **new)
 {
 	t_token	*tmp;
 

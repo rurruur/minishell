@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/10 23:19:57 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 13:01:17 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int			check_quote(char *line);
 int			check_pretok(t_token *pretok);
-void		check_type(t_token *pretok);
+// void		check_type(t_token *pretok);
 
 int	check_quote(char *line)
 {
@@ -46,15 +46,12 @@ int			check_pretok(t_token *pretok)
 	flag = 1;
 	if (!pretok)
 		return (0);
-	check_type(pretok);
 	if (pretok->type == PIPE)
 		flag = 0;
 	while (pretok && flag == 1)
 	{	
-		if (pretok->type != OFF && pretok->next && pretok->next->type != OFF)
+		if (pretok->type != OFF && (!pretok->next || pretok->next->type != OFF))
 			flag = 0;
-		// if (pretok->next == NULL || pretok->next->type == PIPE)
-		// 	pretok->type = END;
 		pretok = pretok->next;
 	}
 	if (flag == 0)
@@ -62,25 +59,25 @@ int			check_pretok(t_token *pretok)
 	return (flag);
 }
 
-void	check_type(t_token *pretok)
-{
-	char	*str;
+// void	check_type(t_token *pretok)
+// {
+// 	char	*str;
 
-	while (pretok)
-	{
-		str = pretok->str;
-		if (!ft_strncmp(str, ">", ft_strlen(str)))
-			pretok->type = RDR_IN;
-		else if (!ft_strncmp(str, ">>", ft_strlen(str)))
-			pretok->type = RDR_HD;
-		else if (!ft_strncmp(str, "<", ft_strlen(str)))
-			pretok->type = RDR_OUT;
-		else if (!ft_strncmp(str, "<<", ft_strlen(str)))
-			pretok->type = RDR_AP;
-		else if (!ft_strncmp(str, "|", ft_strlen(str)))
-			pretok->type = PIPE;
-		else
-			pretok->type = OFF;
-		pretok = pretok->next;
-	}
-}
+// 	while (pretok)
+// 	{
+// 		str = pretok->str;
+// 		if (!ft_strncmp(str, ">", ft_strlen(str)))
+// 			pretok->type = RDR_IN;
+// 		else if (!ft_strncmp(str, ">>", ft_strlen(str)))
+// 			pretok->type = RDR_HD;
+// 		else if (!ft_strncmp(str, "<", ft_strlen(str)))
+// 			pretok->type = RDR_OUT;
+// 		else if (!ft_strncmp(str, "<<", ft_strlen(str)))
+// 			pretok->type = RDR_AP;
+// 		else if (!ft_strncmp(str, "|", ft_strlen(str)))
+// 			pretok->type = PIPE;
+// 		else
+// 			pretok->type = OFF;
+// 		pretok = pretok->next;
+// 	}
+// }
