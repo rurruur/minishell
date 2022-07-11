@@ -22,9 +22,9 @@ SRC			=	src/minishell.c \
 				src/_check.c \
 				src/_token01.c \
 				src/_token02.c \
+				src/_token03.c \
 				src/_lst01.c \
 				src/_lst02.c \
-				src/_quote.c \
 				src/_utils.c \
 				src/__display.c 
 				
