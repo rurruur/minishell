@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 23:28:55 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 23:57:59 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int	main(int argc, char **argv, char **env)
 			{
 				toklst = init_toklst();
 				if (tokenizer(line, toklst))
+				{
+					// display_toklst(toklst);
 					executor(toklst, env);
-				// display_toklst(toklst);
+				}
 			}
-			free(line);
-			line = NULL;
 			// free_toklst(&toklst);
 		}
 		else // ctrl + d
@@ -46,6 +46,7 @@ int	main(int argc, char **argv, char **env)
 			printf("\b\bctrl + d exit the shell\n");
 			break;
 		}
+		free(line);
 	}
 	return (0);
 }
