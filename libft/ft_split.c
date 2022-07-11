@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/14 21:16:48 by jrim              #+#    #+#             */
-/*   Updated: 2021/11/24 23:42:51 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 23:15:58 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		count_str(char const *s, char c);
-void	make_strs(char **strs, int idx, char **ptr, char c);
+int			count_str(char const *s, char c);
+static void	make_strs(char **strs, int idx, char **ptr, char c);
 
 char	**ft_split(char const *s, char c)
 {
