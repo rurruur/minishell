@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 15:42:58 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 21:38:34 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ enum e_type
 	T_PIPE
 };
 
-// parser가 executor에게 주는 선물은 다음과 같습니다...
 typedef struct s_token
 {
 	char			*str;
@@ -59,9 +58,6 @@ typedef struct s_toklst
 	t_token			*append;	//	>> : append 되어야할 file name
 	struct s_toklst	*next;
 } 					t_toklst;
-// char **의 경우 배열의 마지막은 NULL (ft_split처럼)
-// 여기까지가 parser로부터의 선물입니다.
-// thank you from executor
 
 // _signal.c
 void		h_sigint(int signum);
@@ -73,16 +69,18 @@ int			check_pretok(t_token *pretok);
 
 // _token01.c
 void		tokenizer(char *line, t_toklst *toklst);
+void		del_empty_tok(t_token *pretok);
 void		tok_to_lst(t_token **pretok, t_toklst *new);
 
 // _token02.c
 t_token		*split_tok(char *line, char *delim);
-void		skip_delim(char **line, char *delim, t_token **strlst);
+void		parse_delim(char **line, char *delim, t_token **strlst);
+void		assort_delim(t_token **new, char **line, int flag);
 char		*make_strs(char **line, char *delim);
 
 // _token03.c
 void		trim_pretok(t_token *pretok);
-char		*trim_quote(char *str, int *quote);
+char		*trim_quote(char *str);
 int			check_len(char *str);
 
 // _lst01.c
@@ -97,11 +95,11 @@ t_toklst	*init_toklst(void);
 void		add_to_toklst(t_toklst **toklst, t_toklst *new);
 void		free_toklst(t_toklst **toklst);
 
-
 // _utils.c
 void		free_all(char **str);
 void		err_msg(char *str);
 char		*ft_strndup(char *str, int n);
+char		*msh_strjoin(char *s1, char *s2);
 
 // __display.c
 void		display_toklst(t_toklst *toklst);

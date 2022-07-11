@@ -6,14 +6,15 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:16:27 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 18:16:45 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 21:47:31 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_token	*split_tok(char *line, char *delim);
-void	skip_delim(char **line, char *delim, t_token **strlst);
+void	parse_delim(char **line, char *delim, t_token **strlst);
+void	assort_delim(t_token **new, char **line, int flag);
 char	*make_strs(char **line, char *delim);
 
 t_token	*split_tok(char *line, char *delim)
@@ -24,56 +25,52 @@ t_token	*split_tok(char *line, char *delim)
 	strlst = NULL;
 	while (*line != '\0')
 	{
-		skip_delim(&line, delim, &strlst);
+		parse_delim(&line, delim, &strlst);
 		tmp = make_strs(&line, delim);
 		while (!ft_strchr(delim, *line))
-			tmp = ft_strjoin(tmp, make_strs(&line, delim)); // leak어쩔건데
+			tmp = msh_strjoin(tmp, make_strs(&line, delim));
 		add_to_strlst(&strlst, init_strlst(tmp));
 	}
 	return (strlst);
 }
 
-void	skip_delim(char **line, char *delim, t_token **strlst)
+void	parse_delim(char **line, char *delim, t_token **strlst)
 {
 	t_token	*new;
 
 	while (ft_strchr(delim, **line) && **line != '\0')
 	{
 		new = NULL;
-		if (**line == '|')
-		{
-			new = init_strlst(ft_strdup("|"));
-			new->type = T_PIPE;
+		if (!ft_strncmp(*line, "<<", 2) || !ft_strncmp(*line, ">>", 2))
+			assort_delim(&new, line, 2);
+		else if (ft_strchr("|<>", **line))
+			assort_delim(&new, line, 1);
+		if (new)
 			add_to_strlst(strlst, new);
-		}
-		else if (ft_strncmp(*line, "<<", 2) == 0)
-		{
-			new = init_strlst(ft_strdup("<<"));
-			new->type = T_RDR_HD;
-			add_to_strlst(strlst, new);
-			(*line)++;
-		}
-		else if (ft_strncmp(*line, ">>", 2) == 0)
-		{
-			new = init_strlst(ft_strdup(">>"));
-			new->type = T_RDR_AP;
-			add_to_strlst(strlst, new);
-			(*line)++;
-		}
-		else if (**line == '<')
-		{
-			new = init_strlst(ft_strdup("<"));
-			new->type = T_RDR_IN;
-			add_to_strlst(strlst, new);
-		}
-		else if (**line == '>')
-		{
-			new = init_strlst(ft_strdup(">"));
-			new->type = T_RDR_OUT;
-			add_to_strlst(strlst, new);
-		}
 		(*line)++;
 	}
+}
+
+void	assort_delim(t_token **new, char **line, int flag)
+{
+	(*new) = init_strlst(ft_strndup(*line, flag));
+	if (flag == 2)	// << or >>
+	{
+		if (**line == '<')
+			(*new)->type = T_RDR_HD;
+		else if (**line == '>')
+			(*new)->type = T_RDR_AP;
+		(*line)++;
+	}
+	else			// < or > or |
+	{
+		if (flag == 1 && **line == '<')
+			(*new)->type = T_RDR_IN;
+		else if (flag == 1 && **line == '>')
+			(*new)->type = T_RDR_OUT;
+		else if (flag == 1 && **line == '|')
+			(*new)->type = T_PIPE;
+	}	
 }
 
 char	*make_strs(char **line, char *delim)

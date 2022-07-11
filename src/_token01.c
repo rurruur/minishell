@@ -6,31 +6,26 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 17:54:42 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 22:49:25 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	tokenizer(char *line, t_toklst *toklst);
+void	del_empty_tok(t_token *pretok);
 void	tok_to_lst(t_token **pretok, t_toklst *new);
 
 void	tokenizer(char *line, t_toklst *toklst)
 {
 	t_token		*pretok;
-	// t_token		*tmp;
 	t_toklst	*new;
 
-	pretok = NULL;
-	pretok = split_tok(line, " |<>");
-	display_strlst(pretok);
-	trim_pretok(pretok);
-	display_strlst(pretok);
-	if (!pretok)
+	pretok = split_tok(line, " |<>");	// _token02.c
+	trim_pretok(pretok);				// _token03.c
+	del_empty_tok(pretok);
+	if (!pretok || !check_pretok(pretok))
 		return ;
-	if (!check_pretok(pretok))
-		return ;
-	// tmp = pretok;
 	while (pretok)
 	{
 		if (pretok->type != T_PIPE)
@@ -43,9 +38,20 @@ void	tokenizer(char *line, t_toklst *toklst)
 		}
 		pretok = pretok->next;
 	}
-	// pretok = tmp;
 	// free_strlst(&pretok);
+	pretok = NULL;
 	return;
+}
+
+void	del_empty_tok(t_token *pretok)
+{
+	while (pretok)
+	{
+		if (pretok->next && pretok->next->str[0] == '\0')
+			del_from_strlst(&pretok);
+		else
+			pretok = pretok->next;
+	}
 }
 
 void	tok_to_lst(t_token **pretok, t_toklst *new)
@@ -55,7 +61,7 @@ void	tok_to_lst(t_token **pretok, t_toklst *new)
 	while ((*pretok) && (*pretok)->type != T_PIPE)
 	{
 		type = (*pretok)->type;
-		if (type > T_OFF)
+		if ((*pretok)->type > T_OFF)
 		{
 			lst_to_lst(pretok, &(new->rdr));
 			if (type == T_RDR_IN)
