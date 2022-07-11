@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 22:49:12 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 23:05:16 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+int	main(int argc, char **argv, char **env)
 {
 	char		*line;
 	t_toklst	*toklst;
+
+	(void)argc;
+	(void)argv;
 
 	signal(SIGINT, h_sigint);      // ctrl + c
 	signal(SIGQUIT, h_sigquit);    // ctrl + '\'
@@ -32,7 +35,7 @@ int	main(void)
 				toklst = init_toklst();
 				tokenizer(line, toklst);
 				// display_toklst(toklst);
-				// executor(toklst);
+				executor(toklst, env);
 			}
 			free(line);
 			line = NULL;

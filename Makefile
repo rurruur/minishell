@@ -26,7 +26,8 @@ SRC			=	src/minishell.c \
 				src/_lst01.c \
 				src/_lst02.c \
 				src/_utils.c \
-				src/__display.c 
+				src/__display.c \
+				src/executor.c
 				
 OBJ			=	$(SRC:.c=.o)
 
