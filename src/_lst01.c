@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 12:54:43 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 14:45:42 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_token		*init_strlst(char *content)
 	if (!new)
 		err_msg("token allocation");
 	new->str = content;
-	new->type = OFF;
+	new->type = T_OFF;
 	new->next = NULL;
 	return (new);
 }

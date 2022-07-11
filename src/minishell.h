@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 12:51:46 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 15:26:14 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,21 @@
 # define CLOSED -1
 # define OPEN 1
 
-enum e_flag
+enum e_type
 {
-	END = -1,
-	OFF,
-	RDR_IN,
-	RDR_HD,
-	RDR_OUT,
-	RDR_AP,
-	PIPE
+	T_OFF,
+	T_RDR_IN,
+	T_RDR_HD,
+	T_RDR_OUT,
+	T_RDR_AP,
+	T_PIPE
 };
 
 // parser가 executor에게 주는 선물은 다음과 같습니다...
 typedef struct s_token
 {
 	char			*str;
-	enum e_flag		type;
+	enum e_type		type;
 	struct s_token	*next;
 } 					t_token;
 
@@ -71,7 +70,6 @@ void		h_sigquit(int signum);
 // _check.c
 int			check_quote(char *line);
 int			check_pretok(t_token *pretok);
-void		check_type(t_token *pretok);
 
 // _token01.c
 void		tokenizer(char *line, t_toklst *toklst);

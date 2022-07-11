@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:16:27 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 12:48:31 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/11 15:25:05 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_token	*split_tok(char *line, char *delim)
 		skip_delim(&line, delim, &strlst);
 		tmp = make_strs(&line, delim);
 		while (!ft_strchr(delim, *line))
-			tmp = ft_strjoin(tmp, make_strs(&line, delim));
+			tmp = ft_strjoin(tmp, make_strs(&line, delim)); // leak어쩔건데
 		add_to_strlst(&strlst, init_strlst(tmp));
 	}
 	return (strlst);
@@ -43,33 +43,33 @@ void	skip_delim(char **line, char *delim, t_token **strlst)
 		if (**line == '|')
 		{
 			new = init_strlst(ft_strdup("|"));
-			new->type = PIPE;
+			new->type = T_PIPE;
 			add_to_strlst(strlst, new);
 		}
 		else if (ft_strncmp(*line, "<<", 2) == 0)
 		{
 			new = init_strlst(ft_strdup("<<"));
-			new->type = RDR_HD;
+			new->type = T_RDR_HD;
 			add_to_strlst(strlst, new);
 			(*line)++;
 		}
 		else if (ft_strncmp(*line, ">>", 2) == 0)
 		{
 			new = init_strlst(ft_strdup(">>"));
-			new->type = RDR_AP;
+			new->type = T_RDR_AP;
 			add_to_strlst(strlst, new);
 			(*line)++;
 		}
 		else if (**line == '<')
 		{
 			new = init_strlst(ft_strdup("<"));
-			new->type = RDR_IN;
+			new->type = T_RDR_IN;
 			add_to_strlst(strlst, new);
 		}
 		else if (**line == '>')
 		{
 			new = init_strlst(ft_strdup(">"));
-			new->type = RDR_OUT;
+			new->type = T_RDR_OUT;
 			add_to_strlst(strlst, new);
 		}
 		(*line)++;
