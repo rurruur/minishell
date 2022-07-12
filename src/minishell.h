@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 21:38:34 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/12 23:36:53 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 # define STR_SQ "\'"
 // # define RDR "<>"
 
-# define CLOSED -1
-# define OPEN 1
+# define CLOSED 1
+# define OPEN -1
 
 enum e_type
 {
@@ -76,12 +76,12 @@ void		tok_to_lst(t_token **pretok, t_toklst *new);
 t_token		*split_tok(char *line, char *delim);
 void		parse_delim(char **line, char *delim, t_token **strlst);
 void		assort_delim(t_token **new, char **line, int flag);
-char		*make_strs(char **line, char *delim);
+char		*make_tok(char **line, char *delim);
 
 // _token03.c
 void		trim_pretok(t_token *pretok);
 char		*trim_quote(char *str);
-int			check_len(char *str);
+int			cnt_trimmed_len(char *str);
 
 // _lst01.c
 t_token		*init_strlst(char *content);

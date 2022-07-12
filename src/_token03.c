@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:58:07 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 19:02:31 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/12 23:50:41 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	trim_pretok(t_token *pretok);
 char	*trim_quote(char *str);
-int		check_len(char *str);
+int		cnt_trimmed_len(char *str);
 
 void	trim_pretok(t_token *pretok)
 {
@@ -41,7 +41,7 @@ char	*trim_quote(char *str)
 	int		idx;
 	char	*new_str;
 
-	new_len = check_len(str);
+	new_len = cnt_trimmed_len(str);
 	if (new_len == (int)ft_strlen(str))
 		return (NULL);
 	idx = 0;
@@ -58,7 +58,7 @@ char	*trim_quote(char *str)
 	return (new_str);
 }
 
-int		check_len(char *str)
+int		cnt_trimmed_len(char *str)
 {
 	int	len;
 	int	dq;
@@ -71,51 +71,32 @@ int		check_len(char *str)
 	{
 		if (*str == '"')
 		{
-			if (dq == CLOSED && sq == CLOSED)
+			if (dq == OPEN || (dq == CLOSED && sq == CLOSED))
 			{
-				dq = OPEN;
+				dq = -dq;
 				*str = '\0';
 			}
-			else if (dq == OPEN)
-			{
-				dq = CLOSED;
-				*str = '\0';
-			}
-			else if (sq == OPEN)
-				len++;
-			else 
+			else	// sq == OPEN
 				len++;
 		}
 		else if (*str == '\'')
 		{
-			if (dq == CLOSED && sq == CLOSED)
+			if (sq == OPEN || (dq == CLOSED && sq == CLOSED))
 			{
-				sq = OPEN;
+				sq = -sq;
 				*str = '\0';
 			}
-			else if (sq == OPEN)
-			{
-				sq = CLOSED;
-				*str = '\0';
-			}
-			else if (dq == OPEN)
-				len++;
-			else 
+			else	// dq == OPEN
 				len++;
 		}
 		else if (*str == '\\')
 		{
 			if (dq == OPEN || sq == OPEN)
-			{
-				str++;
-				len += 2;
-			}
-			else
-			{
-				*str = '\0';
-				str++;
 				len++;
-			}
+			else
+				*str = '\0';
+			len++;
+			str++;
 		}
 		else
 			len++;

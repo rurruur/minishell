@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 22:49:12 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/12 23:13:42 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(void)
 			{
 				toklst = init_toklst();
 				tokenizer(line, toklst);
-				// display_toklst(toklst);
+				display_toklst(toklst);
 				// executor(toklst);
 			}
 			free(line);
