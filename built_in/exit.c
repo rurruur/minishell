@@ -6,8 +6,15 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:39 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/13 18:36:47 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/13 18:56:02 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../src/minishell.h"
+
+// $? : return value of previous command
+
+void	msh_exit()
+{
+	
+}
