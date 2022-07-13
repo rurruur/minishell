@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/13 21:22:43 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/14 00:27:58 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,17 @@ t_token		*init_strlst(char *content);
 void		add_to_strlst(t_token **strlst, t_token *new);
 void		del_from_strlst(t_token **strlst);
 void		lst_to_lst(t_token **old, t_token **new);
-void		free_strlst(t_token **strlst);
 
 // _lst02.c
 t_toklst	*init_toklst(void);
 void		add_to_toklst(t_toklst **toklst, t_toklst *new);
+
+// _free.c
+void		free_strarr(char **str);
+void		free_strlst(t_token **strlst);
 void		free_toklst(t_toklst **toklst);
 
 // _utils.c
-void		free_all(char **str);
 void		err_msg(char *str);
 char		*ft_strndup(char *str, int n);
 char		*msh_strjoin(char *s1, char *s2);
@@ -116,15 +118,15 @@ void		display_toklst(t_toklst *toklst);
 void		display_strlst(t_token *strlst);
 
 // executor.c
-int		set_file_redirection(t_token *files, enum e_rdr mode);
-void	set_redirection(t_toklst *list, int *end);
-void	child_process(t_toklst *list, int *end, char **env);
-void	parent_process(pid_t child, int *end);
-void	executor(t_toklst *list, char **env);
-int		get_cmd_count(t_token *cmds);
-char	**list_to_arr(t_token *cmds);
-char	*double_strjoin(char *start, char *middle, char *end);
-char	*get_valid_cmd_path(char *cmd);
+int			set_file_redirection(t_token *files, enum e_rdr mode);
+void		set_redirection(t_toklst *list, int *end);
+void		child_process(t_toklst *list, int *end, char **env);
+void		parent_process(pid_t child, int *end);
+void		executor(t_toklst *list, char **env);
+int			get_cmd_count(t_token *cmds);
+char		**list_to_arr(t_token *cmds);
+char		*double_strjoin(char *start, char *middle, char *end);
+char		*get_valid_cmd_path(char *cmd);
 
 // built-in functions
 void		builtin_main(char *cmd, t_token *argv);
