@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:58:07 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 19:02:31 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/13 19:32:27 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	trim_pretok(t_token *pretok);
 char	*trim_quote(char *str);
-int		check_len(char *str);
+int		cnt_trimmed_len(char *str);
+void	del_quote_or_escape(char **str, int *q1, int *q2, int *len);
 
 void	trim_pretok(t_token *pretok)
 {
@@ -41,11 +42,11 @@ char	*trim_quote(char *str)
 	int		idx;
 	char	*new_str;
 
-	new_len = check_len(str);
+	new_len = cnt_trimmed_len(str);
 	if (new_len == (int)ft_strlen(str))
 		return (NULL);
 	idx = 0;
-	new_str = (char	*)malloc((new_len + 1) * sizeof(char));
+	new_str = (char *)malloc((new_len + 1) * sizeof(char));
 	if (!new_str)
 		err_msg("allocation");
 	while (idx < new_len)
@@ -58,7 +59,7 @@ char	*trim_quote(char *str)
 	return (new_str);
 }
 
-int		check_len(char *str)
+int	cnt_trimmed_len(char *str)
 {
 	int	len;
 	int	dq;
@@ -70,56 +71,35 @@ int		check_len(char *str)
 	while (*str)
 	{
 		if (*str == '"')
-		{
-			if (dq == CLOSED && sq == CLOSED)
-			{
-				dq = OPEN;
-				*str = '\0';
-			}
-			else if (dq == OPEN)
-			{
-				dq = CLOSED;
-				*str = '\0';
-			}
-			else if (sq == OPEN)
-				len++;
-			else 
-				len++;
-		}
+			del_quote_or_escape(&str, &dq, &sq, &len);
 		else if (*str == '\'')
-		{
-			if (dq == CLOSED && sq == CLOSED)
-			{
-				sq = OPEN;
-				*str = '\0';
-			}
-			else if (sq == OPEN)
-			{
-				sq = CLOSED;
-				*str = '\0';
-			}
-			else if (dq == OPEN)
-				len++;
-			else 
-				len++;
-		}
+			del_quote_or_escape(&str, &sq, &dq, &len);
 		else if (*str == '\\')
-		{
-			if (dq == OPEN || sq == OPEN)
-			{
-				str++;
-				len += 2;
-			}
-			else
-			{
-				*str = '\0';
-				str++;
-				len++;
-			}
-		}
+			del_quote_or_escape(&str, &dq, &sq, &len);
 		else
 			len++;
 		str++;
 	}
 	return (len);
+}
+
+void	del_quote_or_escape(char **str, int *q1, int *q2, int *len)
+{
+	if (**str == '\\')
+	{
+		if (*q1 == OPEN || *q2 == OPEN)
+				(*len)++;
+		else
+			(**str) = '\0';
+		(*len)++;
+		(*str)++;
+		return ;
+	}
+	if (*q1 == OPEN || (*q1 == CLOSED && *q2 == CLOSED))
+	{
+		(*q1) = -(*q1);
+		(**str) = '\0';
+	}
+	else	// *q2 == OPEN
+		(*len)++;
 }

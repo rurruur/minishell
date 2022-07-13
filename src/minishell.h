@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 23:28:16 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/13 21:22:43 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,14 @@
 # include "../libft/libft.h"
 
 # define PRMPT "\033[0;33m( ´Д`)>\033[0;37m "
+# define DELIM " <>|'\""
 # define QUOTE "'\""
 # define STR_DQ "\""
 # define STR_SQ "\'"
 // # define RDR "<>"
 
-# define CLOSED -1
-# define OPEN 1
+# define CLOSED 1
+# define OPEN -1
 
 enum e_type
 {
@@ -84,12 +85,13 @@ void		tok_to_lst(t_token **pretok, t_toklst *new);
 t_token		*split_tok(char *line, char *delim);
 void		parse_delim(char **line, char *delim, t_token **strlst);
 void		assort_delim(t_token **new, char **line, int flag);
-char		*make_strs(char **line, char *delim);
+char		*make_tok(char **line, char *delim);
 
 // _token03.c
 void		trim_pretok(t_token *pretok);
 char		*trim_quote(char *str);
-int			check_len(char *str);
+int			cnt_trimmed_len(char *str);
+void		del_quote_or_escape(char **str, int *q1, int *q2, int *len);
 
 // _lst01.c
 t_token		*init_strlst(char *content);
@@ -123,5 +125,14 @@ int		get_cmd_count(t_token *cmds);
 char	**list_to_arr(t_token *cmds);
 char	*double_strjoin(char *start, char *middle, char *end);
 char	*get_valid_cmd_path(char *cmd);
+
+// built-in functions
+void		builtin_main(char *cmd, t_token *argv);
+void		msh_cd(t_token *argv);
+void		msh_echo(t_token *argv);
+void		msh_env(t_token *argv);
+void		msh_exit(t_token *argv);
+void		msh_pwd(void);
+void		msh_unset(t_token *argv);
 
 #endif

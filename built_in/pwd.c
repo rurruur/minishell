@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _signal.c                                          :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/03 17:02:57 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/12 23:36:19 by jrim             ###   ########.fr       */
+/*   Created: 2022/07/13 18:36:50 by jrim              #+#    #+#             */
+/*   Updated: 2022/07/13 18:47:29 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../src/minishell.h"
 
-void	h_sigint(int signum);
-void	h_sigquit(int signum);
+#define MAX_PATH_LEN 4096	// Linux maximum path length라고 검색한 결과
 
-void	h_sigint(int signum)
+void	msh_pwd(void)
 {
-	if (signum != SIGINT)
-		return ;
-	printf("ctrl + c print a new prompt on a newline\n");
-	rl_on_new_line();
-	rl_replace_line("", 1);
-	rl_redisplay();
-}
+	char	*pwd;
+	char	buf[MAX_PATH_LEN];
 
-void	h_sigquit(int signum)
-{
-	if (signum != SIGQUIT)
+	pwd = getcwd(buf, MAX_PATH_LEN);
+	if (!pwd)
+	{
+		printf("error?\n");
 		return ;
-	printf("ctrl + \\ do nothing\n");
-	rl_on_new_line();
-	rl_replace_line("", 1);
-	rl_redisplay();
+	}
+	printf("%s\n", pwd);
 }
