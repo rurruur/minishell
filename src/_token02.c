@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:16:27 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/12 23:22:33 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/13 19:33:41 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,14 @@ char	*make_tok(char **line, char *delim)
 
 	len = 0;
 	if (**line != '"' && **line != '\'')
+	{
 		while (!ft_strchr(delim, (*line)[len]) && !ft_strchr(QUOTE, (*line)[len]) && (*line)[len] != '\0')
 		{
 			if ((*line)[len] == '\\' && ((*line)[len + 1] == '\'' || (*line)[len + 1] == '"'))
 				len++;
 			len++;
 		}
+	}
 	else
 	{
 		len++;

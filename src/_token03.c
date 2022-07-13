@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:58:07 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/12 23:50:41 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/13 19:32:27 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	trim_pretok(t_token *pretok);
 char	*trim_quote(char *str);
 int		cnt_trimmed_len(char *str);
+void	del_quote_or_escape(char **str, int *q1, int *q2, int *len);
 
 void	trim_pretok(t_token *pretok)
 {
@@ -45,7 +46,7 @@ char	*trim_quote(char *str)
 	if (new_len == (int)ft_strlen(str))
 		return (NULL);
 	idx = 0;
-	new_str = (char	*)malloc((new_len + 1) * sizeof(char));
+	new_str = (char *)malloc((new_len + 1) * sizeof(char));
 	if (!new_str)
 		err_msg("allocation");
 	while (idx < new_len)
@@ -58,7 +59,7 @@ char	*trim_quote(char *str)
 	return (new_str);
 }
 
-int		cnt_trimmed_len(char *str)
+int	cnt_trimmed_len(char *str)
 {
 	int	len;
 	int	dq;
@@ -70,37 +71,35 @@ int		cnt_trimmed_len(char *str)
 	while (*str)
 	{
 		if (*str == '"')
-		{
-			if (dq == OPEN || (dq == CLOSED && sq == CLOSED))
-			{
-				dq = -dq;
-				*str = '\0';
-			}
-			else	// sq == OPEN
-				len++;
-		}
+			del_quote_or_escape(&str, &dq, &sq, &len);
 		else if (*str == '\'')
-		{
-			if (sq == OPEN || (dq == CLOSED && sq == CLOSED))
-			{
-				sq = -sq;
-				*str = '\0';
-			}
-			else	// dq == OPEN
-				len++;
-		}
+			del_quote_or_escape(&str, &sq, &dq, &len);
 		else if (*str == '\\')
-		{
-			if (dq == OPEN || sq == OPEN)
-				len++;
-			else
-				*str = '\0';
-			len++;
-			str++;
-		}
+			del_quote_or_escape(&str, &dq, &sq, &len);
 		else
 			len++;
 		str++;
 	}
 	return (len);
+}
+
+void	del_quote_or_escape(char **str, int *q1, int *q2, int *len)
+{
+	if (**str == '\\')
+	{
+		if (*q1 == OPEN || *q2 == OPEN)
+				(*len)++;
+		else
+			(**str) = '\0';
+		(*len)++;
+		(*str)++;
+		return ;
+	}
+	if (*q1 == OPEN || (*q1 == CLOSED && *q2 == CLOSED))
+	{
+		(*q1) = -(*q1);
+		(**str) = '\0';
+	}
+	else	// *q2 == OPEN
+		(*len)++;
 }
