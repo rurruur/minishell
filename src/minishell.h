@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/13 19:41:23 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/13 21:06:18 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,14 @@ char		*msh_strjoin(char *s1, char *s2);
 // __display.c
 void		display_toklst(t_toklst *toklst);
 void		display_strlst(t_token *strlst);
+
+// built-in functions
+void		builtin_main(char *cmd, t_token *argv);
+void		msh_cd(t_token *argv);
+void		msh_echo(t_token *argv);
+void		msh_env(t_token *argv);
+void		msh_exit(t_token *argv);
+void		msh_pwd(void);
+void		msh_unset(t_token *argv);
 
 #endif
