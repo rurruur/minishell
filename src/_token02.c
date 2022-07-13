@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:16:27 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/13 19:33:41 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/13 19:51:34 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_token	*split_tok(char *line, char *delim);
 void	parse_delim(char **line, char *delim, t_token **strlst);
 void	assort_delim(t_token **new, char **line, int flag);
 char	*make_tok(char **line, char *delim);
+void	cnt_tok_len(char *line, int *len, int quote);
 
 t_token	*split_tok(char *line, char *delim)
 {
@@ -78,28 +79,37 @@ char	*make_tok(char **line, char *delim)
 	int		len;
 	char	*str;
 
-	len = 0;
+	if (delim) //norm 때문에 잠깐 넣어놓은거임
+		len = 0;
 	if (**line != '"' && **line != '\'')
-	{
-		while (!ft_strchr(delim, (*line)[len]) && !ft_strchr(QUOTE, (*line)[len]) && (*line)[len] != '\0')
-		{
-			if ((*line)[len] == '\\' && ((*line)[len + 1] == '\'' || (*line)[len + 1] == '"'))
-				len++;
-			len++;
-		}
-	}
+		cnt_tok_len(*line, &len, 0);
 	else
-	{
-		len++;
-		while ((*line)[len] != **line)
-		{
-			if ((*line)[len] == '\\' && ((*line)[len + 1] == '\'' || (*line)[len + 1] == '"'))
-				len++;
-			len++;
-		}
-		len++;
-	}
+		cnt_tok_len(*line, &len, 1);
 	str = ft_strndup(*line, len);
 	(*line) += len;
 	return (str);
+}
+
+void	cnt_tok_len(char *line, int *len, int quote)
+{
+	if (quote == 1)
+	{
+		(*len)++;
+		while (line[*len] != *line)
+		{
+			if (line[*len] == '\\' && ft_strchr(QUOTE, line[*len + 1]))
+				(*len)++;
+			(*len)++;
+		}
+		(*len)++;
+	}
+	else
+	{
+		while (!ft_strchr(DELIM, line[*len]) && line[*len] != '\0')
+		{
+			if (line[*len] == '\\' && ft_strchr(QUOTE, line[*len + 1]))
+				(*len)++;
+			(*len)++;
+		}
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/12 23:36:53 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/13 19:41:23 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "../libft/libft.h"
 
 # define PRMPT "\033[0;33m( ´Д`)>\033[0;37m "
+# define DELIM " <>|'\""
 # define QUOTE "'\""
 # define STR_DQ "\""
 # define STR_SQ "\'"
@@ -82,6 +83,7 @@ char		*make_tok(char **line, char *delim);
 void		trim_pretok(t_token *pretok);
 char		*trim_quote(char *str);
 int			cnt_trimmed_len(char *str);
+void		del_quote_or_escape(char **str, int *q1, int *q2, int *len);
 
 // _lst01.c
 t_token		*init_strlst(char *content);
