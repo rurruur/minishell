@@ -25,16 +25,17 @@ SRC			=	src/minishell.c \
 				src/_token03.c \
 				src/_lst01.c \
 				src/_lst02.c \
+				src/_free.c \
 				src/_utils.c \
 				src/__display.c \
 				src/executor.c \
-				built_in/built_in.c \
-				built_in/cd.c \
-				built_in/echo.c \
-				built_in/env.c \
-				built_in/exit.c \
-				built_in/pwd.c \
-				built_in/unset.c
+				# built_in/built_in.c \
+				# built_in/cd.c \
+				# built_in/echo.c \
+				# built_in/env.c \
+				# built_in/exit.c \
+				# built_in/pwd.c \
+				# built_in/unset.c
 				
 OBJ			=	$(SRC:.c=.o)
 
