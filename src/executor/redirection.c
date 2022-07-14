@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:05:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/14 23:20:23 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/15 00:22:45 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ int	set_outfile_redirection(t_toklst *list)
 	int	result;
 	t_token	*files;
 
-	files = list->outfile;
+	files = list->rdr_out;
 	while (files)
 	{
 		if (files->type == T_RDR_OUT)
 			fd = open(files->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		else if (files->type == T_RDR_AP)
-			fd = open(files->str, O_WRONLY | O_CREAT, 0777);
+			fd = open(files->str, O_WRONLY | O_CREAT | O_APPEND, 0777);
 		if (fd < 0)
 			return (0);
 		if (files->next == NULL)
@@ -76,7 +76,7 @@ void	set_redirection(t_toklst *list, int *end)
 		else if (result == -1)
 			perror("dup2");		// 어캐 해야? 걍 종료?
 	}
-	if (list->outfile)
+	if (list->rdr_out)
 	{
 		// STDOUT 설정
 		result = set_outfile_redirection(list);
