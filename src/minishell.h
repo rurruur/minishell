@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/13 21:22:43 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/14 22:26:27 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,14 @@ void		display_strlst(t_token *strlst);
 // executor.c
 int		set_file_redirection(t_token *files, enum e_rdr mode);
 void	set_redirection(t_toklst *list, int *end);
+int		is_builtin(char *cmd);
 void	child_process(t_toklst *list, int *end, char **env);
 void	parent_process(pid_t child, int *end);
 void	executor(t_toklst *list, char **env);
 int		get_cmd_count(t_token *cmds);
 char	**list_to_arr(t_token *cmds);
 char	*double_strjoin(char *start, char *middle, char *end);
+void	destroy_split(char **arr);
 char	*get_valid_cmd_path(char *cmd);
 
 // built-in functions
