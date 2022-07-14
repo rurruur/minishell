@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 00:21:56 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 00:31:34 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_pretok(t_token *pretok)
 		flag = 0;
 	while (pretok && flag == 1)
 	{	
-		if (pretok->type != T_OFF && (!pretok->next || pretok->next->type != T_OFF))
+		if (pretok->type > T_OFF && (!pretok->next || pretok->next->type > T_OFF))
 			flag = 0;
 		pretok = pretok->next;
 	}

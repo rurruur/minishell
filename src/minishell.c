@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 00:21:04 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/15 01:07:03 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ int	main(int argc, char **argv, char **env)
 	char		*line;
 	t_toklst	*toklst;
 
-	(void)argc;
+	// (void)argc;
 	(void)argv;
 
 	signal(SIGINT, h_sigint);      // ctrl + c
 	signal(SIGQUIT, h_sigquit);    // ctrl + '\'
-	while (1)
+	while (argc)
 	{
 		line = readline(PRMPT);
 		if (line)
@@ -35,8 +35,7 @@ int	main(int argc, char **argv, char **env)
 				toklst = init_toklst();
 				if (tokenizer(line, toklst))
 				{
-					// display_toklst(toklst);
-					// system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");
+					display_toklst(toklst);
 					executor(toklst, env);
 				}
 			}
@@ -48,6 +47,7 @@ int	main(int argc, char **argv, char **env)
 			printf("\b\bctrl + d exit the shell\n");
 			break;
 		}
+		free(line);
 	}
 	return (0);
 }
