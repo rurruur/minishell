@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/13 21:24:32 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/14 00:23:21 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	tokenizer(char *line, t_toklst *toklst)
 		}
 		pretok = pretok->next;
 	}
-	// free_strlst(&pretok);
 	pretok = NULL;
+	system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");
 	return (1);
 }
 

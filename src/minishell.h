@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/14 22:26:27 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/14 22:51:59 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +98,17 @@ t_token		*init_strlst(char *content);
 void		add_to_strlst(t_token **strlst, t_token *new);
 void		del_from_strlst(t_token **strlst);
 void		lst_to_lst(t_token **old, t_token **new);
-void		free_strlst(t_token **strlst);
 
 // _lst02.c
 t_toklst	*init_toklst(void);
 void		add_to_toklst(t_toklst **toklst, t_toklst *new);
+
+// _free.c
+void		free_strarr(char **str);
+void		free_strlst(t_token **strlst);
 void		free_toklst(t_toklst **toklst);
 
 // _utils.c
-void		free_all(char **str);
 void		err_msg(char *str);
 char		*ft_strndup(char *str, int n);
 char		*msh_strjoin(char *s1, char *s2);
