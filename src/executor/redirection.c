@@ -47,7 +47,7 @@ int	set_outfile_redirection(t_toklst *list)
 		if (files->type == T_RDR_OUT)
 			fd = open(files->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		else if (files->type == T_RDR_AP)
-			fd = open(files->str, O_WRONLY | O_CREAT, 0777);
+			fd = open(files->str, O_WRONLY | O_CREAT | O_APPEND, 0777);
 		if (fd < 0)
 			return (0);
 		if (files->next == NULL)
