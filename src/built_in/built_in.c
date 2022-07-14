@@ -6,11 +6,11 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/13 21:06:14 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 00:21:32 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../src/minishell.h"
+#include "../minishell.h"
 
 void	builtin_main(char *cmd, t_token *argv)
 {

@@ -6,11 +6,11 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 00:15:23 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 00:22:11 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int		tokenizer(char *line, t_toklst *toklst);
 void	check_env(t_token *pretok);

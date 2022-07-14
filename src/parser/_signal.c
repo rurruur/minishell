@@ -6,11 +6,11 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 17:02:57 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/12 23:36:19 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 00:22:08 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	h_sigint(int signum);
 void	h_sigquit(int signum);

@@ -6,11 +6,11 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/11 15:47:04 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 00:21:56 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	check_quote(char *line);
 int	check_pretok(t_token *pretok);

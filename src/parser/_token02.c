@@ -6,11 +6,11 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:16:27 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/13 21:23:16 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 00:22:14 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 t_token	*split_tok(char *line, char *delim);
 void	parse_delim(char **line, char *delim, t_token **strlst);

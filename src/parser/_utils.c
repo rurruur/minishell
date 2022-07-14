@@ -6,11 +6,11 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 18:12:05 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/14 00:26:38 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 00:22:19 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	err_msg(char *str);
 char	*ft_strndup(char *str, int n);

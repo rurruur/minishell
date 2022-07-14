@@ -6,11 +6,11 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:25:11 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 00:11:30 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 00:22:00 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free_strarr(char **str);
 void	free_strlst(t_token **strlst);
