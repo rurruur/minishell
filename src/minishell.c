@@ -6,11 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/07/11 23:57:59 by jrim             ###   ########.fr       */
-=======
-/*   Updated: 2022/07/12 23:13:42 by jrim             ###   ########.fr       */
->>>>>>> 2d91312d505f7e636afcb5272ec59583eb06c596
+/*   Updated: 2022/07/14 22:47:51 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +33,13 @@ int	main(int argc, char **argv, char **env)
 			else
 			{
 				toklst = init_toklst();
-<<<<<<< HEAD
 				if (tokenizer(line, toklst))
 				{
 					// display_toklst(toklst);
 					executor(toklst, env);
 				}
-=======
-				tokenizer(line, toklst);
-				display_toklst(toklst);
-				// executor(toklst);
->>>>>>> 2d91312d505f7e636afcb5272ec59583eb06c596
 			}
-			// free_toklst(&toklst);
+			free_toklst(&toklst);
 		}
 		else // ctrl + d
 		{
