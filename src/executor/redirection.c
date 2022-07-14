@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:05:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/14 23:20:23 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/15 00:22:57 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	set_outfile_redirection(t_toklst *list)
 	int	result;
 	t_token	*files;
 
-	files = list->outfile;
+	files = list->rdr_out;
 	while (files)
 	{
 		if (files->type == T_RDR_OUT)
@@ -76,7 +76,7 @@ void	set_redirection(t_toklst *list, int *end)
 		else if (result == -1)
 			perror("dup2");		// 어캐 해야? 걍 종료?
 	}
-	if (list->outfile)
+	if (list->rdr_out)
 	{
 		// STDOUT 설정
 		result = set_outfile_redirection(list);
