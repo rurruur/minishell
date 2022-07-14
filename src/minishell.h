@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/14 22:55:09 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 00:10:58 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@
 
 enum e_type
 {
+	T_ENV,
 	T_OFF,
 	T_RDR_IN,
 	T_RDR_HD,
 	T_RDR_OUT,
 	T_RDR_AP,
-	T_PIPE,
-	T_ENV
+	T_PIPE
 };
 
 enum e_rdr
@@ -61,11 +61,10 @@ typedef struct s_token
 typedef struct s_toklst
 {
 	t_token			*cmd;		//	cmd와 뒤에 오는 str들
-	t_token			*rdr;
 	t_token			*infile;	//	< : infile name
 	t_token			*heredoc;	//	<< : here_doc에 들어가는 str들
-	t_token			*outfile;	//	> : outfile name
-	t_token			*append;	//	>> : append 되어야할 file name
+	t_token			*rdr_out;
+	t_token			*trash;
 	struct s_toklst	*next;
 } 					t_toklst;
 

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:25:11 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/14 00:27:02 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 00:11:30 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void		free_toklst(t_toklst **toklst)
 		(*toklst) = (*toklst)->next;
 		free_strlst(&(tmp->cmd));
 		free_strlst(&(tmp->infile));
-		free_strlst(&(tmp->outfile));
 		free_strlst(&(tmp->heredoc));
-		free_strlst(&(tmp->append));
+		free_strlst(&(tmp->rdr_out));
+		free_strlst(&(tmp->trash));
 		free(tmp);
 		tmp = NULL;
 	}

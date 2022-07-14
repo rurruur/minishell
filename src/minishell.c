@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/14 22:57:37 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/15 00:15:37 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **env)
 				toklst = init_toklst();
 				if (tokenizer(line, toklst))
 				{
-					// display_toklst(toklst);
+					display_toklst(toklst);
 					// system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");
 					executor(toklst, env);
 				}
