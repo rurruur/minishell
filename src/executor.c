@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/14 22:25:48 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/14 22:59:34 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void	child_process(t_toklst *list, int *end, char **env)
 		cmd = get_valid_cmd_path(list->cmd->str);
 		if (!cmd) {
 			// cmd 못찾은 경우
+			exit(1);
 		} else {
 			// cmd free 필요
 			cmd_line = list_to_arr(list->cmd);	// 각각 free 필요?
@@ -230,7 +231,6 @@ char	*get_valid_cmd_path(char *cmd)
 	}
 	destroy_split(path);
 	if (!path[i]) {	// 여기 에러 처리 좀 더 고민
-		free(cmd_path);
 		return (0);
 	}
 	return (cmd_path);
