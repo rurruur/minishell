@@ -28,7 +28,9 @@ SRC			=	src/minishell.c \
 				src/_free.c \
 				src/_utils.c \
 				src/__display.c \
-				src/executor.c \
+				src/executor/executor.c \
+				src/executor/cmd_utils.c \
+				src/executor/redirection.c \
 				# built_in/built_in.c \
 				# built_in/cd.c \
 				# built_in/echo.c \
