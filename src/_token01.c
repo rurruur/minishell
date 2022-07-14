@@ -6,13 +6,14 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/14 00:23:21 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/14 22:42:15 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		tokenizer(char *line, t_toklst *toklst);
+void	check_env(t_token *pretok);
 void	del_empty_tok(t_token *pretok);
 void	tok_to_lst(t_token **pretok, t_toklst *new);
 
@@ -22,6 +23,7 @@ int	tokenizer(char *line, t_toklst *toklst)
 	t_toklst	*new;
 
 	pretok = split_tok(line, " |<>");	// _token02.c
+	// check_env(pretok);
 	trim_pretok(pretok);				// _token03.c
 	del_empty_tok(pretok);
 	if (!pretok || !check_pretok(pretok))
@@ -39,9 +41,25 @@ int	tokenizer(char *line, t_toklst *toklst)
 		pretok = pretok->next;
 	}
 	pretok = NULL;
-	system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");
+	// system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");
 	return (1);
 }
+
+// void	check_env(t_token *pretok)
+// {
+// 	char *str;
+
+// 	while (pretok)
+// 	{
+// 		str = pretok->str;
+// 		while (str)
+// 		{
+// 			if ()
+
+// 		}
+// 		pretok = pretok->next;
+// 	}
+// }
 
 void	del_empty_tok(t_token *pretok)
 {

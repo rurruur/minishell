@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:39 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/13 18:56:02 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/14 22:44:34 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 // $? : return value of previous command
 
-void	msh_exit()
+void	msh_exit(t_token *argv)
 {
-	
+	if (argv)
+		printf("exit 아직 안만들었단다\n");
 }

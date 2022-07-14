@@ -6,8 +6,14 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/13 18:36:54 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/14 22:44:50 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../src/minishell.h"
+
+void	msh_unset(t_token *argv)
+{
+	if (argv)
+		printf("unset 아직 안만들었단다\n");
+}

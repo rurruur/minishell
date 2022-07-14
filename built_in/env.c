@@ -6,20 +6,14 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:35 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/13 18:51:42 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/14 22:44:23 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../src/minishell.h"
 
-void	msh_env(char **env)
+void	msh_env(t_token *argv)
 {
-	int idx;
-
-	idx = 0;
-	while (env[idx])	// list로 해야하나?
-	{
-		printf("%s\n", env[idx]);
-		idx++;
-	}
+	if (argv)
+		printf("env 아직 안만들었단다\n");
 }
