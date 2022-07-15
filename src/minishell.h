@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 16:00:55 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 22:49:41 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void		check_env(t_token *pretok);
 void		check_empty(t_token *pretok);
 
 // _token01.c
-int			tokenizer(char *line, t_toklst *toklst);
+t_toklst	*tokenizer(char *line, t_toklst *toklst);
 int			pretoknizer(char *line, t_token **pretok);
 void		tok_to_lst(t_token **pretok, t_toklst *new);
 
@@ -110,8 +110,8 @@ void		add_to_toklst(t_toklst **toklst, t_toklst *new);
 
 // _free.c
 void		free_strarr(char **str);
-void		free_strlst(t_token **strlst);
-void		free_toklst(t_toklst **toklst);
+void		free_strlst(t_token *strlst);
+void		free_toklst(t_toklst *toklst);
 
 // _utils.c
 void		err_msg(char *str);
