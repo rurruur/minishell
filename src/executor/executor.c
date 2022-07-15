@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/14 23:07:14 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/15 21:15:00 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	child_process(t_toklst *list, int *end, char **env)
 		} else {
 			// cmd free 필요
 			cmd_line = list_to_arr(list->cmd);	// 각각 free 필요?
+			dprintf(g_fd, "cmd execute(pid: %d)\n", getpid());
 			if (!execve(cmd, cmd_line, env))
 			{
 				perror("execve");
@@ -53,6 +54,7 @@ void	child_process(t_toklst *list, int *end, char **env)
 			}
 		}
 	}
+	exit(1);
 }
 
 void	parent_process(pid_t child, int *end)
@@ -65,6 +67,23 @@ void	parent_process(pid_t child, int *end)
 	waitpid(child, &status, 0);
 }
 
+void	print_list(t_toklst *list)
+{
+	t_token	*tmp;
+	
+		dprintf(g_fd, "========node(%p)=======\n", list);
+		dprintf(g_fd, "cmd: ");
+		tmp = list->cmd;
+		while (tmp)
+		{
+			dprintf(g_fd, "%s ", tmp->str);
+			tmp = tmp->next;
+		}
+		dprintf(g_fd, "next: %p\n", list->next);
+		
+		dprintf(g_fd, "===================================\n");
+}
+
 void	executor(t_toklst *list, char **env)
 {
 	int		end[2];
@@ -72,12 +91,15 @@ void	executor(t_toklst *list, char **env)
 
 	while (list != NULL)
 	{
+		print_list(list);
+		dprintf(g_fd, "\n= executor(%d) =\n", getpid());
 		if (pipe(end) == -1)
 		{
 			perror("pipe");
 			return ;	// 리턴할지 아니면 다음 명령어로 넘어갈지 결정
 		}
 		child = fork();
+		dprintf(g_fd, "fork: %d\n", getpid());
 		if (child == -1)
 		{
 			perror("fork");
