@@ -6,28 +6,23 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 00:22:11 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 22:52:22 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		tokenizer(char *line, t_toklst *toklst);
-void	check_env(t_token *pretok);
-void	del_empty_tok(t_token *pretok);
-void	tok_to_lst(t_token **pretok, t_toklst *new);
+t_toklst	*tokenizer(char *line, t_toklst *toklst);
+int			pretoknizer(char *line, t_token **pretok);
+void		tok_to_lst(t_token **pretok, t_toklst *new);
 
-int	tokenizer(char *line, t_toklst *toklst)
+t_toklst	*tokenizer(char *line, t_toklst *toklst)
 {
 	t_token		*pretok;
 	t_toklst	*new;
 
-	pretok = split_tok(line, " |<>");	// _token02.c
-	// check_env(pretok);
-	trim_pretok(pretok);				// _token03.c
-	del_empty_tok(pretok);
-	if (!pretok || !check_pretok(pretok))
-		return (0);
+	if (!pretoknizer(line, &pretok))
+		return (NULL);
 	while (pretok)
 	{
 		if (pretok->type != T_PIPE)
@@ -35,41 +30,25 @@ int	tokenizer(char *line, t_toklst *toklst)
 			new = init_toklst();
 			tok_to_lst(&pretok, new);
 			add_to_toklst(&toklst, new);
-			if (!pretok)
-				break;
 		}
-		pretok = pretok->next;
-	}
-	pretok = NULL;
-	// system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");
-	return (1);
-}
-
-// void	check_env(t_token *pretok)
-// {
-// 	char *str;
-
-// 	while (pretok)
-// 	{
-// 		str = pretok->str;
-// 		while (str)
-// 		{
-// 			if ()
-
-// 		}
-// 		pretok = pretok->next;
-// 	}
-// }
-
-void	del_empty_tok(t_token *pretok)
-{
-	while (pretok)
-	{
-		if (pretok->next && pretok->next->str[0] == '\0')
-			del_from_strlst(&pretok);
-		else
+		if (pretok && pretok->next)
 			pretok = pretok->next;
 	}
+	pretok = NULL;
+	return (toklst);
+}
+
+int		pretoknizer(char *line, t_token **pretok)
+{
+	if (check_whitespace(line) || !check_quote(line))	// 짝 안맞는 따옴표는 미리 거르기
+		return (0);	// escape 처리는?
+	(*pretok) = split_tok(line, " |<>");	// _token02.c
+	// check_env(*pretok);
+	trim_pretok(*pretok);				// _token03.c
+	check_empty(*pretok);
+	if (!(*pretok) || !check_pretok(*pretok))
+		return (0);
+	return (1);
 }
 
 void	tok_to_lst(t_token **pretok, t_toklst *new)
@@ -82,26 +61,13 @@ void	tok_to_lst(t_token **pretok, t_toklst *new)
 		if ((*pretok)->type > T_OFF)
 		{
 			lst_to_lst(pretok, &(new->trash));
+			(*pretok)->type = type;
 			if (type == T_RDR_IN)
-			{
-				(*pretok)->type = T_RDR_IN;
 				lst_to_lst(pretok, &(new->infile)); 
-			}
 			else if (type == T_RDR_HD)
-			{
-				(*pretok)->type = T_RDR_HD;
 				lst_to_lst(pretok, &(new->heredoc)); 
-			}
-			else if (type == T_RDR_OUT)
-			{
-				(*pretok)->type = T_RDR_OUT;
+			else if (type == T_RDR_OUT || type == T_RDR_AP)
 				lst_to_lst(pretok, &(new->rdr_out)); 
-			}
-			else if (type == T_RDR_AP)
-			{
-				(*pretok)->type = T_RDR_AP;
-				lst_to_lst(pretok, &(new->rdr_out)); 
-			}
 		}
 		else
 			lst_to_lst(pretok, &(new->cmd));

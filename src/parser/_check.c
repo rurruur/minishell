@@ -6,14 +6,28 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 00:21:56 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 14:39:48 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	check_quote(char *line);
-int	check_pretok(t_token *pretok);
+int		check_whitespace(char *line);
+int		check_quote(char *line);
+int		check_pretok(t_token *pretok);
+void	check_env(t_token *pretok);
+void	check_empty(t_token *pretok);
+
+int	check_whitespace(char *line)
+{
+	while (*line)
+	{
+		if (!ft_strchr(WH_SPACE, *line))
+			return (0);
+		line++;
+	}
+	return (1);
+}
 
 int	check_quote(char *line)
 {
@@ -35,6 +49,8 @@ int	check_quote(char *line)
 			dq_flag = -dq_flag;
 		line++;
 	}
+	if (!(sq_flag + dq_flag > 0))
+		err_msg("quote");
 	return (sq_flag + dq_flag > 0); // flag가 -1이면 quote가 안닫혔다는 의미
 }
 
@@ -47,11 +63,38 @@ int	check_pretok(t_token *pretok)
 		flag = 0;
 	while (pretok && flag == 1)
 	{	
-		if (pretok->type != T_OFF && (!pretok->next || pretok->next->type != T_OFF))
+		if (pretok->type > T_OFF && (!pretok->next || pretok->next->type > T_OFF))
 			flag = 0;
 		pretok = pretok->next;
 	}
 	if (flag == 0)
 		err_msg("pipe or RDR");
 	return (flag);
+}
+
+// void	check_env(t_token *pretok)
+// {
+// 	char *str;
+
+// 	while (pretok)
+// 	{
+// 		str = pretok->str;
+// 		while (str)
+// 		{
+// 			if ()
+
+// 		}
+// 		pretok = pretok->next;
+// 	}
+// }
+
+void	check_empty(t_token *pretok)
+{
+	while (pretok)
+	{
+		if (pretok->next && pretok->next->str[0] == '\0')
+			del_from_strlst(&pretok);
+		else
+			pretok = pretok->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 18:56:57 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 00:21:51 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 22:45:05 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	display_toklst(t_toklst *toklst)
 	idx = 1;
 	while (toklst)
 	{
-		toklst = toklst->next;
 		if (!toklst)
 			break;
 		printf("__________ %dth node __________\n", idx);
@@ -35,6 +34,7 @@ void	display_toklst(t_toklst *toklst)
 		printf(" >/>> : ");
 		display_strlst(toklst->rdr_out);
 		printf("______________________________\n");
+		toklst = toklst->next;
 		idx++;
 	}
 }

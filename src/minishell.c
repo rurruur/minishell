@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 00:21:04 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/15 22:56:51 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,37 +17,27 @@ int	main(int argc, char **argv, char **env)
 	char		*line;
 	t_toklst	*toklst;
 
-	(void)argc;
 	(void)argv;
-
-	signal(SIGINT, h_sigint);      // ctrl + c
-	signal(SIGQUIT, h_sigquit);    // ctrl + '\'
-	while (1)
+	handle_sig();
+	// env copy해오기?
+	while (argc)
 	{
 		line = readline(PRMPT);
 		if (line)
 		{
 			add_history(line);
-			if (!check_quote(line))	// 짝 안맞는 따옴표는 미리 거르기
-				err_msg("quote");	// escape 처리는?
-			else
+			toklst = tokenizer(line, NULL);
+			if (toklst)
 			{
-				toklst = init_toklst();
-				if (tokenizer(line, toklst))
-				{
-					// display_toklst(toklst);
-					// system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");
-					executor(toklst, env);
-				}
+				display_toklst(toklst);
+				executor(toklst, env);
 			}
-			free_toklst(&toklst);
-			// system("leaks minishell");
+			free_toklst(toklst);
+			// system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");
 		}
-		else // ctrl + d
-		{
-			printf("\b\bctrl + d exit the shell\n");
+		else
 			break;
-		}
+		free(line);
 	}
 	return (0);
 }
