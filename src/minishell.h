@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 14:33:27 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 14:42:26 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,21 @@ void		h_sigquit(int signum);
 int			check_whitespace(char *line);
 int			check_quote(char *line);
 int			check_pretok(t_token *pretok);
+void		check_env(t_token *pretok);
+void		check_empty(t_token *pretok);
 
-// _token.c
+// _token01.c
 int			tokenizer(char *line, t_toklst *toklst);
+int			pretoknizer(char *line, t_token **pretok);
 void		tok_to_lst(t_token **pretok, t_toklst *new);
 
-// _pretok01.c
-int			pretoknizer(char *line, t_token **pretok);
-void		check_env(t_token *pretok);
-void		del_empty_tok(t_token *pretok);
-
-// _pretok02.c
+// _token02.c
 t_token		*split_tok(char *line, char *delim);
 void		parse_delim(char **line, char *delim, t_token **strlst);
 void		assort_delim(t_token **new, char **line, int flag);
 char		*make_tok(char **line, char *delim);
 
-// _pretok03.c
+// _token03.c
 void		trim_pretok(t_token *pretok);
 char		*trim_quote(char *str);
 int			cnt_trimmed_len(char *str);

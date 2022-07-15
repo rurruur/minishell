@@ -6,13 +6,14 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 14:31:35 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 14:41:10 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 int		tokenizer(char *line, t_toklst *toklst);
+int		pretoknizer(char *line, t_token **pretok);
 void	tok_to_lst(t_token **pretok, t_toklst *new);
 
 int	tokenizer(char *line, t_toklst *toklst)
@@ -35,6 +36,19 @@ int	tokenizer(char *line, t_toklst *toklst)
 	}
 	pretok = NULL;
 	// system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");
+	return (1);
+}
+
+int		pretoknizer(char *line, t_token **pretok)
+{
+	if (check_whitespace(line) || !check_quote(line))	// 짝 안맞는 따옴표는 미리 거르기
+		return (0);	// escape 처리는?
+	(*pretok) = split_tok(line, " |<>");	// _token02.c
+	// check_env(*pretok);
+	trim_pretok(*pretok);				// _token03.c
+	check_empty(*pretok);
+	if (!(*pretok) || !check_pretok(*pretok))
+		return (0);
 	return (1);
 }
 
