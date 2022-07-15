@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:05:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/15 00:22:57 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 00:39:39 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int	set_outfile_redirection(t_toklst *list)
 	while (files)
 	{
 		if (files->type == T_RDR_OUT)
-			fd = open(files->str, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+			fd = open(files->str, O_WRONLY | O_TRUNC | O_CREAT, 0777);
 		else if (files->type == T_RDR_AP)
-			fd = open(files->str, O_WRONLY | O_CREAT | O_APPEND, 0777);
+			fd = open(files->str, O_WRONLY | O_APPEND | O_CREAT, 0777);
 		if (fd < 0)
 			return (0);
 		if (files->next == NULL)
@@ -60,7 +60,6 @@ int	set_outfile_redirection(t_toklst *list)
 		return (-1);
 	close(fd);
 	return (1);
-
 }
 
 void	set_redirection(t_toklst *list, int *end)
