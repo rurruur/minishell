@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 00:18:15 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 14:33:27 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "../libft/libft.h"
 
 # define PRMPT "\033[0;33m( ´Д`)>\033[0;37m "
+# define WH_SPACE " \f\n\r\t\v"
 # define DELIM " <>|'\""
 # define QUOTE "'\""
 # define STR_DQ "\""
@@ -69,25 +70,31 @@ typedef struct s_toklst
 } 					t_toklst;
 
 // _signal.c
+void		handle_sig(void);
 void		h_sigint(int signum);
 void		h_sigquit(int signum);
 
 // _check.c
+int			check_whitespace(char *line);
 int			check_quote(char *line);
 int			check_pretok(t_token *pretok);
 
-// _token01.c
+// _token.c
 int			tokenizer(char *line, t_toklst *toklst);
-void		del_empty_tok(t_token *pretok);
 void		tok_to_lst(t_token **pretok, t_toklst *new);
 
-// _token02.c
+// _pretok01.c
+int			pretoknizer(char *line, t_token **pretok);
+void		check_env(t_token *pretok);
+void		del_empty_tok(t_token *pretok);
+
+// _pretok02.c
 t_token		*split_tok(char *line, char *delim);
 void		parse_delim(char **line, char *delim, t_token **strlst);
 void		assort_delim(t_token **new, char **line, int flag);
 char		*make_tok(char **line, char *delim);
 
-// _token03.c
+// _pretok03.c
 void		trim_pretok(t_token *pretok);
 char		*trim_quote(char *str);
 int			cnt_trimmed_len(char *str);
@@ -118,21 +125,21 @@ void		display_toklst(t_toklst *toklst);
 void		display_strlst(t_token *strlst);
 
 // executor/redirection.c
-int		set_file_redirection(t_token *files, enum e_rdr mode);
-void	set_redirection(t_toklst *list, int *end);
+int			set_file_redirection(t_token *files, enum e_rdr mode);
+void		set_redirection(t_toklst *list, int *end);
 
 // executor/executor.c
-int		is_builtin(char *cmd);
-void	child_process(t_toklst *list, int *end, char **env);
-void	parent_process(pid_t child, int *end);
-void	executor(t_toklst *list, char **env);
+int			is_builtin(char *cmd);
+void		child_process(t_toklst *list, int *end, char **env);
+void		parent_process(pid_t child, int *end);
+void		executor(t_toklst *list, char **env);
 
 // executor/cmd_utils.c
-int		get_cmd_count(t_token *cmds);
-char	**list_to_arr(t_token *cmds);
-char	*double_strjoin(char *start, char *middle, char *end);
-void	destroy_split(char **arr);
-char	*get_valid_cmd_path(char *cmd);
+int			get_cmd_count(t_token *cmds);
+char		**list_to_arr(t_token *cmds);
+char		*double_strjoin(char *start, char *middle, char *end);
+void		destroy_split(char **arr);
+char		*get_valid_cmd_path(char *cmd);
 
 // built-in functions
 void		builtin_main(char *cmd, t_token *argv);

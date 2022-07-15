@@ -6,14 +6,26 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 00:31:34 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 14:08:01 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int	check_whitespace(char *line);
 int	check_quote(char *line);
 int	check_pretok(t_token *pretok);
+
+int	check_whitespace(char *line)
+{
+	while (*line)
+	{
+		if (!ft_strchr(WH_SPACE, *line))
+			return (0);
+		line++;
+	}
+	return (1);
+}
 
 int	check_quote(char *line)
 {
@@ -35,6 +47,8 @@ int	check_quote(char *line)
 			dq_flag = -dq_flag;
 		line++;
 	}
+	if (!(sq_flag + dq_flag > 0))
+		err_msg("quote");
 	return (sq_flag + dq_flag > 0); // flag가 -1이면 quote가 안닫혔다는 의미
 }
 
