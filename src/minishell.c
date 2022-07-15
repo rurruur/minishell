@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 22:56:51 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/15 23:14:41 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	handle_sig();
 	// env copy해오기?
+	g_fd = open("global", O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	while (argc)
 	{
 		line = readline(PRMPT);
+		dprintf(g_fd, "\n---readline---\n");
 		if (line)
 		{
 			add_history(line);
@@ -39,5 +41,6 @@ int	main(int argc, char **argv, char **env)
 			break;
 		free(line);
 	}
+	close(g_fd);
 	return (0);
 }

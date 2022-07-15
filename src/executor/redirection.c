@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:05:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/15 00:39:39 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/15 21:04:54 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	set_redirection(t_toklst *list, int *end)
 		if (dup2(end[1], STDOUT_FILENO) < 0)
 			perror("dup2");
 	}
+	dprintf(g_fd, "rdr set done(pid: %d)\n", getpid());
 	// 	// STDIN 설정
 	// if (list->infile && !set_file_redirection(list->infile, IN))
 	// 	perror("redirection error");	// infile 하나라도 없는 경우: 해당 노드는 실행 x
