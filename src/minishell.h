@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 22:49:41 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 02:29:39 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,12 @@ void		h_sigquit(int signum);
 int			check_whitespace(char *line);
 int			check_quote(char *line);
 int			check_pretok(t_token *pretok);
-void		check_env(t_token *pretok);
 void		check_empty(t_token *pretok);
+
+// _env.c
+void		copy_env(char **env);
+void		find_env(t_token *pretok);
+char		*insert_env(char *old, int	start, int len, char *key);
 
 // _token01.c
 t_toklst	*tokenizer(char *line, t_toklst *toklst);

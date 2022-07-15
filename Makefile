@@ -23,6 +23,7 @@ SRC			=	src/minishell.c \
 				src/parser/_token01.c \
 				src/parser/_token02.c \
 				src/parser/_token03.c \
+				src/parser/_env.c \
 				src/parser/_lst01.c \
 				src/parser/_lst02.c \
 				src/parser/_free.c \
