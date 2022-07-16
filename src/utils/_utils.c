@@ -6,14 +6,33 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 18:12:05 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 15:12:00 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 03:04:17 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strndup(char *str, int n);
 char	*msh_strjoin(char *s1, char *s2);
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t			idx;
+	unsigned char	*s1_ptr;
+	unsigned char	*s2_ptr;
+
+	idx = 0;
+	s1_ptr = (unsigned char *)s1;
+	s2_ptr = (unsigned char *)s2;
+	while ((s1[idx] != '\0' || s2[idx] != '\0'))
+	{
+		if (s1_ptr[idx] != s2_ptr[idx])
+			return (s1_ptr[idx] - s2_ptr[idx]);
+		idx++;
+	}
+	return (0);
+}
 
 char	*ft_strndup(char *str, int n)
 {
@@ -43,8 +62,10 @@ char	*msh_strjoin(char *s1, char *s2)
 	size_t	total_len;
 	char	*new_str;
 
-	if (!s1)
+	if (!s1 && !s2)
 		return (NULL);
+	if (!s1)
+		return (s2);
 	if (!s2)
 		return (s1);
 	total_len = ft_strlen(s1) + ft_strlen(s2) + 1;

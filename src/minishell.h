@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 23:00:51 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 03:03:25 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ void		check_empty(t_token *pretok);
 
 // _env.c
 t_env		*copy_env(char **env, t_env *envlst);
-void		is_env(t_token *pretok, t_env *envlst);
-char		*insert_env(t_env *envlst, char *old, char *str, int start);
+void		env_to_str(t_token *pretok, t_env *envlst);
+char		*insert_env(t_env *envlst, char *old, char *str);
 char		*find_env(t_env *envlst, char *key);
 char		**get_env(t_env *envlst);
 
@@ -142,6 +142,7 @@ void		err_alloc(void);
 // _utils.c
 char		*ft_strndup(char *str, int n);
 char		*msh_strjoin(char *s1, char *s2);
+int			ft_strcmp(const char *s1, const char *s2);
 
 // __display.c
 void		display_toklst(t_toklst *toklst);

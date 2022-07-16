@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:58:07 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 23:31:39 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 02:09:22 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,14 @@ void	trim_pretok(t_token *pretok)
 
 	while (pretok)
 	{
-		if (pretok->type != T_ENV)
+		tmp = pretok->str;
+		new = trim_quote(pretok->str);
+		if (new)
 		{
-			tmp = pretok->str;
-			new = trim_quote(pretok->str);
-			if (new)
-			{
-				pretok->str = new;
-				free(tmp);
-			}
-			tmp = NULL;
+			pretok->str = new;
+			free(tmp);
 		}
+		tmp = NULL;
 		pretok = pretok->next;
 	}
 }
