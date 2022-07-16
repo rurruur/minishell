@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 15:28:42 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 17:25:00 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../src/minishell.h"
+#include "../minishell.h"
 
 // int	check_n_opt(t_token *argv);
 

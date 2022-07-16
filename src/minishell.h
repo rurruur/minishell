@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 16:42:46 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 17:08:09 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,16 +152,16 @@ void		set_redirection(t_toklst *list, int end);
 
 // executor/executor.c
 int			is_builtin(char *cmd);
-void		child_process(t_toklst *list, int end, char **env);
+void		child_process(t_toklst *list, int end, t_env *envlst);
 void		parent_process(pid_t child, int *end);
-void		executor(t_toklst *list, char **env);
+void		executor(t_toklst *list, t_env *envlst);
 
 // executor/cmd_utils.c
 int			get_cmd_count(t_token *cmds);
 char		**list_to_arr(t_token *cmds);
 char		*double_strjoin(char *start, char *middle, char *end);
 void		destroy_split(char **arr);
-char		*get_valid_cmd_path(char *cmd);
+char		*get_valid_cmd_path(char *cmd, t_env *env);
 
 // built-in functions
 void		builtin_main(char *cmd, t_token *argv, t_env *envlst);
