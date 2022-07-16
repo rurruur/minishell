@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:06:23 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/14 23:06:58 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/16 17:16:45 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ void	destroy_split(char **arr)
 	free(arr);
 }
 
-char	*get_valid_cmd_path(char *cmd)
+char	*get_valid_cmd_path(char *cmd, t_env *env)
 {
 	struct stat	stat_result;
 	char		*cmd_path;
 	char		**path;
 	int			i;
 	
-	path = ft_split(getenv("PATH"), ':');	// free?
+	path = ft_split(find_env(env, "PATH"), ':');	// free?
 	i = -1;
 	while (path[++i])
 	{
