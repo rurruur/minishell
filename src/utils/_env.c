@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 17:38:32 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 19:32:57 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ char	*insert_env(t_env *envlst, char *old, char *str, int start)
 		len++;
 	env_key = ft_strndup(str, len);
 	env_val = find_env(envlst, env_key);
+	free(env_key);
 	if (!env_val)
 		return (old);
 	new = msh_strjoin(ft_strndup(old, start), env_val);
@@ -98,7 +99,6 @@ char	*find_env(t_env *envlst, char *key)
 		}
 		envlst = envlst->next;
 	}
-	// free(key); jrim은 써야되는데 nakkim은 필요없어
 	return (env_val);
 }
 
