@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 17:08:09 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/16 17:39:32 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ t_env		*copy_env(char **env, t_env *envlst);
 void		is_env(t_token *pretok, t_env *envlst);
 char		*insert_env(t_env *envlst, char *old, char *str, int start);
 char		*find_env(t_env *envlst, char *key);
+char		**get_env(t_env *envlst);
 
 // _token01.c
 t_toklst	*tokenizer(char *line, t_toklst *toklst, t_env *envlst);

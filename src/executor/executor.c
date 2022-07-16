@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/16 17:26:37 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/16 17:39:40 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,6 @@ int	is_builtin(char *cmd)
 		|| ft_strncmp("unset", cmd, cmd_len) || ft_strncmp("env", cmd, cmd_len))
 		return (1);
 	return (0);
-}
-
-char	**get_env(t_env *envlst)
-{
-	char	**arr;
-	int		size;
-	t_env	*tmp;
-
-	tmp = envlst;
-	size = 0;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		size++;
-	}
-	arr = (char **)malloc(sizeof(char *) * (size + 1));
-	arr[size] = NULL;
-	size = 0;
-	while (envlst)
-	{
-		arr[size++] = double_strjoin(envlst->key, "=", envlst->val);
-		envlst = envlst->next;
-	}
-	return (arr);
 }
 
 void	child_process(t_toklst *list, int prev_end, t_env *envlst)

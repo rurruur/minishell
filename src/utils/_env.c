@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _env.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 17:20:05 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/16 17:38:32 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_env	*copy_env(char **env, t_env *envlst);
 void	is_env(t_token *pretok, t_env *envlst);
 char	*insert_env(t_env *envlst, char *old, char *str, int start);
 char	*find_env(t_env *envlst, char *key);
+char	**get_env(t_env *envlst);
 
 t_env	*copy_env(char **env, t_env *envlst)
 {
@@ -99,4 +100,28 @@ char	*find_env(t_env *envlst, char *key)
 	}
 	// free(key); jrim은 써야되는데 nakkim은 필요없어
 	return (env_val);
+}
+
+char	**get_env(t_env *envlst)
+{
+	char	**arr;
+	int		size;
+	t_env	*tmp;
+
+	tmp = envlst;
+	size = 0;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		size++;
+	}
+	arr = (char **)malloc(sizeof(char *) * (size + 1));
+	arr[size] = NULL;
+	size = 0;
+	while (envlst)
+	{
+		arr[size++] = double_strjoin(envlst->key, "=", envlst->val);
+		envlst = envlst->next;
+	}
+	return (arr);
 }
