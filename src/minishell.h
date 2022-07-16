@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 02:29:39 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 13:09:47 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void		check_empty(t_token *pretok);
 // _env.c
 void		copy_env(char **env);
 void		find_env(t_token *pretok);
-char		*insert_env(char *old, int	start, int len, char *key);
+char		*insert_env(char *old, char *str, int start);
 
 // _token01.c
 t_toklst	*tokenizer(char *line, t_toklst *toklst);
