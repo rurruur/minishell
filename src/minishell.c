@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 14:51:34 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 16:34:06 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,22 @@ int	main(int argc, char **argv, char **env)
 	while (argc)
 	{
 		line = readline(PRMPT);
-		dprintf(g_fd, "\n---readline---\n");
+		dprintf(g_fd, "\n---readline(%s)---\n", line);
 		if (line)
 		{
 			add_history(line);
 			toklst = tokenizer(line, NULL, envlst);
 			if (toklst)
 			{
-				display_toklst(toklst);
+				// display_toklst(toklst);
 				executor(toklst, env);
 			}
-			free_toklst(toklst);
+			// free_toklst(toklst);
+			// // system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");
+			free(line);
 		}
 		else
 			break;
-		free(line);
 	}
 	close(g_fd);
 	free_envlst(envlst);

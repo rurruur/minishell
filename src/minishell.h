@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 14:51:40 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 16:06:51 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_toklst
 	t_token			*heredoc;	//	<< : here_doc에 들어가는 str들
 	t_token			*rdr_out;
 	t_token			*trash;
+	int				end[2];
 	t_env			*envlst;
 	struct s_toklst	*next;
 } 					t_toklst;
@@ -142,11 +143,11 @@ void		display_envlst(t_env *envlst);
 
 // executor/redirection.c
 int			set_file_redirection(t_token *files, enum e_rdr mode);
-void		set_redirection(t_toklst *list, int *end);
+void		set_redirection(t_toklst *list, int end);
 
 // executor/executor.c
 int			is_builtin(char *cmd);
-void		child_process(t_toklst *list, int *end, char **env);
+void		child_process(t_toklst *list, int end, char **env);
 void		parent_process(pid_t child, int *end);
 void		executor(t_toklst *list, char **env);
 
