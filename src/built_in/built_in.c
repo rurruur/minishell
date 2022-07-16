@@ -6,27 +6,31 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 15:19:10 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 19:35:00 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	builtin_main(char *cmd, t_token *argv, t_env *envlst)
+int	builtin_main(char *cmd, t_token *argv, t_env *envlst)
 {
 	int	len;
+	int ret;
 
 	len = ft_strlen(cmd);
+	ret = 0;
 	if (!ft_strncmp(cmd, "cd", len))
-		msh_cd(argv);
+		ret = msh_cd(argv);
 	else if (!ft_strncmp(cmd, "echo", len))
-		msh_echo(argv);
+		ret = msh_echo(argv);
 	else if (!ft_strncmp(cmd, "env", len))
-		msh_env(argv, envlst);
+		ret = msh_env(argv, envlst);
 	else if (!ft_strncmp(cmd, "exit", len))
-		msh_exit(argv);
+		ret = msh_exit(argv);
 	else if (!ft_strncmp(cmd, "pwd", len))
-		msh_pwd();
+		ret = msh_pwd(argv);
 	else if (!ft_strncmp(cmd, "unset", len))
-		msh_unset(argv);
+		ret = msh_unset(argv);
+	dprintf(g_fd, "ret from built in: %d\n", ret);
+	return (ret);
 }

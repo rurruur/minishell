@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 17:25:15 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/16 19:03:18 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	msh_unset(t_token *argv)
+int	msh_unset(t_token *argv)
 {
 	if (argv)
 		printf("unset 아직 안만들었단다\n");
+	return (0);
 }

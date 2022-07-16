@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/16 17:39:40 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 19:17:36 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ void	child_process(t_toklst *list, int prev_end, t_env *envlst)
 	{
 		if (is_builtin(list->cmd->str))
 		{
-			builtin_main(list->cmd->str, list->cmd, envlst);
+			if (builtin_main(list->cmd->str, list->cmd, envlst))
+				exit(1);
 			// free는해야돼..
-			exit(1);
 		}
 		cmd = get_valid_cmd_path(list->cmd->str, envlst);
 		if (!cmd) {

@@ -3,17 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 17:24:52 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/16 19:12:56 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	msh_cd(t_token *argv)
+int	msh_cd(t_token *argv)
 {
-	if (argv)
-		printf("cd 아직 안만들었단다\n");
+	// char	*path;
+	
+	if (argv->next == NULL)
+		return (1);
+	// argv->next->str = path;
+	// path 검색해서 이동?
+	printf("아직 안만들어졌단다^^\n");
+	return (0);
 }
