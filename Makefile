@@ -27,6 +27,7 @@ SRC			=	src/minishell.c \
 				src/parser/_lst01.c \
 				src/parser/_lst02.c \
 				src/parser/_free.c \
+				src/parser/_error.c \
 				src/parser/_utils.c \
 				src/parser/__display.c \
 				src/executor/executor.c \

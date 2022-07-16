@@ -6,11 +6,13 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/14 22:45:14 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 15:28:42 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../src/minishell.h"
+
+// int	check_n_opt(t_token *argv);
 
 void	msh_echo(t_token *argv)
 {
@@ -30,3 +32,8 @@ void	msh_echo(t_token *argv)
 	// 		printf("\n");
 	// }
 }
+
+// int	check_n_opt(t_token *argv)
+// {
+	
+// }
