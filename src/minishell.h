@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 17:39:32 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 19:34:54 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,12 +165,12 @@ void		destroy_split(char **arr);
 char		*get_valid_cmd_path(char *cmd, t_env *env);
 
 // built-in functions
-void		builtin_main(char *cmd, t_token *argv, t_env *envlst);
-void		msh_cd(t_token *argv);
-void		msh_echo(t_token *argv);
-void		msh_env(t_token *argv, t_env *envlst);
-void		msh_exit(t_token *argv);
-void		msh_pwd(void);
-void		msh_unset(t_token *argv);
+int			builtin_main(char *cmd, t_token *argv, t_env *envlst);
+int			msh_cd(t_token *argv);
+int			msh_echo(t_token *argv);
+int			msh_env(t_token *argv, t_env *envlst);
+int			msh_exit(t_token *argv);
+int			msh_pwd(t_token *argv);
+int			msh_unset(t_token *argv);
 
 #endif
