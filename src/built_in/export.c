@@ -6,48 +6,85 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 21:43:46 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 03:12:30 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	_export_valid(char *str)
+int	_export_valid_key(char *str)
 {
-	if (*str == '=')
-	{
-		printf("minishell: export: `%c': not a valid identifier\n", *str);
+	int	idx;
+	
+	idx = 0;
+	if (ft_isdigit(str[idx]))
 		return (0);
-	}
-	while (*str)
+	while (str[idx] != '\0' && str[idx] != '=')
 	{
-		if (ft_isdigit(*str))
-		{
-			printf("minishell: export: `%c': not a valid identifier\n", *str);
+		if (!ft_isalnum(str[idx]) && str[idx] != '_')
 			return (0);
-		}
-		str++;
+		idx++;
 	}
-	return (1);
+	if (str[idx] == '=')
+		return (idx);
+	else
+		return (0);
+}
+
+void	_export_valid(char *str, t_env *envlst)
+{
+	int		key_len;
+	char	*env_key;
+	char	*env_val;
+	char	*tmp;
+
+	key_len = _export_valid_key(str);
+	if (!key_len)
+	{
+		printf("invalid key\n");
+		return ;
+	}
+	env_key = ft_strndup(str, key_len);
+	str += key_len + 1;
+	env_val = ft_strdup(str);
+	// A=   인 경우에는?
+	if (!env_val)
+	{
+		printf("invalid val\n");
+		free(env_key);
+		return ;
+	}
+	if (find_env(envlst, env_key))
+	{
+		while (envlst)
+		{
+			if (!ft_strcmp(envlst->key, env_key)) //  ft_strcmp 만들기
+			{
+				env_val = ft_strdup(envlst->val);
+				break;
+			}
+			envlst = envlst->next;
+		}
+		tmp = envlst->val;
+		envlst->val = env_val;
+		free(tmp);
+	}
+	else
+		add_to_envlst(&envlst, init_envlst(env_key, env_val));
 }
 
 int	msh_export(t_token *argv, t_env *envlst)
 {
 	if (!argv->next)
 	{
-		printf("뭔가 잔뜩 뽑아야해\n");
+		printf("뭔가 잔뜩 뽑아야해?\n");
 		return (1);
 	}
 	argv = argv->next;
-	if (envlst)
-		printf("아직이야\n");
-	// while (argv)
-	// {
-	// 	// 먼저 유효한 조합인지 확인 -> A=a (공백 없이)
-	// 	// 유효한 경우만 실행하되
-	// 	// 이미 있는 경우 val을 바꿔줘야함
-	// 	// 없는 경우에는 새로 만들어야함
-	// 	argv = argv->next;
-	// }
-	return (0);
+	while (argv)
+	{
+		_export_valid(argv->str, envlst);
+		argv = argv->next;
+	}
+	return (1);
 }
