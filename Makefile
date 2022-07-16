@@ -39,7 +39,8 @@ SRC			=	src/minishell.c \
 				src/built_in/env.c \
 				src/built_in/exit.c \
 				src/built_in/pwd.c \
-				src/built_in/unset.c
+				src/built_in/unset.c \
+				src/built_in/export.c
 				
 OBJ			=	$(SRC:.c=.o)
 
