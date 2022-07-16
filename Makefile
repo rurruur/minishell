@@ -18,18 +18,18 @@ LIB_NAME	=	libft.a
 LIBS		=	$(addprefix $(LIB_DIR), $(LIB_NAME))
 
 SRC			=	src/minishell.c \
-				src/parser/_signal.c \
+				src/utils/_signal.c \
+				src/utils/_env.c \
+				src/utils/_error.c \
+				src/utils/_utils.c \
+				src/utils/__display.c \
 				src/parser/_check.c \
 				src/parser/_token01.c \
 				src/parser/_token02.c \
 				src/parser/_token03.c \
-				src/parser/_env.c \
-				src/parser/_lst01.c \
-				src/parser/_lst02.c \
-				src/parser/_free.c \
-				src/parser/_error.c \
-				src/parser/_utils.c \
-				src/parser/__display.c \
+				src/lst/_lst01.c \
+				src/lst/_lst02.c \
+				src/lst/_free.c \
 				src/executor/executor.c \
 				src/executor/cmd_utils.c \
 				src/executor/redirection.c \
