@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/16 16:37:03 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/16 17:26:37 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,61 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-void	child_process(t_toklst *list, int prev_end, char **env)
+char	**get_env(t_env *envlst)
+{
+	char	**arr;
+	int		size;
+	t_env	*tmp;
+
+	tmp = envlst;
+	size = 0;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		size++;
+	}
+	arr = (char **)malloc(sizeof(char *) * (size + 1));
+	arr[size] = NULL;
+	size = 0;
+	while (envlst)
+	{
+		arr[size++] = double_strjoin(envlst->key, "=", envlst->val);
+		envlst = envlst->next;
+	}
+	return (arr);
+}
+
+void	child_process(t_toklst *list, int prev_end, t_env *envlst)
 {
 	char	*cmd;
-	char	**cmd_line;
+	char	**cmd_arr;
+	char	**env;
 
 	set_redirection(list, prev_end);
 	if (list->cmd)
 	{
-		dprintf(g_fd, "cmd exist)\n");
 		if (is_builtin(list->cmd->str))
-			;
-		cmd = get_valid_cmd_path(list->cmd->str);
+		{
+			builtin_main(list->cmd->str, list->cmd, envlst);
+			// free는해야돼..
+			exit(1);
+		}
+		cmd = get_valid_cmd_path(list->cmd->str, envlst);
 		if (!cmd) {
 			// cmd 못찾은 경우
+			perror("command");
 			exit(1);
 		} else {
 			// cmd free 필요
-			cmd_line = list_to_arr(list->cmd);	// 각각 free 필요?
+			cmd_arr = list_to_arr(list->cmd);	// 각각 free 필요?
 			dprintf(g_fd, "cmd execute(pid: %d)\n", getpid());
-			if (!execve(cmd, cmd_line, env))
+			env = get_env(envlst);
+			if (!execve(cmd, cmd_arr, env))
 			{
 				perror("execve");
 				free(cmd);
-				destroy_split(cmd_line);
+				// env free
+				destroy_split(cmd_arr);
 			}
 		}
 	}
@@ -70,29 +101,32 @@ void	parent_process(pid_t child, int *end)
 
 void	print_list(t_toklst *list)
 {
-	// t_token	*tmp;
+	t_token	*tmp;
 	
 		dprintf(g_fd, "\n========node(%p)=======\n", list);
 		dprintf(g_fd, "cmd: ");
-		display_strlst(list->cmd);
-		dprintf(g_fd, "next: %p\n", list->next);
+		tmp = list->cmd;
+		while(tmp)
+		{
+			dprintf(g_fd, "%s ", tmp->str);
+			tmp = tmp->next;
+		}
+		dprintf(g_fd, "\nnext: %p\n", list->next);
 		
 		dprintf(g_fd, "===================================\n");
 }
 
-void	executor(t_toklst *list, char **env)
+void	executor(t_toklst *list, t_env *envlst)
 {
 	int		prev_end;
 	pid_t	child;
 
-	(void)env;
 	prev_end = -1;
-	display_toklst(list);
 	while (list != NULL)
 	{
 		list->end[0] = -1;
 		list->end[1] = -1;
-		// print_list(list);
+		print_list(list);
 		dprintf(g_fd, "\n= executor(%d) =\n", getpid());
 		if (list->next != NULL && pipe(list->end) == -1)	// 다음 노드가 있을 경우 파이프 생성
 		{
@@ -107,7 +141,7 @@ void	executor(t_toklst *list, char **env)
 			return ;
 		}
 		if (child == 0)
-			child_process(list, prev_end, env);
+			child_process(list, prev_end, envlst);
 		// else
 		// 	parent_process(child, end);
 		else
@@ -126,5 +160,4 @@ void	executor(t_toklst *list, char **env)
 		}
 		list = list->next;
 	}
-	dprintf(g_fd, "exit\n");
 }
