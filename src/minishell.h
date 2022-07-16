@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 23:15:26 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/16 14:51:40 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	g_fd;
 
 enum e_type
 {
-	T_ENV,
 	T_OFF,
 	T_RDR_IN,
 	T_RDR_HD,
@@ -53,6 +52,13 @@ enum e_rdr
 	IN,
 	OUT
 };
+
+typedef struct s_env
+{
+	char			*key;
+	char			*val;
+	struct s_env	*next;
+} 					t_env;
 
 typedef struct s_token
 {
@@ -68,6 +74,7 @@ typedef struct s_toklst
 	t_token			*heredoc;	//	<< : here_doc에 들어가는 str들
 	t_token			*rdr_out;
 	t_token			*trash;
+	t_env			*envlst;
 	struct s_toklst	*next;
 } 					t_toklst;
 
@@ -80,12 +87,17 @@ void		h_sigquit(int signum);
 int			check_whitespace(char *line);
 int			check_quote(char *line);
 int			check_pretok(t_token *pretok);
-void		check_env(t_token *pretok);
 void		check_empty(t_token *pretok);
 
+// _env.c
+t_env		*copy_env(char **env, t_env *envlst);
+void		is_env(t_token *pretok, t_env *envlst);
+char		*insert_env(t_env *envlst, char *old, char *str, int start);
+char		*find_env(t_env *envlst, char *key);
+
 // _token01.c
-t_toklst	*tokenizer(char *line, t_toklst *toklst);
-int			pretoknizer(char *line, t_token **pretok);
+t_toklst	*tokenizer(char *line, t_toklst *toklst, t_env *envlst);
+int			pretoknizer(char *line, t_token **pretok, t_env *envlst);
 void		tok_to_lst(t_token **pretok, t_toklst *new);
 
 // _token02.c
@@ -107,12 +119,15 @@ void		del_from_strlst(t_token **strlst);
 void		lst_to_lst(t_token **old, t_token **new);
 
 // _lst02.c
-t_toklst	*init_toklst(void);
+t_env		*init_envlst(char *key, char *val);
+void		add_to_envlst(t_env **envlst, t_env *new);
+t_toklst	*init_toklst(t_env *envlst);
 void		add_to_toklst(t_toklst **toklst, t_toklst *new);
 
 // _free.c
 void		free_strarr(char **str);
 void		free_strlst(t_token *strlst);
+void		free_envlst(t_env *envlst);
 void		free_toklst(t_toklst *toklst);
 
 // _utils.c
@@ -123,6 +138,7 @@ char		*msh_strjoin(char *s1, char *s2);
 // __display.c
 void		display_toklst(t_toklst *toklst);
 void		display_strlst(t_token *strlst);
+void		display_envlst(t_env *envlst);
 
 // executor/redirection.c
 int			set_file_redirection(t_token *files, enum e_rdr mode);
