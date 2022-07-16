@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _env.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 14:47:00 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 17:20:05 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,6 @@ char	*find_env(t_env *envlst, char *key)
 		}
 		envlst = envlst->next;
 	}
-	free(key);
+	// free(key); jrim은 써야되는데 nakkim은 필요없어
 	return (env_val);
 }
