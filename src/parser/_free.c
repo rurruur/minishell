@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:25:11 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 22:52:02 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 14:17:27 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	free_strarr(char **str);
 void	free_strlst(t_token *strlst);
+void	free_envlst(t_env *envlst);
 void	free_toklst(t_toklst *toklst);
 
 void	free_strarr(char **str)
@@ -41,6 +42,24 @@ void	free_strlst(t_token *strlst)
 		strlst = strlst->next;
 		free(tmp->str);
 		tmp->str = NULL;
+		tmp->next = NULL;
+		free(tmp);
+		tmp = NULL;
+	}
+}
+
+void	free_envlst(t_env *envlst)
+{
+	t_env	*tmp;
+
+	while (envlst)
+	{
+		tmp = envlst;
+		envlst = envlst->next;
+		free(tmp->key);
+		free(tmp->val);
+		tmp->key = NULL;
+		tmp->val = NULL;
 		tmp->next = NULL;
 		free(tmp);
 		tmp = NULL;
