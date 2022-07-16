@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 19:32:57 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 21:07:46 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*insert_env(t_env *envlst, char *old, char *str, int start)
 	env_key = ft_strndup(str, len);
 	env_val = find_env(envlst, env_key);
 	free(env_key);
-	if (!env_val)
+	if (len == 0)
 		return (old);
 	new = msh_strjoin(ft_strndup(old, start), env_val);
 	new = msh_strjoin(new, ft_strdup(old + start + len + 1));

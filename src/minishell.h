@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 19:34:54 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 21:14:14 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,11 +166,12 @@ char		*get_valid_cmd_path(char *cmd, t_env *env);
 
 // built-in functions
 int			builtin_main(char *cmd, t_token *argv, t_env *envlst);
-int			msh_cd(t_token *argv);
+int			msh_cd(t_token *argv, t_env *envlst);
 int			msh_echo(t_token *argv);
 int			msh_env(t_token *argv, t_env *envlst);
 int			msh_exit(t_token *argv);
 int			msh_pwd(t_token *argv);
-int			msh_unset(t_token *argv);
+int			msh_unset(t_token *argv, t_env *envlst);
+int			msh_export(t_token *argv, t_env *envlst);
 
 #endif
