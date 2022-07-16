@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:58:07 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 16:14:30 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 23:31:39 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,17 @@ void	trim_pretok(t_token *pretok)
 
 	while (pretok)
 	{
-		tmp = pretok->str;
-		new = trim_quote(pretok->str);
-		if (new)
+		if (pretok->type != T_ENV)
 		{
-			pretok->str = new;
-			free(tmp);
+			tmp = pretok->str;
+			new = trim_quote(pretok->str);
+			if (new)
+			{
+				pretok->str = new;
+				free(tmp);
+			}
+			tmp = NULL;
 		}
-		tmp = NULL;
 		pretok = pretok->next;
 	}
 }
@@ -87,8 +90,11 @@ void	del_quote_or_escape(char **str, int *q1, int *q2, int *len)
 {
 	if (**str == '\\')
 	{
-		if (*q1 == OPEN || *q2 == OPEN)
-				(*len)++;
+		if (*q1 == CLOSED && *q2 == CLOSED && \
+			(*(*str + 1) == '\0' || !ft_strchr(QUOTE, *(*str + 1))))
+		;
+		else if (*q1 == OPEN || *q2 == OPEN)
+			(*len)++;
 		else
 			(**str) = '\0';
 		(*len)++;

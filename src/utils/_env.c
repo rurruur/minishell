@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 21:07:46 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 23:04:25 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	is_env(t_token *pretok, t_env *envlst)
 	int		sq;
 	int		start;
 
+	if (envlst)
+		;
 	while (pretok)
 	{
 		sq = CLOSED;
@@ -56,7 +58,10 @@ void	is_env(t_token *pretok, t_env *envlst)
 				str++;
 			}
 			else if (sq == CLOSED && *str == '$')
-				pretok->str = insert_env(envlst, pretok->str, ++str, start);
+			{
+				pretok->type = T_ENV;
+				// pretok->str = insert_env(envlst, pretok->str, ++str, start);
+			}
 			start++;
 			str++;
 		}
