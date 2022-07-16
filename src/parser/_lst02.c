@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 15:22:26 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 16:14:21 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_env		*init_envlst(char *key, char *val)
 
 	new = (t_env *)malloc(sizeof(t_env));
 	if (!new)
-		print_errmsg("env list allocation");
+		err_alloc();
 	new->key = key;
 	new->val = val;
 	new->next = NULL;
@@ -53,7 +53,7 @@ t_toklst	*init_toklst(t_env *envlst)
 
 	new = (t_toklst *)malloc(sizeof(t_toklst));
 	if (!new)
-		print_errmsg("token list allocation");
+		err_alloc();
 	new->cmd = NULL;
 	new->infile = NULL;
 	new->heredoc = NULL;

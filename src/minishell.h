@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 14:51:40 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 16:13:31 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,12 @@ void		free_strlst(t_token *strlst);
 void		free_envlst(t_env *envlst);
 void		free_toklst(t_toklst *toklst);
 
+// _error.c
+void		print_errmsg(int err_type, char *str);
+void		err_syntax(int err_type, char *str);
+void		err_alloc(void);
+
 // _utils.c
-void		err_msg(char *str);
 char		*ft_strndup(char *str, int n);
 char		*msh_strjoin(char *s1, char *s2);
 
@@ -158,10 +162,10 @@ void		destroy_split(char **arr);
 char		*get_valid_cmd_path(char *cmd);
 
 // built-in functions
-void		builtin_main(char *cmd, t_token *argv);
+void		builtin_main(char *cmd, t_token *argv, t_env *envlst);
 void		msh_cd(t_token *argv);
 void		msh_echo(t_token *argv);
-void		msh_env(t_token *argv);
+void		msh_env(t_token *argv, t_env *envlst);
 void		msh_exit(t_token *argv);
 void		msh_pwd(void);
 void		msh_unset(t_token *argv);

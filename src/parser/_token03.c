@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:58:07 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 15:22:49 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 16:14:30 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*trim_quote(char *str)
 	idx = 0;
 	new_str = (char *)malloc((new_len + 1) * sizeof(char));
 	if (!new_str)
-		print_errmsg("allocation");
+		err_alloc();
 	while (idx < new_len)
 	{
 		if (*str != '\0')
