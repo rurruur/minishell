@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 18:56:57 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 22:45:05 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 14:33:23 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	display_toklst(t_toklst *toklst);
 void	display_strlst(t_token *strlst);
+void	display_envlst(t_env *envlst);
 
 void	display_toklst(t_toklst *toklst)
 {
@@ -52,5 +53,16 @@ void	display_strlst(t_token *strlst)
 		else
 			printf(" \033[0;33m.\033[0;37m\n");
 		strlst = strlst->next;
+	}
+}
+
+void	display_envlst(t_env *envlst)
+{
+	if (!envlst)
+		printf("(null)\n");
+	while (envlst)
+	{
+		printf("%s=%s\n", envlst->key, envlst->val);
+		envlst = envlst->next;
 	}
 }

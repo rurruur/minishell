@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 13:13:20 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 14:49:04 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,31 @@
 int	main(int argc, char **argv, char **env)
 {
 	char		*line;
+	t_env		*envlst;
 	t_toklst	*toklst;
 
 	(void)argv;
 	handle_sig();
-	// env copy해오기?
+	envlst = copy_env(env, NULL);
 	while (argc)
 	{
 		line = readline(PRMPT);
 		if (line)
 		{
 			add_history(line);
-			toklst = tokenizer(line, NULL);
+			toklst = tokenizer(line, NULL, envlst);
 			if (toklst)
 			{
 				display_toklst(toklst);
 				executor(toklst, env);
 			}
 			free_toklst(toklst);
-			system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");
 		}
 		else
 			break;
 		free(line);
 	}
+	free_envlst(envlst);
+	// system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");
 	return (0);
 }
