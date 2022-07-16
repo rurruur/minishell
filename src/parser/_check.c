@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 02:24:29 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 15:21:56 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	check_quote(char *line)
 		line++;
 	}
 	if (!(sq_flag + dq_flag > 0))
-		err_msg("quote");
+		print_errmsg("quote");
 	return (sq_flag + dq_flag > 0); // flag가 -1이면 quote가 안닫혔다는 의미
 }
 
@@ -67,7 +67,7 @@ int	check_pretok(t_token *pretok)
 		pretok = pretok->next;
 	}
 	if (flag == 0)
-		err_msg("pipe or RDR");
+		print_errmsg("pipe or RDR");
 	return (flag);
 }
 

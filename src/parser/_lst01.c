@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 00:22:02 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 15:22:09 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_token		*init_strlst(char *content)
 
 	new = (t_token *)malloc(sizeof(t_token));
 	if (!new)
-		err_msg("token allocation");
+		print_errmsg("token allocation");
 	new->str = content;
 	new->type = T_OFF;
 	new->next = NULL;
