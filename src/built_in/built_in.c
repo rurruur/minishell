@@ -6,13 +6,13 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/15 00:21:32 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 15:19:10 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	builtin_main(char *cmd, t_token *argv)
+void	builtin_main(char *cmd, t_token *argv, t_env *envlst)
 {
 	int	len;
 
@@ -22,7 +22,7 @@ void	builtin_main(char *cmd, t_token *argv)
 	else if (!ft_strncmp(cmd, "echo", len))
 		msh_echo(argv);
 	else if (!ft_strncmp(cmd, "env", len))
-		msh_env(argv);
+		msh_env(argv, envlst);
 	else if (!ft_strncmp(cmd, "exit", len))
 		msh_exit(argv);
 	else if (!ft_strncmp(cmd, "pwd", len))
