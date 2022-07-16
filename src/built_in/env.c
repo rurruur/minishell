@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:35 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 15:20:59 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 17:25:05 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../src/minishell.h"
+#include "../minishell.h"
 
 void	msh_env(t_token *argv, t_env *envlst)
 {

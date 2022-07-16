@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/14 22:43:44 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 17:24:52 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../src/minishell.h"
+#include "../minishell.h"
 
 void	msh_cd(t_token *argv)
 {
