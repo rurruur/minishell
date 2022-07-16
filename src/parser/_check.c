@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 16:17:54 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 16:35:44 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	check_quote(char *line)
 		line++;
 	}
 	if (!(sq_flag + dq_flag > 0))
-		err_syntax(0, NULL);
+		err_custom(0, NULL);
 	return (sq_flag + dq_flag > 0); // flag가 -1이면 quote가 안닫혔다는 의미
 }
 

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:11:42 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 16:18:03 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/16 16:36:32 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	print_errmsg(int err_type,char *str);
 void	err_syntax(int err_type, char *str);
+void	err_custom(int err_type, char *str);
 void	err_alloc(void);
 
 void	print_errmsg(int err_type, char *str)
@@ -31,12 +32,18 @@ void	print_errmsg(int err_type, char *str)
 
 void	err_syntax(int err_type, char *str)
 {
-	if (err_type == 0) // quote error
-		printf("minishell: quote is not closed\n");
-	else if (err_type == 1)
+	if (err_type == 1)
 		printf("minishell: syntax error near unexpected token `%s'\n", str);
 	else if (err_type == 2)
 		printf("minishell: syntax error near unexpected token `newline\'\n");
+}
+
+void	err_custom(int err_type, char *str)
+{
+	if (err_type == 0) // quote error
+		printf("minishell: quote is not closed\n");
+	else if (err_type == 1)
+		printf("minishell: invalid character `%s' is found", str);
 }
 
 void	err_alloc(void)
