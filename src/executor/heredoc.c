@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 11:58:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/17 12:55:21 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/17 14:36:35 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,47 @@ void	process_heredoc(t_token *heredoc_tok)
 		free(line);
 	}
 	close(fd);
+	free(heredoc_tok->str);
 	heredoc_tok->str = file_name;
 }
 
 void	check_heredoc(t_toklst *list)
 {
-	t_token	*infile;
+	t_token	*rdr_in;
 
 	while (list)
 	{
-		infile = list->infile;
-		while (infile)
+		rdr_in = list->rdr_in;
+		while (rdr_in)
 		{
-			if (infile->type == T_RDR_HD)
+			if (rdr_in->type == T_RDR_HD)
 			{
 				// heredoc 처리
-				// 파일 생성 후 infile->str 나올 때까지 readline으로 입력받음
+				// 파일 생성 후 rdr_in->str 나올 때까지 readline으로 입력받음
 				// 입력 받는 동안 시그널 처리? (ctrl+d, ctrl+c)
-				// 파일명 정해서 파일 생성 후 해당 파일명으로 infile->str 교체
+				// 파일명 정해서 파일 생성 후 해당 파일명으로 rdr_in->str 교체
 				// executor 끝나면 파일 삭제 & 파일명 free
-				process_heredoc(infile);
+				process_heredoc(rdr_in);
 			}
-			infile = infile->next;
+			rdr_in = rdr_in->next;
 		}
+		list = list->next;
+	}
+}
+
+void	clear_heredoc(t_toklst *list)
+{
+	t_token	*rdr_in;
+
+	while (list)
+	{
+		rdr_in = list->rdr_in;
+		while (rdr_in)
+		{
+			if (rdr_in->type == T_RDR_HD)
+				unlink(rdr_in->str);
+			rdr_in = rdr_in->next;
+		}
+		list = list->next;
 	}
 }
