@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 14:23:19 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/17 14:36:03 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_token
 typedef struct s_toklst
 {
 	t_token			*cmd;
-	t_token			*infile;
+	t_token			*rdr_in;
 	t_token			*rdr_out;
 	t_token			*trash;
 	int				end[2];
