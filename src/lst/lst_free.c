@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:25:11 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 13:50:17 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 14:08:45 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	free_envlst(t_env *envlst)
 	}
 }
 
-void		free_toklst(t_toklst *toklst)
+void	free_toklst(t_toklst *toklst)
 {
 	t_toklst	*tmp;
 

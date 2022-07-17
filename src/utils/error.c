@@ -6,13 +6,13 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:11:42 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 13:52:25 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 14:06:21 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	print_errmsg(int err_type,char *str);
+void	print_errmsg(int err_type, char *str);
 void	err_syntax(int err_type, char *str);
 void	err_custom(int err_type, char *str);
 void	err_alloc(void);
@@ -21,7 +21,6 @@ void	print_errmsg(int err_type, char *str)
 {
 	if (err_type)
 		printf("error: %s\n", str);
-		
 	// printf("minishell: %s: command not found\n");
 	// printf("minishell: %s: too many arguments\n");
 	// printf("minishell: %s: No such file or directory\n");

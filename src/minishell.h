@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 14:03:28 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 14:08:12 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,14 @@ typedef struct s_env
 	char			*key;
 	char			*val;
 	struct s_env	*next;
-} 					t_env;
+}					t_env;
 
 typedef struct s_token
 {
 	char			*str;
 	enum e_type		type;
 	struct s_token	*next;
-} 					t_token;
+}					t_token;
 
 typedef struct s_toklst
 {
@@ -77,7 +77,7 @@ typedef struct s_toklst
 	int				end[2];
 	t_env			*envlst;
 	struct s_toklst	*next;
-} 					t_toklst;
+}					t_toklst;
 
 /* directory: utils ------------------------------------------------------ */
 // _display.c
