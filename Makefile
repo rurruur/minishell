@@ -33,14 +33,14 @@ SRC			=	src/minishell.c \
 				src/executor/executor.c \
 				src/executor/cmd_utils.c \
 				src/executor/redirection.c \
-				src/built_in/builtin.c \
-				src/built_in/_cd.c \
-				src/built_in/_echo.c \
-				src/built_in/_env.c \
-				src/built_in/_exit.c \
-				src/built_in/_pwd.c \
-				src/built_in/_unset.c \
-				src/built_in/_export.c
+				src/builtin/builtin.c \
+				src/builtin/_cd.c \
+				src/builtin/_echo.c \
+				src/builtin/_env.c \
+				src/builtin/_exit.c \
+				src/builtin/_pwd.c \
+				src/builtin/_unset.c \
+				src/builtin/_export.c
 				
 OBJ			=	$(SRC:.c=.o)
 
