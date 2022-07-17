@@ -32,7 +32,8 @@ int	main(int argc, char **argv, char **env)
 			toklst = tokenizer(line, NULL, envlst);
 			if (toklst)
 			{
-				display_toklst(toklst);
+				// display_toklst(toklst);
+				// check_heredoc(toklst);
 				executor(toklst, envlst);
 			}
 			free_toklst(toklst);
