@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 16:10:40 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 19:46:12 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argv;
 	handle_sig();
+	g_status = 0;
 	envlst = copy_env(env, NULL);
 	g_fd = open("global", O_WRONLY | O_TRUNC | O_CREAT, 0777);
 	while (argc)
@@ -32,9 +33,9 @@ int	main(int argc, char **argv, char **env)
 			toklst = tokenizer(line, NULL, envlst);
 			if (toklst)
 			{
-				display_toklst(toklst);
+				// display_toklst(toklst);
 				check_heredoc(toklst);
-				display_toklst(toklst);
+				// display_toklst(toklst);
 				executor(toklst, envlst);
 				clear_heredoc(toklst);
 			}
