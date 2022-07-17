@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 14:08:12 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 15:50:04 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,14 @@ typedef struct s_toklst
 void		display_toklst(t_toklst *toklst);
 void		display_strlst(t_token *strlst);
 void		display_envlst(t_env *envlst);
+// env01.c
+t_env		*copy_env(char **env, t_env *envlst);
+void		env_to_str(t_token *pretok, t_env *envlst);
+char		*insert_env(t_env *envlst, char *old, char *str);
+char		*find_env(t_env *envlst, char *key);
+char		**get_env(t_env *envlst);
+// env02.c
+char		*get_env_key(char *str);
 // error.c
 void		print_errmsg(int err_type, char *str);
 void		err_syntax(int err_type, char *str);
@@ -93,12 +101,6 @@ void		err_alloc(void);
 void		handle_sig(void);
 void		h_sigint(int signum);
 void		h_sigquit(int signum);
-// utils_env.c
-t_env		*copy_env(char **env, t_env *envlst);
-void		env_to_str(t_token *pretok, t_env *envlst);
-char		*insert_env(t_env *envlst, char *old, char *str);
-char		*find_env(t_env *envlst, char *key);
-char		**get_env(t_env *envlst);
 // utils_str.c
 char		*ft_strndup(char *str, int n);
 char		*msh_strjoin(char *s1, char *s2);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_env.c                                        :+:      :+:    :+:   */
+/*   env01.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 14:05:48 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 15:54:02 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	env_to_str(t_token *pretok, t_env *envlst)
 			else if (sq == CLOSED && str[idx] == '$')
 			{
 				pretok->type = T_ENV;
-				pretok->str = insert_env(envlst, pretok->str, str + idx + 1);
+				pretok->str = insert_env(envlst, pretok->str, str + idx);
 			}
 			idx++;
 		}
@@ -68,25 +68,23 @@ void	env_to_str(t_token *pretok, t_env *envlst)
 
 char	*insert_env(t_env *envlst, char *old, char *str)
 {
-	int		len;
+	int		key_len;
 	int		dollar;
 	char	*env_key;
 	char	*env_val;
 	char	*new;
-
-	len = 0;
-	while (str[len] && !ft_strchr(DELIM, str[len]) && str[len] != '\\')
-		len++;
+	
 	dollar = 0;
 	while (old[dollar] && old[dollar] != '$')
 		dollar++;
-	env_key = ft_strndup(str, len);
-	env_val = find_env(envlst, env_key);
-	free(env_key);
-	if (len == 0)
+	env_key = get_env_key(str);
+	key_len = (int)ft_strlen(env_key);
+	if (key_len == 0)
 		return (ft_strdup(old));
+	env_val = find_env(envlst, env_key);
 	new = msh_strjoin(ft_strndup(old, dollar), env_val);
-	new = msh_strjoin(new, ft_strdup(old + dollar + len + 1));
+	new = msh_strjoin(new, ft_strdup(old + dollar + key_len + 1));
+	free(env_key);
 	return (new);
 }
 

@@ -19,9 +19,10 @@ LIBS		=	$(addprefix $(LIB_DIR), $(LIB_NAME))
 
 SRC			=	src/minishell.c \
 				src/utils/_display.c \
+				src/utils/env01.c \
+				src/utils/env02.c \
 				src/utils/error.c \
 				src/utils/signal.c \
-				src/utils/utils_env.c \
 				src/utils/utils_str.c \
 				src/parser/check.c \
 				src/parser/token01.c \
