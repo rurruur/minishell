@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 15:50:04 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 16:35:14 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_env
 {
 	char			*key;
 	char			*val;
+	struct s_env	*prev;
 	struct s_env	*next;
 }					t_env;
 
@@ -65,6 +66,7 @@ typedef struct s_token
 {
 	char			*str;
 	enum e_type		type;
+	struct s_token	*prev;
 	struct s_token	*next;
 }					t_token;
 
@@ -73,9 +75,9 @@ typedef struct s_toklst
 	t_token			*cmd;
 	t_token			*rdr_in;
 	t_token			*rdr_out;
-	t_token			*trash;
 	int				end[2];
 	t_env			*envlst;
+	struct s_toklst	*prev;
 	struct s_toklst	*next;
 }					t_toklst;
 
@@ -105,6 +107,7 @@ void		h_sigquit(int signum);
 char		*ft_strndup(char *str, int n);
 char		*msh_strjoin(char *s1, char *s2);
 int			ft_strcmp(const char *s1, const char *s2);
+void		free_strarr(char **str);
 
 /* directory: parser ----------------------------------------------------- */
 // check.c
@@ -128,21 +131,21 @@ int			cnt_trimmed_len(char *str);
 void		del_quote_or_escape(char **str, int *q1, int *q2, int *len);
 
 /* directory: lst --------------------------------------------------------- */
-// lst01.c
+// strlst.c
 t_token		*init_strlst(char *content);
 void		add_to_strlst(t_token **strlst, t_token *new);
 void		del_from_strlst(t_token **strlst);
 void		lst_to_lst(t_token **old, t_token **new);
-// _lst02.c
-t_env		*init_envlst(char *key, char *val);
-void		add_to_envlst(t_env **envlst, t_env *new);
+void		free_strlst(t_token *strlst);
+// toklst.c
 t_toklst	*init_toklst(t_env *envlst);
 void		add_to_toklst(t_toklst **toklst, t_toklst *new);
-// lst_free.c
-void		free_strarr(char **str);
-void		free_strlst(t_token *strlst);
-void		free_envlst(t_env *envlst);
 void		free_toklst(t_toklst *toklst);
+// envlst.c
+t_env		*init_envlst(char *key, char *val);
+void		add_to_envlst(t_env **envlst, t_env *new);
+void		del_from_envlst(t_env **envlst);
+void		free_envlst(t_env *envlst);
 
 /* directory: executor ---------------------------------------------------- */
 // redirection.c

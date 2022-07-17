@@ -23,14 +23,14 @@ SRC			=	src/minishell.c \
 				src/utils/env02.c \
 				src/utils/error.c \
 				src/utils/signal.c \
-				src/utils/utils_str.c \
+				src/utils/string.c \
 				src/parser/check.c \
 				src/parser/token01.c \
 				src/parser/token02.c \
 				src/parser/token03.c \
-				src/lst/lst01.c \
-				src/lst/lst02.c \
-				src/lst/lst_free.c \
+				src/lst/strlst.c \
+				src/lst/envlst.c \
+				src/lst/toklst.c \
 				src/executor/executor.c \
 				src/executor/cmd_utils.c \
 				src/executor/redirection.c \

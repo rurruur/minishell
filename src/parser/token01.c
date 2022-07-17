@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 14:10:40 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 16:21:26 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_toklst	*tokenizer(char *line, t_toklst *toklst, t_env *envlst)
 
 	if (!pretoknizer(line, &pretok, envlst))
 		return (NULL);
+	display_strlst(pretok);
 	while (pretok)
 	{
 		if (pretok->type != T_PIPE)
@@ -60,7 +61,7 @@ void	tok_to_lst(t_token **pretok, t_toklst *new)
 		type = (*pretok)->type;
 		if ((*pretok)->type > T_OFF)
 		{
-			lst_to_lst(pretok, &(new->trash));
+			del_from_strlst(pretok);
 			(*pretok)->type = type;
 			if (type == T_RDR_IN || type == T_RDR_HD)
 				lst_to_lst(pretok, &(new->rdr_in));

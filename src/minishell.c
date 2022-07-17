@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 14:07:24 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 16:10:40 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	main(int argc, char **argv, char **env)
 			toklst = tokenizer(line, NULL, envlst);
 			if (toklst)
 			{
-				// display_toklst(toklst);
+				display_toklst(toklst);
 				// check_heredoc(toklst);
-				executor(toklst, envlst);
+				// executor(toklst, envlst);
 			}
 			free_toklst(toklst);
 			// // system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");

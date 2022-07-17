@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_utils.c                                        :+:      :+:    :+:   */
+/*   string.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 18:12:05 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 13:52:31 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 16:35:37 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strndup(char *str, int n);
 char	*msh_strjoin(char *s1, char *s2);
+void	free_strarr(char **str);
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
@@ -80,4 +81,19 @@ char	*msh_strjoin(char *s1, char *s2)
 	free(s1);
 	free(s2);
 	return (new_str);
+}
+
+void	free_strarr(char **str)
+{
+	int	idx;
+
+	idx = 0;
+	if (!str)
+		return ;
+	while (str[idx])
+	{
+		free(str[idx]);
+		idx++;
+	}
+	free(str);
 }
