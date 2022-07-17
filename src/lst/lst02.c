@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _lst02.c                                           :+:      :+:    :+:   */
+/*   lst02.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 16:14:21 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 14:10:03 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		add_to_envlst(t_env **envlst, t_env *new);
 t_toklst	*init_toklst(t_env *envlst);
 void		add_to_toklst(t_toklst **toklst, t_toklst *new);
 
-t_env		*init_envlst(char *key, char *val)
+t_env	*init_envlst(char *key, char *val)
 {
 	t_env	*new;
 
@@ -30,9 +30,9 @@ t_env		*init_envlst(char *key, char *val)
 	return (new);
 }
 
-void		add_to_envlst(t_env **envlst, t_env *new)
+void	add_to_envlst(t_env **envlst, t_env *new)
 {
-	t_env *tmp;
+	t_env	*tmp;
 
 	if (*envlst == NULL)
 		(*envlst) = new;
@@ -46,7 +46,6 @@ void		add_to_envlst(t_env **envlst, t_env *new)
 	}
 }
 
-
 t_toklst	*init_toklst(t_env *envlst)
 {
 	t_toklst	*new;
@@ -55,8 +54,7 @@ t_toklst	*init_toklst(t_env *envlst)
 	if (!new)
 		err_alloc();
 	new->cmd = NULL;
-	new->infile = NULL;
-	new->heredoc = NULL;
+	new->rdr_in = NULL;
 	new->rdr_out = NULL;
 	new->trash = NULL;
 	new->envlst = envlst;
@@ -66,7 +64,7 @@ t_toklst	*init_toklst(t_env *envlst)
 
 void	add_to_toklst(t_toklst **toklst, t_toklst *new)
 {
-	t_toklst *tmp;
+	t_toklst	*tmp;
 
 	if (*toklst == NULL)
 		(*toklst) = new;

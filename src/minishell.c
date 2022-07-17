@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 12:55:37 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/17 14:07:24 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **env)
 			free(line);
 		}
 		else
-			break;
+			break ;
 	}
 	close(g_fd);
 	free_envlst(envlst);

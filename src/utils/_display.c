@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   __display.c                                        :+:      :+:    :+:   */
+/*   _display.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 18:56:57 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 14:33:23 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 14:06:50 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,18 @@ void	display_envlst(t_env *envlst);
 
 void	display_toklst(t_toklst *toklst)
 {
-	int idx;
+	int	idx;
 
 	idx = 1;
 	while (toklst)
 	{
 		if (!toklst)
-			break;
+			break ;
 		printf("__________ %dth node __________\n", idx);
 		printf("  cmd : ");
 		display_strlst(toklst->cmd);
-		printf("   <  : ");
-		display_strlst(toklst->infile);
-		printf("  <<  : ");
-		display_strlst(toklst->heredoc);
+		printf(" </<<  : ");
+		display_strlst(toklst->rdr_in);
 		printf(" >/>> : ");
 		display_strlst(toklst->rdr_out);
 		printf("______________________________\n");
@@ -46,7 +44,6 @@ void	display_strlst(t_token *strlst)
 		printf("(null)\n");
 	while (strlst)
 	{
-		// printf("%s", strlst->str);
 		printf("%s(%d)", strlst->str, strlst->type);
 		if (strlst->next)
 			printf(" | ");

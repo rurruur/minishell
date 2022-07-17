@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _token03.c                                         :+:      :+:    :+:   */
+/*   token03.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:58:07 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 02:09:22 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 14:13:54 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	del_quote_or_escape(char **str, int *q1, int *q2, int *len)
 	{
 		if (*q1 == CLOSED && *q2 == CLOSED && \
 			(*(*str + 1) == '\0' || !ft_strchr(QUOTE, *(*str + 1))))
-		;
+			;
 		else if (*q1 == OPEN || *q2 == OPEN)
 			(*len)++;
 		else
@@ -103,6 +103,6 @@ void	del_quote_or_escape(char **str, int *q1, int *q2, int *len)
 		(*q1) = -(*q1);
 		(**str) = '\0';
 	}
-	else	// *q2 == OPEN
+	else
 		(*len)++;
 }

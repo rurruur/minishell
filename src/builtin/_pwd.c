@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   _pwd.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/13 18:36:35 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 19:05:52 by jrim             ###   ########.fr       */
+/*   Created: 2022/07/13 18:36:50 by jrim              #+#    #+#             */
+/*   Updated: 2022/07/17 13:51:01 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	msh_env(t_token *argv, t_env *envlst)
+#define MAX_PATH_LEN 4096	// Linux maximum path length라고 검색한 결과
+
+int	msh_pwd(t_token *argv)
 {
-	(void)argv;	
-	if (!envlst || argv->next)
-		return (0);	
-	while (envlst)
-	{
-		printf("%s=%s\n", envlst->key, envlst->val);
-		envlst = envlst->next;
-	}
+	char	*pwd;
+	char	buf[MAX_PATH_LEN];
+
+	if (argv->next && (!ft_strncmp(argv->next->str, "-L", ft_strlen(argv->next->str))\
+						|| !ft_strncmp(argv->next->str, "-P", ft_strlen(argv->next->str))))
+		return (0);
+	pwd = getcwd(buf, MAX_PATH_LEN);
+	printf("%s\n", pwd);
 	return (1);
 }

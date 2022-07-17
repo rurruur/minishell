@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _env.c                                             :+:      :+:    :+:   */
+/*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 02:09:10 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 14:05:48 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	**get_env(t_env *envlst);
 t_env	*copy_env(char **env, t_env *envlst)
 {
 	int		idx;
-	int 	delim;
+	int		delim;
 	t_env	*new;
 
 	idx = 0;
@@ -39,7 +39,7 @@ t_env	*copy_env(char **env, t_env *envlst)
 
 void	env_to_str(t_token *pretok, t_env *envlst)
 {
-	char 	*str;
+	char	*str;
 	int		sq;
 	int		idx;
 
@@ -92,7 +92,7 @@ char	*insert_env(t_env *envlst, char *old, char *str)
 
 char	*find_env(t_env *envlst, char *key)
 {
-	char *env_val;
+	char	*env_val;
 
 	env_val = NULL;
 	while (envlst)
@@ -100,7 +100,7 @@ char	*find_env(t_env *envlst, char *key)
 		if (!ft_strncmp(envlst->key, key, ft_strlen(key)))
 		{
 			env_val = ft_strdup(envlst->val);
-			break;
+			break ;
 		}
 		envlst = envlst->next;
 	}

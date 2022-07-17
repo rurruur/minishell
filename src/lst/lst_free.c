@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _free.c                                            :+:      :+:    :+:   */
+/*   lst_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:25:11 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 14:17:27 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 14:08:45 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	free_envlst(t_env *envlst)
 	}
 }
 
-void		free_toklst(t_toklst *toklst)
+void	free_toklst(t_toklst *toklst)
 {
 	t_toklst	*tmp;
 
@@ -75,8 +75,7 @@ void		free_toklst(t_toklst *toklst)
 		tmp = toklst;
 		toklst = toklst->next;
 		free_strlst(tmp->cmd);
-		free_strlst(tmp->infile);
-		free_strlst(tmp->heredoc);
+		free_strlst(tmp->rdr_in);
 		free_strlst(tmp->rdr_out);
 		free_strlst(tmp->trash);
 		free(tmp);

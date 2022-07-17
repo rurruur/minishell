@@ -18,30 +18,29 @@ LIB_NAME	=	libft.a
 LIBS		=	$(addprefix $(LIB_DIR), $(LIB_NAME))
 
 SRC			=	src/minishell.c \
-				src/utils/_signal.c \
-				src/utils/_env.c \
-				src/utils/_error.c \
-				src/utils/_utils.c \
-				src/utils/__display.c \
-				src/parser/_check.c \
-				src/parser/_token01.c \
-				src/parser/_token02.c \
-				src/parser/_token03.c \
-				src/lst/_lst01.c \
-				src/lst/_lst02.c \
-				src/lst/_free.c \
+				src/utils/_display.c \
+				src/utils/error.c \
+				src/utils/signal.c \
+				src/utils/utils_env.c \
+				src/utils/utils_str.c \
+				src/parser/check.c \
+				src/parser/token01.c \
+				src/parser/token02.c \
+				src/parser/token03.c \
+				src/lst/lst01.c \
+				src/lst/lst02.c \
+				src/lst/lst_free.c \
 				src/executor/executor.c \
 				src/executor/cmd_utils.c \
 				src/executor/redirection.c \
-				src/executor/heredoc.c \
-				src/built_in/built_in.c \
-				src/built_in/cd.c \
-				src/built_in/echo.c \
-				src/built_in/env.c \
-				src/built_in/exit.c \
-				src/built_in/pwd.c \
-				src/built_in/unset.c \
-				src/built_in/export.c
+				src/builtin/builtin.c \
+				src/builtin/_cd.c \
+				src/builtin/_echo.c \
+				src/builtin/_env.c \
+				src/builtin/_exit.c \
+				src/builtin/_pwd.c \
+				src/builtin/_unset.c \
+				src/builtin/_export.c
 				
 OBJ			=	$(SRC:.c=.o)
 
