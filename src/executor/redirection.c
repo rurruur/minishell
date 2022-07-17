@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:05:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/17 13:37:34 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 20:07:15 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,13 @@ int	set_outfile_redirection(t_toklst *list)
 	return (1);
 }
 
-void	set_redirection(t_toklst *list, int prev_end)
+void	set_redirection(t_toklst *list)
 {
 	int	result;
 
 	// if (list->end[0] != -1)
 	// 	close(list->end[0]);
-	if (prev_end != -1)
-	{
-		dup2(prev_end, STDIN_FILENO);
-		dprintf(g_fd, "prev_end(%d)을 STDIN으로 설정\n", prev_end);
-	}
+	dprintf(g_fd, "[%p] %p [%p]\n", list->prev, list, list->next);
 	if (list->rdr_in)
 	{
 		// STDIN 설정
@@ -81,6 +77,11 @@ void	set_redirection(t_toklst *list, int prev_end)
 			perror("redirection error");	// infile 하나라도 없는 경우: 해당 노드는 실행 x
 		else if (result == -1)
 			perror("dup2");		// 어캐 해야? 걍 종료?
+	}
+	else if (list->prev)
+	{
+		dup2(list->prev->end[0], STDIN_FILENO);
+		dprintf(g_fd, "list->prev->end[0](%d)을 STDIN으로 설정\n", list->prev->end[0]);
 	}
 	if (list->rdr_out)
 	{
