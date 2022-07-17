@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 14:08:12 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 14:23:19 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_token
 typedef struct s_toklst
 {
 	t_token			*cmd;
-	t_token			*rdr_in;
+	t_token			*infile;
 	t_token			*rdr_out;
 	t_token			*trash;
 	int				end[2];
@@ -157,6 +157,11 @@ char		**list_to_arr(t_token *cmds);
 char		*double_strjoin(char *start, char *middle, char *end);
 void		destroy_split(char **arr);
 char		*get_valid_cmd_path(char *cmd, t_env *env);
+// heredoc.c
+char		*make_file_name(char *heredoc);
+void		process_heredoc(t_token *heredoc_tok);
+void		check_heredoc(t_toklst *list);
+void		clear_heredoc(t_toklst *list);
 
 /* directory: builtin ----------------------------------------------------- */
 // builtin functions

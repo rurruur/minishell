@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 11:58:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/17 12:55:21 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/17 14:29:49 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	process_heredoc(t_token *heredoc_tok)
 		free(line);
 	}
 	close(fd);
+	free(heredoc_tok->str);
 	heredoc_tok->str = file_name;
 }
 
@@ -74,5 +75,23 @@ void	check_heredoc(t_toklst *list)
 			}
 			infile = infile->next;
 		}
+		list = list->next;
+	}
+}
+
+void	clear_heredoc(t_toklst *list)
+{
+	t_token	*infile;
+
+	while (list)
+	{
+		infile = list->infile;
+		while (infile)
+		{
+			if (infile->type == T_RDR_HD)
+				unlink(infile->str);
+			infile = infile->next;
+		}
+		list = list->next;
 	}
 }
