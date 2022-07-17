@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 17:04:52 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/17 12:55:37 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	main(int argc, char **argv, char **env)
 			if (toklst)
 			{
 				// display_toklst(toklst);
+				// check_heredoc(toklst);
 				executor(toklst, envlst);
 			}
 			// free_toklst(toklst);
