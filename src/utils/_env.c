@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   _env.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 17:20:05 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/17 02:09:10 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 t_env	*copy_env(char **env, t_env *envlst);
-void	is_env(t_token *pretok, t_env *envlst);
-char	*insert_env(t_env *envlst, char *old, char *str, int start);
+void	env_to_str(t_token *pretok, t_env *envlst);
+char	*insert_env(t_env *envlst, char *old, char *str);
 char	*find_env(t_env *envlst, char *key);
+char	**get_env(t_env *envlst);
 
 t_env	*copy_env(char **env, t_env *envlst)
 {
@@ -36,50 +37,56 @@ t_env	*copy_env(char **env, t_env *envlst)
 	return (envlst);
 }
 
-void	is_env(t_token *pretok, t_env *envlst)
+void	env_to_str(t_token *pretok, t_env *envlst)
 {
 	char 	*str;
 	int		sq;
-	int		start;
+	int		idx;
 
 	while (pretok)
 	{
 		sq = CLOSED;
 		str = pretok->str;
-		start = 0;
-		while (*str)
+		idx = 0;
+		while (str[idx])
 		{
-			if (*str != '\\' && *(str + 1) == '\'')
+			if (str[idx] != '\\' && str[idx + 1] == '\'')
 			{
 				sq = -sq;
-				str++;
+				idx++;
 			}
-			else if (sq == CLOSED && *str == '$')
-				pretok->str = insert_env(envlst, pretok->str, ++str, start);
-			start++;
-			str++;
+			else if (sq == CLOSED && str[idx] == '$')
+			{
+				pretok->type = T_ENV;
+				pretok->str = insert_env(envlst, pretok->str, str + idx + 1);
+			}
+			idx++;
 		}
 		pretok = pretok->next;
 	}
 }
 
-char	*insert_env(t_env *envlst, char *old, char *str, int start)
+char	*insert_env(t_env *envlst, char *old, char *str)
 {
 	int		len;
+	int		dollar;
 	char	*env_key;
 	char	*env_val;
 	char	*new;
 
 	len = 0;
-	while (!ft_strchr(DELIM, str[len]) && str[len] != '\\')
+	while (str[len] && !ft_strchr(DELIM, str[len]) && str[len] != '\\')
 		len++;
+	dollar = 0;
+	while (old[dollar] && old[dollar] != '$')
+		dollar++;
 	env_key = ft_strndup(str, len);
 	env_val = find_env(envlst, env_key);
-	if (!env_val)
-		return (old);
-	new = msh_strjoin(ft_strndup(old, start), env_val);
-	new = msh_strjoin(new, ft_strdup(old + start + len + 1));
-	free(old);
+	free(env_key);
+	if (len == 0)
+		return (ft_strdup(old));
+	new = msh_strjoin(ft_strndup(old, dollar), env_val);
+	new = msh_strjoin(new, ft_strdup(old + dollar + len + 1));
 	return (new);
 }
 
@@ -97,6 +104,29 @@ char	*find_env(t_env *envlst, char *key)
 		}
 		envlst = envlst->next;
 	}
-	// free(key); jrim은 써야되는데 nakkim은 필요없어
 	return (env_val);
+}
+
+char	**get_env(t_env *envlst)
+{
+	char	**arr;
+	int		size;
+	t_env	*tmp;
+
+	tmp = envlst;
+	size = 0;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		size++;
+	}
+	arr = (char **)malloc(sizeof(char *) * (size + 1));
+	arr[size] = NULL;
+	size = 0;
+	while (envlst)
+	{
+		arr[size++] = double_strjoin(envlst->key, "=", envlst->val);
+		envlst = envlst->next;
+	}
+	return (arr);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 17:08:09 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/17 03:03:25 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	g_fd;
 
 enum e_type
 {
+	T_ENV,
 	T_OFF,
 	T_RDR_IN,
 	T_RDR_HD,
@@ -92,9 +93,10 @@ void		check_empty(t_token *pretok);
 
 // _env.c
 t_env		*copy_env(char **env, t_env *envlst);
-void		is_env(t_token *pretok, t_env *envlst);
-char		*insert_env(t_env *envlst, char *old, char *str, int start);
+void		env_to_str(t_token *pretok, t_env *envlst);
+char		*insert_env(t_env *envlst, char *old, char *str);
 char		*find_env(t_env *envlst, char *key);
+char		**get_env(t_env *envlst);
 
 // _token01.c
 t_toklst	*tokenizer(char *line, t_toklst *toklst, t_env *envlst);
@@ -140,6 +142,7 @@ void		err_alloc(void);
 // _utils.c
 char		*ft_strndup(char *str, int n);
 char		*msh_strjoin(char *s1, char *s2);
+int			ft_strcmp(const char *s1, const char *s2);
 
 // __display.c
 void		display_toklst(t_toklst *toklst);
@@ -164,12 +167,13 @@ void		destroy_split(char **arr);
 char		*get_valid_cmd_path(char *cmd, t_env *env);
 
 // built-in functions
-void		builtin_main(char *cmd, t_token *argv, t_env *envlst);
-void		msh_cd(t_token *argv);
-void		msh_echo(t_token *argv);
-void		msh_env(t_token *argv, t_env *envlst);
-void		msh_exit(t_token *argv);
-void		msh_pwd(void);
-void		msh_unset(t_token *argv);
+int			builtin_main(char *cmd, t_token *argv, t_env *envlst);
+int			msh_cd(t_token *argv, t_env *envlst);
+int			msh_echo(t_token *argv);
+int			msh_env(t_token *argv, t_env *envlst);
+int			msh_exit(t_token *argv);
+int			msh_pwd(t_token *argv);
+int			msh_unset(t_token *argv, t_env *envlst);
+int			msh_export(t_token *argv, t_env *envlst);
 
 #endif

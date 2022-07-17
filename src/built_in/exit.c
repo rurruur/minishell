@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:39 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 17:25:08 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/16 19:02:50 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 // $? : return value of previous command
 
-void	msh_exit(t_token *argv)
+int	msh_exit(t_token *argv)
 {
 	if (argv)
 		printf("exit 아직 안만들었단다\n");
+	return (0);
 }

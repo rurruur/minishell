@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:35 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 17:25:05 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/16 19:05:52 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	msh_env(t_token *argv, t_env *envlst)
+int	msh_env(t_token *argv, t_env *envlst)
 {
-	// 옵션이 있는지 없는지 검사?
-
 	(void)argv;	
+	if (!envlst || argv->next)
+		return (0);	
 	while (envlst)
 	{
 		printf("%s=%s\n", envlst->key, envlst->val);
 		envlst = envlst->next;
 	}
+	return (1);
 }

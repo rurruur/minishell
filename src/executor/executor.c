@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
 /*   Updated: 2022/07/17 12:00:24 by nakkim           ###   ########.fr       */
@@ -28,30 +28,6 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-char	**get_env(t_env *envlst)
-{
-	char	**arr;
-	int		size;
-	t_env	*tmp;
-
-	tmp = envlst;
-	size = 0;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		size++;
-	}
-	arr = (char **)malloc(sizeof(char *) * (size + 1));
-	arr[size] = NULL;
-	size = 0;
-	while (envlst)
-	{
-		arr[size++] = double_strjoin(envlst->key, "=", envlst->val);
-		envlst = envlst->next;
-	}
-	return (arr);
-}
-
 void	child_process(t_toklst *list, int prev_end, t_env *envlst)
 {
 	char	*cmd;
@@ -61,12 +37,12 @@ void	child_process(t_toklst *list, int prev_end, t_env *envlst)
 	set_redirection(list, prev_end);
 	if (list->cmd)
 	{
-		// if (is_builtin(list->cmd->str))
-		// {
-		// 	builtin_main(list->cmd->str, list->cmd, envlst);
-		// 	// free는해야돼..
-		// 	exit(1);
-		// }
+		if (is_builtin(list->cmd->str))
+		{
+			if (builtin_main(list->cmd->str, list->cmd, envlst))
+				exit(1);
+			// free는해야돼..
+		}
 		cmd = get_valid_cmd_path(list->cmd->str, envlst);
 		if (!cmd) {
 			// cmd 못찾은 경우
