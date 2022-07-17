@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 02:03:11 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 13:35:30 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,8 @@ void	tok_to_lst(t_token **pretok, t_toklst *new)
 		{
 			lst_to_lst(pretok, &(new->trash));
 			(*pretok)->type = type;
-			if (type == T_RDR_IN)
-				lst_to_lst(pretok, &(new->infile)); 
-			else if (type == T_RDR_HD)
-				lst_to_lst(pretok, &(new->heredoc)); 
+			if (type == T_RDR_IN || type == T_RDR_HD)
+				lst_to_lst(pretok, &(new->rdr_in)); 
 			else if (type == T_RDR_OUT || type == T_RDR_AP)
 				lst_to_lst(pretok, &(new->rdr_out)); 
 		}

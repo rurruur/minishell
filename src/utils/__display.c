@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 18:56:57 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 14:33:23 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 13:36:33 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ void	display_toklst(t_toklst *toklst)
 		printf("__________ %dth node __________\n", idx);
 		printf("  cmd : ");
 		display_strlst(toklst->cmd);
-		printf("   <  : ");
-		display_strlst(toklst->infile);
-		printf("  <<  : ");
-		display_strlst(toklst->heredoc);
+		printf(" </<<  : ");
+		display_strlst(toklst->rdr_in);
 		printf(" >/>> : ");
 		display_strlst(toklst->rdr_out);
 		printf("______________________________\n");

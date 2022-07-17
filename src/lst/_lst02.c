@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/16 16:14:21 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 13:36:02 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ t_toklst	*init_toklst(t_env *envlst)
 	if (!new)
 		err_alloc();
 	new->cmd = NULL;
-	new->infile = NULL;
-	new->heredoc = NULL;
+	new->rdr_in = NULL;
 	new->rdr_out = NULL;
 	new->trash = NULL;
 	new->envlst = envlst;

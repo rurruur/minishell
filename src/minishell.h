@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 03:03:25 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 13:35:10 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ typedef struct s_token
 typedef struct s_toklst
 {
 	t_token			*cmd;		//	cmd와 뒤에 오는 str들
-	t_token			*infile;	//	< : infile name
-	t_token			*heredoc;	//	<< : here_doc에 들어가는 str들
-	t_token			*rdr_out;
+	// t_token			*infile;	//	< : infile name
+	// t_token			*heredoc;	//	<< : here_doc에 들어가는 str들
+	t_token			*rdr_in;	// infile and heredoc
+	t_token			*rdr_out;	// outfile and append
 	t_token			*trash;
 	int				end[2];
 	t_env			*envlst;

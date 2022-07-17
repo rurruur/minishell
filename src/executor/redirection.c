@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:05:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/16 16:20:19 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/17 13:37:34 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ void	set_redirection(t_toklst *list, int prev_end)
 		dup2(prev_end, STDIN_FILENO);
 		dprintf(g_fd, "prev_end(%d)을 STDIN으로 설정\n", prev_end);
 	}
-	if (list->infile)
+	if (list->rdr_in)
 	{
 		// STDIN 설정
-		result = set_infile_redirection(list->infile);
+		result = set_infile_redirection(list->rdr_in);
 		if (result == 0)
 			perror("redirection error");	// infile 하나라도 없는 경우: 해당 노드는 실행 x
 		else if (result == -1)
