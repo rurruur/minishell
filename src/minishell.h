@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 18:13:46 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 21:33:46 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,8 @@
 
 # define PRMPT "\033[0;33m( ´Д`)>\033[0;37m "
 # define WH_SPACE " \f\n\r\t\v"
-# define DELIM " <>|'\""
+# define DELIM_WITH_QUOTE " <>|'\""
 # define QUOTE "'\""
-# define STR_DQ "\""
-# define STR_SQ "\'"
-// # define RDR "<>"
 
 # define CLOSED 1
 # define OPEN -1
@@ -122,7 +119,8 @@ void		tok_to_lst(t_token **pretok, t_toklst *new);
 t_token		*split_tok(char *line, char *delim);
 void		parse_delim(char **line, char *delim, t_token **strlst);
 void		assort_delim(t_token **new, char **line, int flag);
-char		*make_tok(char **line, char *delim);
+char		*make_tok(char **line);
+void		cnt_tok_len(char *line, int *len, int quote);
 // token03.c
 void		trim_pretok(t_token *pretok);
 char		*trim_quote(char *str);
@@ -151,7 +149,6 @@ void		free_envlst(t_env *envlst);
 int			set_file_redirection(t_token *files, enum e_rdr mode);
 void		set_redirection(t_toklst *list, int end);
 // executor.c
-int			is_builtin(char *cmd);
 void		child_process(t_toklst *list, int end, t_env *envlst);
 void		parent_process(pid_t child, int *end);
 void		executor(t_toklst *list, t_env *envlst);
