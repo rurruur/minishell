@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 13:50:59 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 18:12:05 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	_export_valid(char *str, t_env *envlst)
 		free(env_key);
 		return ;
 	}
-	if (find_env(envlst, env_key))
+	if (get_env_val(envlst, env_key))
 	{
 		while (envlst)
 		{

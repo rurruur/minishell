@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/17 12:00:24 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/17 18:14:00 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	child_process(t_toklst *list, int prev_end, t_env *envlst)
 			// cmd free 필요
 			cmd_arr = list_to_arr(list->cmd);	// 각각 free 필요?
 			dprintf(g_fd, "cmd execute(pid: %d)\n", getpid());
-			env = get_env(envlst);
+			env = envlst_to_arr(envlst);
 			if (!execve(cmd, cmd_arr, env))
 			{
 				perror("execve");
