@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 14:12:41 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 16:06:27 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	check_empty(t_token *pretok)
 {
 	while (pretok)
 	{
-		if (pretok->next && pretok->next->str[0] == '\0')
+		if (pretok->str[0] == '\0')
 			del_from_strlst(&pretok);
 		else
 			pretok = pretok->next;

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 13:50:47 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 14:59:40 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	cd_home(char *path, t_env *envlst)
 {
 	printf("cd_home in\n");
 	path = find_env(envlst, "HOME");
+	printf("path : %s\n", path);
 	if (chdir(path) == -1)
 		printf("HOME is not set\n");
 }
