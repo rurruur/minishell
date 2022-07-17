@@ -1,3 +1,8 @@
+### 환경변수
+1. 환경변수 이름 규칙
+	- a~z, A~Z, _, 0~9 로 구성되어있다.
+	- 단, 숫자로 시작할 수 없다.
+
 ### echo
 - echo	$SHELL		:	/bin/zsh
 - echo	"$SHELL"	:	/bin/zsh
