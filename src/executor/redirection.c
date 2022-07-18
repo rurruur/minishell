@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:05:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/18 16:59:56 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/18 17:49:44 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,25 @@
 static void	set_infile_redirection(t_token *files)
 {
 	int	fd;
+	int	exists;
 
+	exists = 1;
 	while (files)
 	{
-		fd = open(files->str, O_RDONLY);
-		if (fd < 0)
-			ft_error("open");
+		if (exists && stat(files->str, NULL) == -1)
+			exists = 0;
 		if (files->next == NULL)
 			break ;
-		close(fd);
 		files = files->next;
 	}
+	if (!exists)
+	{
+		errno = RDR_IN_NO_EXIST;
+		ft_error(files->str);
+	}
+	fd = open(files->str, O_RDONLY);
 	if (dup2(fd, STDIN_FILENO < 0))
-		ft_error("dup2");
+		ft_error(files->str);
 	close(fd);
 }
 
@@ -42,7 +48,7 @@ static int	set_outfile_redirection(t_token *files)
 		else if (files->type == T_RDR_AP)
 			fd = open(files->str, O_WRONLY | O_APPEND | O_CREAT, 0777);
 		if (fd < 0)
-			ft_error("open");
+			ft_error(files->str);
 		if (files->next == NULL)
 			break ;
 		close(fd);
