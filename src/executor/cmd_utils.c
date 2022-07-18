@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:06:23 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/18 17:16:37 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/18 17:29:31 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*get_valid_cmd_path(char *cmd, t_env *env)
 	char		**path;
 	int			i;
 	
-	path = ft_split(find_env(env, "PATH"), ':');
+	path = ft_split(get_env_val(env, "PATH"), ':');	// free?
 	i = -1;
 	while (path[++i])
 	{

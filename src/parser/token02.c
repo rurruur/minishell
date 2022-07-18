@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:16:27 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 14:13:01 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 21:29:07 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_token	*split_tok(char *line, char *delim);
 void	parse_delim(char **line, char *delim, t_token **strlst);
 void	assort_delim(t_token **new, char **line, int flag);
-char	*make_tok(char **line, char *delim);
+char	*make_tok(char **line);
 void	cnt_tok_len(char *line, int *len, int quote);
 
 t_token	*split_tok(char *line, char *delim)
@@ -27,10 +27,11 @@ t_token	*split_tok(char *line, char *delim)
 	while (*line != '\0')
 	{
 		parse_delim(&line, delim, &strlst);
-		tmp = make_tok(&line, delim);
-		while (!ft_strchr(delim, *line))
-			tmp = msh_strjoin(tmp, make_tok(&line, delim));
-		add_to_strlst(&strlst, init_strlst(tmp));
+		tmp = make_tok(&line);
+		while (*line != '\0' && !ft_strchr(delim, *line))
+			tmp = msh_strjoin(tmp, make_tok(&line));
+		if (tmp)
+			add_to_strlst(&strlst, init_strlst(tmp));
 	}
 	return (strlst);
 }
@@ -74,13 +75,14 @@ void	assort_delim(t_token **new, char **line, int flag)
 	}	
 }
 
-char	*make_tok(char **line, char *delim)
+char	*make_tok(char **line)
 {
 	int		len;
 	char	*str;
 
-	if (delim) //norm 때문에 잠깐 넣어놓은거임
-		len = 0;
+	if (**line == '\0')
+		return (NULL);
+	len = 0;
 	if (**line != '"' && **line != '\'')
 		cnt_tok_len(*line, &len, 0);
 	else
@@ -105,7 +107,7 @@ void	cnt_tok_len(char *line, int *len, int quote)
 	}
 	else
 	{
-		while (!ft_strchr(DELIM, line[*len]) && line[*len] != '\0')
+		while (line[*len] != '\0' && !ft_strchr(DELIM_WITH_QUOTE, line[*len]))
 		{
 			if (line[*len] == '\\' && ft_strchr(QUOTE, line[*len + 1]))
 				(*len)++;

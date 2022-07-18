@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:11:42 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 14:06:21 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 21:18:13 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	err_custom(int err_type, char *str)
 {
 	if (err_type == 0) // quote error
 		printf("minishell: quote is not closed\n");
-	else if (err_type == 1)
+	else if (err_type == 1) // 아직 쓰는 경우가 없...어
 		printf("minishell: invalid character `%s' is found", str);
 }
 

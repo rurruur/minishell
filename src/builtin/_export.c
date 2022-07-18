@@ -6,13 +6,40 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 13:50:59 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 18:43:45 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	_export_valid_key(char *str)
+int		msh_export(t_token *argv, t_env *envlst);
+int		_export_valid(char *str);
+void	_export_add(t_env *envlst, char *env_key, char *env_val);
+
+int	msh_export(t_token *argv, t_env *envlst)
+{
+	int		key_len;
+	char	*env_key;
+	char	*env_val;
+
+	argv = argv->next;
+	while (argv)
+	{
+		key_len = _export_valid(argv->str);
+		if (key_len)
+		{
+			env_key = ft_strndup(argv->str, key_len);
+			env_val = ft_strdup(argv->str + key_len + 1);
+			_export_add(envlst, env_key, env_val);
+		}
+		else
+			printf("minishell: export: `%s': not a valid identifier\n", argv->str);
+		argv = argv->next;
+	}
+	return (1);
+}
+
+int	_export_valid(char *str)
 {
 	int	idx;
 	
@@ -31,38 +58,16 @@ int	_export_valid_key(char *str)
 		return (0);
 }
 
-void	_export_valid(char *str, t_env *envlst)
+void	_export_add(t_env *envlst, char *env_key, char *env_val)
 {
-	int		key_len;
-	char	*env_key;
-	char	*env_val;
 	char	*tmp;
 
-	key_len = _export_valid_key(str);
-	if (!key_len)
-	{
-		printf("invalid key\n");
-		return ;
-	}
-	env_key = ft_strndup(str, key_len);
-	str += key_len + 1;
-	env_val = ft_strdup(str);
-	// A=   인 경우에는?
-	if (!env_val)
-	{
-		printf("invalid val\n");
-		free(env_key);
-		return ;
-	}
-	if (find_env(envlst, env_key))
+	if (get_env_val(envlst, env_key))
 	{
 		while (envlst)
 		{
-			if (!ft_strcmp(envlst->key, env_key)) //  ft_strcmp 만들기
-			{
-				env_val = ft_strdup(envlst->val);
+			if (!ft_strcmp(envlst->key, env_key))
 				break;
-			}
 			envlst = envlst->next;
 		}
 		tmp = envlst->val;
@@ -71,20 +76,4 @@ void	_export_valid(char *str, t_env *envlst)
 	}
 	else
 		add_to_envlst(&envlst, init_envlst(env_key, env_val));
-}
-
-int	msh_export(t_token *argv, t_env *envlst)
-{
-	if (!argv->next)
-	{
-		printf("뭔가 잔뜩 뽑아야해?\n");
-		return (1);
-	}
-	argv = argv->next;
-	while (argv)
-	{
-		_export_valid(argv->str, envlst);
-		argv = argv->next;
-	}
-	return (1);
 }

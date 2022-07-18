@@ -3,30 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/18 17:05:30 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/18 17:32:29 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "../minishell.h"
-
-int	is_builtin(char *cmd)
-{
-	int	cmd_len;
-
-	cmd_len = ft_strlen(cmd);
-	// 옵션 같은 경우는 어떻게..? 옵션 있으면 구현 해야하는 거인지 확인 하고 맞으면 빌트인?
-	// 예를 들면 echo -n 은 빌트인으로 처리하는데
-	// echo -e는 execve로 실행햐야 하는 거 아냐
-	if (ft_strncmp("exit", cmd, cmd_len) || ft_strncmp("echo", cmd, cmd_len)
-		|| ft_strncmp("cd", cmd, cmd_len) || ft_strncmp("pwd", cmd, cmd_len)
-		|| ft_strncmp("export", cmd, cmd_len)
-		|| ft_strncmp("unset", cmd, cmd_len) || ft_strncmp("env", cmd, cmd_len))
-		return (1);
-	return (0);
-}
 
 void	child_process(t_toklst *list, t_env *envlst)
 {
@@ -43,7 +28,7 @@ void	child_process(t_toklst *list, t_env *envlst)
 	// }
 	cmd = get_valid_cmd_path(list->cmd->str, envlst);
 	cmd_arr = list_to_arr(list->cmd);
-	env = get_env(envlst);
+	env = envlst_to_arr(envlst);
 	close(list->end[0]);
 	close(list->end[1]);
 	if (execve(cmd, cmd_arr, env) == -1)

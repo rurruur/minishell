@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 16:06:27 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 18:09:44 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int		check_whitespace(char *line);
 int		check_quote(char *line);
 int		check_pretok(t_token *pretok);
-void	check_empty(t_token *pretok);
 
 int	check_whitespace(char *line)
 {
@@ -77,15 +76,4 @@ int	check_pretok(t_token *pretok)
 		err_syntax(1, pretok->next->str);
 	// 여기 이상해...
 	return (flag);
-}
-
-void	check_empty(t_token *pretok)
-{
-	while (pretok)
-	{
-		if (pretok->str[0] == '\0')
-			del_from_strlst(&pretok);
-		else
-			pretok = pretok->next;
-	}
 }

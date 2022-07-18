@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/18 17:07:39 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/18 17:30:30 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,8 @@
 
 # define PRMPT "\033[0;33m( ´Д`)>\033[0;37m "
 # define WH_SPACE " \f\n\r\t\v"
-# define DELIM " <>|'\""
+# define DELIM_WITH_QUOTE " <>|'\""
 # define QUOTE "'\""
-# define STR_DQ "\""
-# define STR_SQ "\'"
-// # define RDR "<>"
 
 # define CLOSED 1
 # define OPEN -1
@@ -96,10 +93,10 @@ void		display_envlst(t_env *envlst);
 t_env		*copy_env(char **env, t_env *envlst);
 void		env_to_str(t_token *pretok, t_env *envlst);
 char		*insert_env(t_env *envlst, char *old, char *str);
-char		*find_env(t_env *envlst, char *key);
-char		**get_env(t_env *envlst);
 // env02.c
 char		*get_env_key(char *str);
+char		*get_env_val(t_env *envlst, char *key);
+char		**envlst_to_arr(t_env *envlst);
 // error.c
 void		print_errmsg(int err_type, char *str);
 void		err_syntax(int err_type, char *str);
@@ -120,7 +117,6 @@ void		free_strarr(char **str);
 int			check_whitespace(char *line);
 int			check_quote(char *line);
 int			check_pretok(t_token *pretok);
-void		check_empty(t_token *pretok);
 // token01.c
 t_toklst	*tokenizer(char *line, t_toklst *toklst, t_env *envlst);
 int			pretoknizer(char *line, t_token **pretok, t_env *envlst);
@@ -129,7 +125,8 @@ void		tok_to_lst(t_token **pretok, t_toklst *new);
 t_token		*split_tok(char *line, char *delim);
 void		parse_delim(char **line, char *delim, t_token **strlst);
 void		assort_delim(t_token **new, char **line, int flag);
-char		*make_tok(char **line, char *delim);
+char		*make_tok(char **line);
+void		cnt_tok_len(char *line, int *len, int quote);
 // token03.c
 void		trim_pretok(t_token *pretok);
 char		*trim_quote(char *str);
@@ -158,7 +155,6 @@ void		free_envlst(t_env *envlst);
 int			set_file_redirection(t_token *files, enum e_rdr mode);
 void		set_redirection(t_toklst *list);
 // executor.c
-int			is_builtin(char *cmd);
 void		child_process(t_toklst *list, t_env *envlst);
 void		executor(t_toklst *list, t_env *envlst);
 // cmd_utils.c
