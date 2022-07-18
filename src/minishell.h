@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/18 17:54:27 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/18 18:28:03 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define CLOSED 1
 # define OPEN -1
 
+# define MAX_PATH_LEN 4096	// Linux maximum path length
 # define MAX_ERRNO 255
 # define CMD_NOT_FOUND 382
 # define IS_DIR 381
@@ -98,6 +99,7 @@ char		*insert_env(t_env *envlst, char *old, char *str);
 // env02.c
 char		*get_env_key(char *str);
 char		*get_env_val(t_env *envlst, char *key);
+int			change_env_val(t_env *envlst, char *key, char *new_val);
 char		**envlst_to_arr(t_env *envlst);
 // error.c
 void		print_errmsg(int err_type, char *str);

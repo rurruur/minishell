@@ -34,3 +34,9 @@ cd 는 인자가 여러개 들어와도 맨 앞 하나의 인자만 사용
 		2. 해당 환경변수가 존재하지 않을 때	: $HOME으로 이동
 	2. 환경변수에 뭐가 붙어있거나, 환경변수 여러개가 붙어있는 경우
 		- 전부 한덩이로 묶어서 판단한다.
+		- cd	$HOMEeee	:	$HOME으로 이동한다. HOMEeee는 없는 환경변수이기때문에
+		- cd	eee$HOME	:	No such file or directory
+			- "eee"$HOME, eee"$HOME" 도 마찬가지
+			- $HOME"eee", "$HOME"eee 도 마찬가지
+---
+- cd 문자열 : 경로의 존재에 따라서 잘 이동하던가 이동하지 못하던가 뭐 그렇겠죠...

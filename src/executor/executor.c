@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/18 17:32:29 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/18 18:01:57 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,9 @@ void	child_process(t_toklst *list, t_env *envlst)
 	char	**env;
 
 	set_redirection(list);
-	// if (is_builtin(list->cmd->str))
-	// {
-	// 	if (builtin_main(list->cmd->str, list->cmd, envlst))
-	// 		exit(0);
-	// 	// free는해야돼..
-	// }
+	if (builtin_main(list->cmd->str, list->cmd, envlst))
+		exit(0);
+		// free는해야돼..
 	cmd = get_valid_cmd_path(list->cmd->str, envlst);
 	cmd_arr = list_to_arr(list->cmd);
 	env = envlst_to_arr(envlst);
