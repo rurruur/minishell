@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:07:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/18 17:52:53 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/18 21:22:34 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_error(char *err_msg)
 		ft_putendl_fd("command not found", STDERR_FILENO);
 	else if (errno == IS_DIR)
 		ft_putendl_fd("Is a directory", STDERR_FILENO);
-	else if (errno == RDR_IN_NO_EXIST)
+	else if (errno == NO_EXIST)
 		ft_putendl_fd("No such file or directory", STDERR_FILENO);
 	exit(errno - MAX_ERRNO);
 }
