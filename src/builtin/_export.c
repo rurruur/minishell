@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _export.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/18 21:24:36 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/18 23:21:08 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		msh_export(t_token *argv, t_env *envlst);
 int		_export_valid(char *str);
+void	_export_display(t_env *envlst);
 
 static void	error(char *err_msg)
 {
@@ -29,6 +30,8 @@ int	msh_export(t_token *argv, t_env *envlst)
 	char	*env_key;
 	char	*env_val;
 
+	if (argv->next == NULL)
+		_export_display(envlst);
 	argv = argv->next;
 	while (argv)
 	{
@@ -66,4 +69,14 @@ int	_export_valid(char *str)
 		return (idx);
 	else
 		return (0);
+}
+
+void	_export_display(t_env *envlst)
+{
+	while (envlst)
+	{
+		printf("declare -x ");
+		printf("%s=\"%s\"\n", envlst->key, envlst->val);
+		envlst = envlst->next;
+	}
 }

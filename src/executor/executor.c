@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/18 21:56:46 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/18 23:31:14 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	child_process(t_toklst *list, t_env *envlst)
 		errno = CMD_NOT_FOUND;
 		ft_error("");
 	}
+	builtin_main(list->cmd->str, list->cmd, envlst);
 	cmd = get_valid_cmd_path(list->cmd->str, envlst);
 	cmd_arr = list_to_arr(list->cmd);
 	env = envlst_to_arr(envlst);
