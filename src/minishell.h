@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/18 17:30:30 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/18 17:54:27 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@
 # define CLOSED 1
 # define OPEN -1
 
-# define CMD_NOT_FOUND -1
-# define IS_DIR -2
+# define MAX_ERRNO 255
+# define CMD_NOT_FOUND 382
+# define IS_DIR 381
+# define RDR_IN_NO_EXIST 256
 
 int	g_fd;
 int	g_status;
