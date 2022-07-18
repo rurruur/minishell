@@ -6,42 +6,35 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:05:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/17 20:07:15 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/18 16:59:56 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	set_infile_redirection(t_token *files)
+static void	set_infile_redirection(t_token *files)
 {
 	int	fd;
-	int	result;
 
 	while (files)
 	{
 		fd = open(files->str, O_RDONLY);
 		if (fd < 0)
-			return (0);
+			ft_error("open");
 		if (files->next == NULL)
 			break ;
 		close(fd);
 		files = files->next;
 	}
-	result = dup2(fd, STDIN_FILENO);
-	if (result < 0)
-		return (-1);
+	if (dup2(fd, STDIN_FILENO < 0))
+		ft_error("dup2");
 	close(fd);
-	return (1);
-
 }
 
-int	set_outfile_redirection(t_toklst *list)
+static int	set_outfile_redirection(t_token *files)
 {
 	int	fd;
-	int	result;
-	t_token	*files;
 
-	files = list->rdr_out;
 	while (files)
 	{
 		if (files->type == T_RDR_OUT)
@@ -49,54 +42,34 @@ int	set_outfile_redirection(t_toklst *list)
 		else if (files->type == T_RDR_AP)
 			fd = open(files->str, O_WRONLY | O_APPEND | O_CREAT, 0777);
 		if (fd < 0)
-			return (0);
+			ft_error("open");
 		if (files->next == NULL)
 			break ;
 		close(fd);
 		files = files->next;
 	}
-	result = dup2(fd, STDOUT_FILENO);
-	if (result < 0)
-		return (-1);
+	if (dup2(fd, STDOUT_FILENO < 0))
+		ft_error("dup2");
 	close(fd);
 	return (1);
 }
 
 void	set_redirection(t_toklst *list)
 {
-	int	result;
-
-	// if (list->end[0] != -1)
-	// 	close(list->end[0]);
-	dprintf(g_fd, "[%p] %p [%p]\n", list->prev, list, list->next);
 	if (list->rdr_in)
-	{
-		// STDIN 설정
-		result = set_infile_redirection(list->rdr_in);
-		if (result == 0)
-			perror("redirection error");	// infile 하나라도 없는 경우: 해당 노드는 실행 x
-		else if (result == -1)
-			perror("dup2");		// 어캐 해야? 걍 종료?
-	}
+		set_infile_redirection(list->rdr_in);
 	else if (list->prev)
 	{
-		dup2(list->prev->end[0], STDIN_FILENO);
-		dprintf(g_fd, "list->prev->end[0](%d)을 STDIN으로 설정\n", list->prev->end[0]);
+		if (dup2(list->prev->end[0], STDIN_FILENO) < 0)
+			ft_error("dup2");
 	}
 	if (list->rdr_out)
-	{
-		// STDOUT 설정
-		result = set_outfile_redirection(list);
-		if (result == 0)
-			perror("open error");	// outfile open error: 어캐 처리??
-		else if (result == -1)
-			perror("dup2");
-	}
-	else if (list->next != NULL)	// out redirection 없고, 마지막 명령어가 아닐 경우 파이프로 표준출력
+		set_outfile_redirection(list->rdr_out);
+	else if (list->next != NULL)
 	{
 		if (dup2(list->end[1], STDOUT_FILENO) < 0)
-			perror("dup2");
-		dprintf(g_fd, "list->end[1]을 STDOUT으로 설정\n");
+			ft_error("dup2");
 	}
-	dprintf(g_fd, "rdr set done(pid: %d)\n", getpid());
+	close(list->end[0]);
+	close(list->end[1]);
 }

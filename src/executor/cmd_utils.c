@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:06:23 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/16 17:16:45 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/18 17:16:37 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*get_valid_cmd_path(char *cmd, t_env *env)
 	char		**path;
 	int			i;
 	
-	path = ft_split(find_env(env, "PATH"), ':');	// free?
+	path = ft_split(find_env(env, "PATH"), ':');
 	i = -1;
 	while (path[++i])
 	{
@@ -79,9 +79,15 @@ char	*get_valid_cmd_path(char *cmd, t_env *env)
 			break ;
 		free(cmd_path);
 	}
-	destroy_split(path);
-	if (!path[i]) {	// 여기 에러 처리 좀 더 고민
-		return (0);
+	if (!path[i]) {
+		errno = CMD_NOT_FOUND;
+		ft_error(cmd);
 	}
+	if (stat_result.st_mode == 0040000)	// 필요없을듯??
+	{
+		errno = IS_DIR;
+		ft_error(cmd);
+	}
+	destroy_split(path);
 	return (cmd_path);
 }
