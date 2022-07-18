@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/18 18:01:57 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/18 21:16:28 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	child_process(t_toklst *list, t_env *envlst)
 	char	**env;
 
 	set_redirection(list);
-	if (builtin_main(list->cmd->str, list->cmd, envlst))
-		exit(0);
+	builtin_main(list->cmd->str, list->cmd, envlst);
 		// free는해야돼..
 	cmd = get_valid_cmd_path(list->cmd->str, envlst);
 	cmd_arr = list_to_arr(list->cmd);

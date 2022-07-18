@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _cd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/18 18:30:56 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/18 21:20:18 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ int	msh_cd(t_token *argv, t_env *envlst)
 		path = _cd_get_path(argv->next, envlst);
 	if (chdir(path) == -1)
 	{
-		printf("minishell: cd: %s: No such file or directory\n", path);
 		free(old_pwd);
-		free(path);
+		// free(path);
+		errno = NO_EXIST;
+		ft_error(ft_strjoin("cd: ", path));
 	}
 	else
 	{

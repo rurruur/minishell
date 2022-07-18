@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/18 18:28:03 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/18 21:24:41 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define MAX_ERRNO 255
 # define CMD_NOT_FOUND 382
 # define IS_DIR 381
-# define RDR_IN_NO_EXIST 256
+# define NO_EXIST 256
 
 int	g_fd;
 int	g_status;
@@ -179,7 +179,7 @@ void		ft_wait(void);
 
 /* directory: builtin ----------------------------------------------------- */
 // builtin functions
-int			builtin_main(char *cmd, t_token *argv, t_env *envlst);
+void		builtin_main(char *cmd, t_token *argv, t_env *envlst);
 int			msh_cd(t_token *argv, t_env *envlst);
 int			msh_echo(t_token *argv);
 int			msh_env(t_token *argv, t_env *envlst);

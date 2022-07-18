@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _export.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/18 18:18:08 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/18 21:24:36 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 
 int		msh_export(t_token *argv, t_env *envlst);
 int		_export_valid(char *str);
+
+static void	error(char *err_msg)
+{
+	ft_putstr_fd("( ༎ຶД༎ຶ): ", STDERR_FILENO);
+	ft_putstr_fd(err_msg, STDERR_FILENO);
+	ft_putendl_fd(": not a valid identifier", STDERR_FILENO);
+	exit(1);
+}
 
 int	msh_export(t_token *argv, t_env *envlst)
 {
@@ -35,7 +43,7 @@ int	msh_export(t_token *argv, t_env *envlst)
 				add_to_envlst(&envlst, init_envlst(env_key, env_val));
 		}
 		else
-			printf("minishell: export: `%s': not a valid identifier\n", argv->str);
+			error(double_strjoin("export: `", argv->str, "'"));
 		argv = argv->next;
 	}
 	return (1);
