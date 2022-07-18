@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/18 17:39:39 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/18 18:04:39 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 #define MAX_PATH_LEN 4096
 
 int		msh_cd(t_token *argv, t_env *envlst);
-void	_pwd_(void); // 나중에 지워라
 char	*_cd_get_path(t_token *argv, t_env *envlst);
-void	_cd_env(char *path, t_env *envlst);
 
 int	msh_cd(t_token *argv, t_env *envlst)
 {
@@ -38,15 +36,6 @@ int	msh_cd(t_token *argv, t_env *envlst)
 	return (1);
 }
 
-void	_pwd_(void)
-{
-	char	*pwd;
-	char	buf[MAX_PATH_LEN];
-
-	pwd = getcwd(buf, MAX_PATH_LEN);
-	printf("pwd : %s\n", pwd);
-}
-
 char	*_cd_get_path(t_token *argv, t_env *envlst)
 {
 	char	*path;
@@ -61,19 +50,11 @@ char	*_cd_get_path(t_token *argv, t_env *envlst)
 	else if (type == T_OFF)
 		path = ft_strdup(str);
 	else if (type == T_ENV)
-		;
-	return (path);
-}
-
-void	_cd_env(char *path, t_env *envlst)
-{
-	if (path[0] == '$' && path[1] == '\0')
 	{
-		printf("minishell: cd: $: No such file or directory\n"); // 임시 error msg
-		return ;
+		if (str[0] == '\0')
+			path = get_env_val(envlst, "HOME");
+		else
+			path = ft_strdup(str);
 	}
-	path = get_env_val(envlst, path + 1);
-	printf("(env) path : %s\n", path);
-	if (chdir(path) == -1)
-		chdir(get_env_val(envlst, "HOME"));
+	return (path);
 }
