@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 21:33:46 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/18 13:23:55 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define OPEN -1
 
 int	g_fd;
+int	g_status;
 
 enum e_type
 {
@@ -147,9 +148,9 @@ void		free_envlst(t_env *envlst);
 /* directory: executor ---------------------------------------------------- */
 // redirection.c
 int			set_file_redirection(t_token *files, enum e_rdr mode);
-void		set_redirection(t_toklst *list, int end);
+void		set_redirection(t_toklst *list);
 // executor.c
-void		child_process(t_toklst *list, int end, t_env *envlst);
+void		child_process(t_toklst *list, t_env *envlst);
 void		parent_process(pid_t child, int *end);
 void		executor(t_toklst *list, t_env *envlst);
 // cmd_utils.c

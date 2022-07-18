@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token01.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/07/17 21:29:46 by jrim             ###   ########.fr       */
+=======
+/*   Updated: 2022/07/17 17:24:07 by nakkim           ###   ########.fr       */
+>>>>>>> 347fb381f957dbffd1947b04fe484d2097af99e5
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +27,10 @@ t_toklst	*tokenizer(char *line, t_toklst *toklst, t_env *envlst)
 
 	if (!pretoknizer(line, &pretok, envlst))
 		return (NULL);
+<<<<<<< HEAD
+=======
+	// display_strlst(pretok);
+>>>>>>> 347fb381f957dbffd1947b04fe484d2097af99e5
 	while (pretok)
 	{
 		if (pretok->type != T_PIPE)
