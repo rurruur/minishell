@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 20:01:48 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/18 17:07:39 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/stat.h>
+# include <sys/errno.h>
+# include <string.h>
 
 # include "../libft/libft.h"
 
@@ -34,6 +36,9 @@
 
 # define CLOSED 1
 # define OPEN -1
+
+# define CMD_NOT_FOUND -1
+# define IS_DIR -2
 
 int	g_fd;
 int	g_status;
@@ -155,7 +160,6 @@ void		set_redirection(t_toklst *list);
 // executor.c
 int			is_builtin(char *cmd);
 void		child_process(t_toklst *list, t_env *envlst);
-void		parent_process(pid_t child, int *end);
 void		executor(t_toklst *list, t_env *envlst);
 // cmd_utils.c
 int			get_cmd_count(t_token *cmds);
@@ -168,6 +172,10 @@ char		*make_file_name(char *heredoc);
 void		process_heredoc(t_token *heredoc_tok);
 void		check_heredoc(t_toklst *list);
 void		clear_heredoc(t_toklst *list);
+// error.c
+void		ft_error(char *err_msg);
+// wait.c
+void		ft_wait(void);
 
 /* directory: builtin ----------------------------------------------------- */
 // builtin functions

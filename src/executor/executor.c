@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/17 20:18:24 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/18 17:05:30 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,46 +35,24 @@ void	child_process(t_toklst *list, t_env *envlst)
 	char	**env;
 
 	set_redirection(list);
-	if (list->cmd)
+	// if (is_builtin(list->cmd->str))
+	// {
+	// 	if (builtin_main(list->cmd->str, list->cmd, envlst))
+	// 		exit(0);
+	// 	// free는해야돼..
+	// }
+	cmd = get_valid_cmd_path(list->cmd->str, envlst);
+	cmd_arr = list_to_arr(list->cmd);
+	env = get_env(envlst);
+	close(list->end[0]);
+	close(list->end[1]);
+	if (execve(cmd, cmd_arr, env) == -1)
 	{
-		if (is_builtin(list->cmd->str))
-		{
-			if (builtin_main(list->cmd->str, list->cmd, envlst))
-				exit(0);
-			// free는해야돼..
-		}
-		cmd = get_valid_cmd_path(list->cmd->str, envlst);
-		if (!cmd) {
-			// cmd 못찾은 경우
-			perror("command");
-			exit(1);
-		} else {
-			// cmd free 필요
-			cmd_arr = list_to_arr(list->cmd);	// 각각 free 필요?
-			dprintf(g_fd, "cmd execute(pid: %d)\n", getpid());
-			env = get_env(envlst);
-			close(list->end[0]);
-			close(list->end[1]);
-			if (!execve(cmd, cmd_arr, env))
-			{
-				perror("execve");
-				free(cmd);
-				// env free
-				destroy_split(cmd_arr);
-			}
-		}
+		free(cmd);
+		destroy_split(cmd_arr);
+		destroy_split(env);
+		ft_error(list->cmd->str);
 	}
-	exit(1);
-}
-
-void	parent_process(pid_t child, int *end)
-{
-	int		status;
-
-	close(end[1]);	// 에러??
-	if (dup2(end[0], STDIN_FILENO) < 0)
-		perror("dup2");
-	waitpid(child, &status, 0);
 }
 
 void	executor(t_toklst *list, t_env *envlst)
@@ -82,34 +60,23 @@ void	executor(t_toklst *list, t_env *envlst)
 	t_toklst	*tmp;
 	pid_t	child;
 
-	dprintf(g_fd, "\n= executor(%d) =\n", getpid());
 	tmp = list;
-	while (tmp)
+	while (list)
 	{
-		if (pipe(tmp->end) == -1)	// 다음 노드가 있을 경우 파이프 생성
-		{
-			perror("pipe");
-			return ;	// 리턴할지 아니면 다음 명령어로 넘어갈지 결정
-		}
+		if (pipe(list->end) == -1)
+			ft_error("pipe");
 		child = fork();
-		dprintf(g_fd, "fork: %d\n", getpid());
 		if (child == -1)
-		{
-			perror("fork");
-			return ;
-		}
+			ft_error("fork");
 		if (child == 0)
-			child_process(tmp, envlst);
-		// close(tmp->end[0]);
-		close(tmp->end[1]);
-		tmp = tmp->next;
+			child_process(list, envlst);
+		close(list->end[1]);
+		list = list->next;
 	}
-	while (wait(&g_status) != -1);
-	tmp = list;
+	ft_wait();
 	while (tmp)
 	{
 		close(tmp->end[0]);
 		tmp = tmp->next;
 	}
-	dprintf(g_fd, "exit: %d\n", WEXITSTATUS(g_status));
 }

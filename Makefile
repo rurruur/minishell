@@ -35,6 +35,8 @@ SRC			=	src/minishell.c \
 				src/executor/cmd_utils.c \
 				src/executor/redirection.c \
 				src/executor/heredoc.c \
+				src/executor/wait.c \
+				src/executor/error.c \
 				src/builtin/builtin.c \
 				src/builtin/_cd.c \
 				src/builtin/_echo.c \
