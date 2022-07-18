@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 16:21:20 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/18 17:25:03 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/18 21:55:28 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,8 @@
 
 void	ft_wait(void)
 {
-	int	status;
-
 	g_status = 0;
-	while (wait(&status) != -1)
-	{
-		if (status != 0)	// 파이프 중 하나라도 에러 뜨면 그걸로 변경
-			g_status = status;
-	}
+	while (wait(&g_status) != -1);
 	if (WIFEXITED(g_status))
 	{
 		g_status = WEXITSTATUS(g_status);
