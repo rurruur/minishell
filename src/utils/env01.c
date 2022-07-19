@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 18:13:14 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/19 23:28:23 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,26 @@ t_env	*copy_env(char **env, t_env *envlst)
 void	env_to_str(t_token *pretok, t_env *envlst)
 {
 	char	*str;
+	int		idx;
 	int		sq;
 
 	while (pretok)
 	{
 		sq = CLOSED;
-		str = pretok->str;
-		while (*str)
+		str = ft_strdup(pretok->str);
+		idx = -1;
+		while (str[++idx])
 		{
-			if (*str != '\\' && *(str + 1) == '\'')
+			if (str[idx] != '\\' && str[idx + 1] == '\'')
 				sq = -sq;
-			else if (sq == CLOSED && *str == '$')
+			else if (sq == CLOSED && str[idx] == '$')
 			{
 				pretok->type = T_ENV;
-				pretok->str = insert_env(envlst, pretok->str, str);
+				pretok->str = insert_env(envlst, pretok->str, str + idx);
 			}
-			str++;
 		}
 		pretok = pretok->next;
+		free(str);
 	}
 }
 
@@ -70,13 +72,17 @@ char	*insert_env(t_env *envlst, char *old, char *str)
 	env_key = get_env_key(str);
 	key_len = (int)ft_strlen(env_key);
 	if (key_len == 0)
-		return (ft_strdup(old));
+	{
+		free(env_key);
+		return (old);
+	}
 	env_val = get_env_val(envlst, env_key);
 	dollar = 0;
 	while (old[dollar] && old[dollar] != '$')
 		dollar++;
 	new = msh_strjoin(ft_strndup(old, dollar), env_val);
 	new = msh_strjoin(new, ft_strdup(old + dollar + key_len + 1));
+	free(old);
 	free(env_key);
 	return (new);
 }
