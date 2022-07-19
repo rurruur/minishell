@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/19 23:28:23 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 00:01:36 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*insert_env(t_env *envlst, char *old, char *str)
 	char	*env_key;
 	char	*env_val;
 	char	*new;
-	
+
 	env_key = get_env_key(str);
 	key_len = (int)ft_strlen(env_key);
 	if (key_len == 0)

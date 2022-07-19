@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 16:32:37 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 00:02:41 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ void	del_from_envlst(t_env **envlst)
 	t_env	*tmp;
 
 	del = (*envlst);
-	if ((*envlst)->prev == NULL) // 제일 앞 노드
+	if ((*envlst)->prev == NULL)
 	{
 		(*envlst) = (*envlst)->next;
 		(*envlst)->prev = NULL;
 	}	
-	else if ((*envlst)->next == NULL) // 제일 뒤 노드
+	else if ((*envlst)->next == NULL)
 	{
 		(*envlst) = (*envlst)->prev;
 		(*envlst)->next = NULL;

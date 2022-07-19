@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/19 23:26:56 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/20 00:05:49 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,21 @@
 enum e_builtin	get_builtin_type(char *cmd)
 {
 	if (!ft_strcmp(cmd, "cd"))
-		return CD;
+		return (CD);
 	else if (!ft_strcmp(cmd, "echo"))
-		return ECHO;
+		return (ECHO);
 	else if (!ft_strcmp(cmd, "env"))
-		return ENV;
+		return (ENV);
 	else if (!ft_strcmp(cmd, "exit"))
-		return EXIT;
+		return (EXIT);
 	else if (!ft_strcmp(cmd, "pwd"))
-		return PWD;
+		return (PWD);
 	else if (!ft_strcmp(cmd, "unset"))
-		return UNSET;
+		return (UNSET);
 	else if (!ft_strcmp(cmd, "export"))
-		return EXPORT;
+		return (EXPORT);
 	else
-		return NONE;
+		return (NONE);
 }
 
 void	builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd)

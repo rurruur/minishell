@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 17:06:13 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 00:03:06 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,18 @@ void	add_to_strlst(t_token **strlst, t_token *new)
 	}
 }
 
-// 현재 가리키고 있는 노드를 지우고 싶을 때
 void	del_from_strlst(t_token **strlst)
 {
 	t_token	*del;
 	t_token	*tmp;
 
 	del = (*strlst);
-	if ((*strlst)->prev == NULL) // 제일 앞 노드
+	if ((*strlst)->prev == NULL)
 	{
 		(*strlst) = (*strlst)->next;
 		(*strlst)->prev = NULL;
 	}	
-	else if ((*strlst)->next == NULL) // 제일 뒤 노드
+	else if ((*strlst)->next == NULL)
 	{
 		(*strlst) = (*strlst)->prev;
 		(*strlst)->next = NULL;

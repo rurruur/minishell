@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/18 23:21:08 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 00:05:00 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	msh_export(t_token *argv, t_env *envlst)
 int	_export_valid(char *str)
 {
 	int	idx;
-	
+
 	idx = 0;
 	if (ft_isdigit(str[idx]))
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:50 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/18 18:30:07 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 00:05:13 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	msh_pwd(t_token *argv)
 {
 	char	*pwd;
 
-	if (argv->next && (!ft_strcmp(argv->next->str, "-L")\
+	if (argv->next && (!ft_strcmp(argv->next->str, "-L") \
 						|| !ft_strcmp(argv->next->str, "-P")))
 		return (0);
 	pwd = getcwd(0, MAX_PATH_LEN);
