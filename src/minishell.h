@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/19 22:51:20 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/19 23:27:08 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,18 @@
 
 int	g_fd;
 int	g_status;
+
+enum e_builtin
+{
+	NONE,
+	CD,
+	ECHO,
+	ENV,
+	EXIT,
+	PWD,
+	UNSET,
+	EXPORT
+};
 
 enum e_sig_mode
 {
@@ -184,7 +196,8 @@ void		ft_wait(void);
 
 /* directory: builtin ----------------------------------------------------- */
 // builtin functions
-void		builtin_main(char *cmd, t_token *argv, t_env *envlst);
+enum e_builtin	get_builtin_type(char *cmd);
+void		builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd);
 int			msh_cd(t_token *argv, t_env *envlst);
 int			msh_echo(t_token *argv);
 int			msh_env(t_token *argv, t_env *envlst);

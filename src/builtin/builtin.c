@@ -6,29 +6,46 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/18 23:30:38 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/19 23:26:56 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	builtin_main(char *cmd, t_token *argv, t_env *envlst)
+enum e_builtin	get_builtin_type(char *cmd)
 {
 	if (!ft_strcmp(cmd, "cd"))
-		msh_cd(argv, envlst);
+		return CD;
 	else if (!ft_strcmp(cmd, "echo"))
-		msh_echo(argv);
+		return ECHO;
 	else if (!ft_strcmp(cmd, "env"))
-		msh_env(argv, envlst);
+		return ENV;
 	else if (!ft_strcmp(cmd, "exit"))
-		msh_exit(argv);
+		return EXIT;
 	else if (!ft_strcmp(cmd, "pwd"))
-		msh_pwd(argv);
+		return PWD;
 	else if (!ft_strcmp(cmd, "unset"))
-		msh_unset(argv, envlst);
+		return UNSET;
 	else if (!ft_strcmp(cmd, "export"))
-		msh_export(argv, envlst);
+		return EXPORT;
 	else
-		return ;
-	exit(0);
+		return NONE;
+}
+
+void	builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd)
+{
+	if (cmd == CD)
+		msh_cd(argv, envlst);
+	else if (cmd == ECHO)
+		msh_echo(argv);
+	else if (cmd == ENV)
+		msh_env(argv, envlst);
+	else if (cmd == EXIT)
+		msh_exit(argv);
+	else if (cmd == PWD)
+		msh_pwd(argv);
+	else if (cmd == UNSET)
+		msh_unset(argv, envlst);
+	else if (cmd == EXPORT)
+		msh_export(argv, envlst);
 }

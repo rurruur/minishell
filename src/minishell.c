@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/19 23:22:56 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/19 23:30:42 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int argc, char **argv, char **env)
 	char		*line;
 	t_env		*envlst;
 	t_toklst	*toklst;
+	enum e_builtin	type;
 
 	(void)argv;
 	handle_sig(READLINE);
@@ -33,15 +34,21 @@ int	main(int argc, char **argv, char **env)
 			toklst = tokenizer(line, NULL, envlst);
 			if (toklst)
 			{
-				// display_toklst(toklst);
-				if (check_heredoc(toklst))
+				type = get_builtin_type(toklst->cmd->str);
+				if (toklst->next == NULL && type)
+					builtin_main(toklst->cmd, envlst, type);
+				else
 				{
-					handle_sig(READLINE);
 					// display_toklst(toklst);
-					executor(toklst, envlst);
+					if (check_heredoc(toklst))
+					{
+						handle_sig(READLINE);
+						// display_toklst(toklst);
+						executor(toklst, envlst);
+					}
+					clear_heredoc(toklst);
+					// display_envlst(envlst);
 				}
-				clear_heredoc(toklst);
-				// display_envlst(envlst);
 			}
 			free_toklst(toklst);
 			// system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");
