@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
 /*   Updated: 2022/07/19 21:54:54 by nakkim           ###   ########.fr       */
@@ -108,7 +108,6 @@ char		*get_env_val(t_env *envlst, char *key);
 int			change_env_val(t_env *envlst, char *key, char *new_val);
 char		**envlst_to_arr(t_env *envlst);
 // error.c
-void		print_errmsg(int err_type, char *str);
 void		err_syntax(int err_type, char *str);
 void		err_custom(int err_type, char *str);
 void		err_alloc(void);
