@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 11:58:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/17 14:36:35 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/19 21:58:46 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,14 @@ char	*make_file_name(char *heredoc)
 	return (file_name);
 }
 
-void	process_heredoc(t_token *heredoc_tok)
+void	process_heredoc(t_token *heredoc_tok, char *filename)
 {
 	char	*line;
-	char	*file_name;
 	int		fd;
 	int		line_len;
 
-	file_name = make_file_name(heredoc_tok->str);
-	fd = open(file_name, O_WRONLY | O_CREAT, 0777);
+	handle_sig(HEREDOC);
+	fd = open(filename, O_WRONLY | O_CREAT, 0777);
 	while (1)
 	{
 		line = readline("> ");
@@ -51,13 +50,23 @@ void	process_heredoc(t_token *heredoc_tok)
 		free(line);
 	}
 	close(fd);
-	free(heredoc_tok->str);
-	heredoc_tok->str = file_name;
+	exit(0);
 }
 
-void	check_heredoc(t_toklst *list)
+static int	heredoc_wait(void)
+{
+	g_status = 0;
+	wait(&g_status);
+	if (WEXITSTATUS(g_status) != 0)
+		return (0);
+	return (1);
+}
+
+int	check_heredoc(t_toklst *list)
 {
 	t_token	*rdr_in;
+	int		child;
+	char	*filename;
 
 	while (list)
 	{
@@ -66,17 +75,32 @@ void	check_heredoc(t_toklst *list)
 		{
 			if (rdr_in->type == T_RDR_HD)
 			{
-				// heredoc 처리
-				// 파일 생성 후 rdr_in->str 나올 때까지 readline으로 입력받음
-				// 입력 받는 동안 시그널 처리? (ctrl+d, ctrl+c)
-				// 파일명 정해서 파일 생성 후 해당 파일명으로 rdr_in->str 교체
-				// executor 끝나면 파일 삭제 & 파일명 free
-				process_heredoc(rdr_in);
+				filename = make_file_name(rdr_in->str);
+				child = fork();
+				if (child == 0)
+					process_heredoc(rdr_in, filename);
+				if (!heredoc_wait())
+				{
+					while (list)
+					{
+						if (list->rdr_in->type == T_RDR_HD)
+						{
+							unlink(filename);
+							dprintf(g_fd, "delete %s(because of heredoc err)\n", filename);
+						}
+						list = list->prev;
+					}
+					// clear toklst 전에 clean heredoc 만들어서 stat으로 확인 후 지우기
+					return (0);
+				}
+				free(rdr_in->str);
+				rdr_in->str = filename;
 			}
 			rdr_in = rdr_in->next;
 		}
 		list = list->next;
 	}
+	return (1);
 }
 
 void	clear_heredoc(t_toklst *list)
