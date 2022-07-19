@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/18 23:29:27 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/19 23:24:30 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 
 void	child_process(t_toklst *list, t_env *envlst)
 {
-	char	*cmd;
-	char	**cmd_arr;
-	char	**env;
+	char			*cmd;
+	char			**cmd_arr;
+	char			**env;
+	enum e_builtin	type;
 
 	set_redirection(list);
 	if (*(list->cmd->str) == '\0')
@@ -25,7 +26,12 @@ void	child_process(t_toklst *list, t_env *envlst)
 		errno = CMD_NOT_FOUND;
 		ft_error("");
 	}
-	builtin_main(list->cmd->str, list->cmd, envlst);
+	type = get_builtin_type(list->cmd->str);
+	if (list->next == NULL && type)
+	{
+		builtin_main(list->cmd, envlst, type);
+		exit(0);
+	}
 	cmd = get_valid_cmd_path(list->cmd->str, envlst);
 	cmd_arr = list_to_arr(list->cmd);
 	env = envlst_to_arr(envlst);

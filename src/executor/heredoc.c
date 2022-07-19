@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 11:58:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/19 22:49:31 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/19 22:59:27 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	process_heredoc(t_token *heredoc_tok)
 	{
 		line = readline("> ");
 		line_len = ft_strlen(line);
-		if (!ft_strncmp(heredoc_tok->str, line, line_len))
+		if (line_len && !ft_strncmp(heredoc_tok->str, line, line_len))
 		{
 			free(line);
 			dprintf(g_fd, "bye\n");
