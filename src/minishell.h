@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/18 21:29:49 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/19 21:54:54 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@
 
 int	g_fd;
 int	g_status;
+
+enum e_sig_mode
+{
+	READLINE,
+	HEREDOC
+};
 
 enum e_type
 {
@@ -106,7 +112,7 @@ void		err_syntax(int err_type, char *str);
 void		err_custom(int err_type, char *str);
 void		err_alloc(void);
 // signal.c
-void		handle_sig(void);
+void		handle_sig(enum e_sig_mode mode);
 void		h_sigint(int signum);
 void		h_sigquit(int signum);
 // utils_str.c
@@ -168,8 +174,8 @@ void		destroy_split(char **arr);
 char		*get_valid_cmd_path(char *cmd, t_env *env);
 // heredoc.c
 char		*make_file_name(char *heredoc);
-void		process_heredoc(t_token *heredoc_tok);
-void		check_heredoc(t_toklst *list);
+void		process_heredoc(t_token *heredoc_tok, char *filename);
+int			check_heredoc(t_toklst *list);
 void		clear_heredoc(t_toklst *list);
 // error.c
 void		ft_error(char *err_msg);

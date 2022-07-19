@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/18 13:24:07 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/19 21:21:08 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **env)
 	t_toklst	*toklst;
 
 	(void)argv;
-	handle_sig();
+	handle_sig(READLINE);
 	g_status = 0;
 	envlst = copy_env(env, NULL);
 	g_fd = open("global", O_WRONLY | O_TRUNC | O_CREAT, 0777);
@@ -34,10 +34,13 @@ int	main(int argc, char **argv, char **env)
 			if (toklst)
 			{
 				// display_toklst(toklst);
-				check_heredoc(toklst);
-				// display_toklst(toklst);
-				executor(toklst, envlst);
-				clear_heredoc(toklst);
+				if (check_heredoc(toklst))
+				{
+					handle_sig(READLINE);
+					// display_toklst(toklst);
+					executor(toklst, envlst);
+					clear_heredoc(toklst);
+				}
 				// display_envlst(envlst);
 			}
 			free_toklst(toklst);
