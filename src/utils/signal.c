@@ -6,13 +6,12 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 17:02:57 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/19 21:47:13 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/19 22:50:11 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	exit_heredoc_newline(int signum);
 void	h_sigint(int signum);
 void	h_sigquit(int signum);
 void	handle_sig(enum e_sig_mode mode);
@@ -26,17 +25,9 @@ void	handle_sig(enum e_sig_mode mode)
 	}
 	else if (mode == HEREDOC)
 	{
-		signal(SIGINT, exit_heredoc_newline);
-		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, h_sigint);
+		signal(SIGQUIT, h_sigquit);
 	}
-}
-
-void	exit_heredoc_newline(int signum)
-{
-	if (signum != SIGINT)
-		return ;
-	// printf("  \b\b\n");
-	exit(1);
 }
 
 void	h_sigint(int signum)

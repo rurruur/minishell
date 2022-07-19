@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:05:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/18 21:20:29 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/19 22:50:55 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 static void	set_infile_redirection(t_token *files)
 {
-	int	fd;
-	int	exists;
+	int			fd;
+	int			exists;
+	struct stat	info;
 
 	exists = 1;
 	while (files)
 	{
-		if (exists && stat(files->str, NULL) == -1)
+		if (exists && stat(files->str, &info) == -1)
 			exists = 0;
 		if (files->next == NULL)
 			break ;

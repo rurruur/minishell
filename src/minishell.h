@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/19 21:54:54 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/19 22:51:20 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ void		destroy_split(char **arr);
 char		*get_valid_cmd_path(char *cmd, t_env *env);
 // heredoc.c
 char		*make_file_name(char *heredoc);
-void		process_heredoc(t_token *heredoc_tok, char *filename);
+int			process_heredoc(t_token *heredoc_tok);
 int			check_heredoc(t_toklst *list);
 void		clear_heredoc(t_toklst *list);
 // error.c
