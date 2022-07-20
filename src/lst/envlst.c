@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 00:02:41 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 14:37:08 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	del_from_envlst(t_env **envlst)
 	}
 	else
 	{
-		(*envlst) = (*envlst)->next;
 		tmp = (*envlst)->prev;
+		(*envlst) = (*envlst)->next;
 		(*envlst)->prev = tmp;
 		tmp->next = (*envlst);
 	}

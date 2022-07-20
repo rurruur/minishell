@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 00:03:06 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 15:07:18 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	add_to_strlst(t_token **strlst, t_token *new)
 			*strlst = (*strlst)->next;
 		(*strlst)->next = new;
 		new->prev = (*strlst);
+		new->next = NULL;
 		*strlst = tmp;
 	}
 }
@@ -67,8 +68,8 @@ void	del_from_strlst(t_token **strlst)
 	}
 	else
 	{
-		(*strlst) = (*strlst)->next;
 		tmp = (*strlst)->prev;
+		(*strlst) = (*strlst)->next;
 		(*strlst)->prev = tmp;
 		tmp->next = (*strlst);
 	}
@@ -84,6 +85,7 @@ void	lst_to_lst(t_token **old, t_token **new)
 
 	tmp = (*old);
 	(*old) = (*old)->next;
+	tmp->prev = NULL;
 	tmp->next = NULL;
 	add_to_strlst(new, tmp);
 }

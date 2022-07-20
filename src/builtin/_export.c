@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 13:31:32 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 14:29:55 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	msh_export(t_token *argv, t_env *envlst)
 	while (argv)
 	{
 		key_len = _export_valid(argv->str);
-		if (key_len)
+		if (key_len > 0)
 		{
 			env_key = ft_strndup(argv->str, key_len);
 			env_val = ft_strdup(argv->str + key_len + 1);
@@ -45,7 +45,7 @@ int	msh_export(t_token *argv, t_env *envlst)
 			else
 				add_to_envlst(&envlst, init_envlst(env_key, env_val));
 		}
-		else
+		else if (key_len == 0)
 			error(double_strjoin("export: `", argv->str, "'"));
 		argv = argv->next;
 	}
@@ -65,7 +65,9 @@ int	_export_valid(char *str)
 			return (0);
 		idx++;
 	}
-	if (str[idx] == '=')
+	if (str[idx] == '\0')
+		return (-1);
+	else if (str[idx] == '=')
 		return (idx);
 	else
 		return (0);
