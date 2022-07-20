@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 13:35:44 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/20 14:24:46 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ enum e_sig_mode
 {
 	READLINE,
 	HEREDOC,
-	WAIT_HEREDOC
+	SIG_WAIT
 };
 
 enum e_type

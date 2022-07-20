@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 11:58:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/20 14:04:08 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 14:25:15 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	check_heredoc(t_toklst *list)
 				child = fork();
 				if (child == 0)
 					process_heredoc(rdr_in, filename);
-				handle_sig(WAIT_HEREDOC);
+				handle_sig(SIG_WAIT);
 				wait(&g_status);
 				handle_sig(READLINE);
 				free(rdr_in->str);
