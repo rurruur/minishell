@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 20:09:19 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 22:32:01 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ int	msh_cd(t_token *argv, t_env *envlst)
 		errno = NO_EXIST;
 		ft_error(ft_strjoin("cd: ", path));
 		free(old_pwd);
-		free(path);
 	}
 	else
 	{
 		change_env_val(envlst, "OLDPWD", old_pwd);
-		change_env_val(envlst, "PWD", path);
+		change_env_val(envlst, "PWD", getcwd(0, MAX_PATH_LEN));
 	}
+	free(path);
 	return (1);
 }
 

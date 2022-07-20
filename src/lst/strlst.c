@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 16:59:31 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 23:39:13 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,38 +59,6 @@ void	del_from_strlst(t_token **strlst)
 	free(del->str);
 	free(del);
 }
-
-// void	del_from_strlst(t_token **strlst)
-// {
-// 	t_token	*del;
-// 	// t_token	*tmp;
-
-// 	del = (*strlst);
-// 	if ((*strlst)->prev == NULL)
-// 	{
-// 		printf("in\n");
-// 		(*strlst) = (*strlst)->next;
-// 		(*strlst)->prev = NULL;
-// 	}	
-// 	else if ((*strlst)->next == NULL)
-// 	{
-// 		(*strlst) = (*strlst)->prev;
-// 		(*strlst)->next = NULL;
-// 	}
-// 	else
-// 	{
-// 		// del->prev->next = del->next;
-// 		// del->next->prev = del->prev;
-// 		// (*strlst) = del->next;
-// 		(*strlst) = (*strlst)->next;
-// 		// (*strlst)->prev = NULL;
-// 		// tmp = (*strlst)->prev;
-// 		// (*strlst)->prev = tmp;
-// 		// tmp->next = (*strlst);
-// 	}
-// 	free(del->str);
-// 	free(del);
-// }
 
 void	lst_to_lst(t_token **old, t_token **new)
 {
