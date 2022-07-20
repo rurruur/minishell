@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 13:49:34 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 14:02:56 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 enum e_builtin	get_builtin_type(char *cmd)
 {
+	if (ft_strlen(cmd) == 0)
+		return NONE;
 	if (!ft_strcmp(cmd, "cd"))
 		return (CD);
 	else if (!ft_strcmp(cmd, "echo"))

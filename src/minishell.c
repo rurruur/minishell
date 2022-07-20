@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 13:57:23 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 14:02:52 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	main(int argc, char **argv, char **env)
 					// display_toklst(toklst);
 					if (check_heredoc(toklst))
 					{
-						handle_sig(READLINE);
 						// display_toklst(toklst);
 						executor(toklst, envlst);
 					}
