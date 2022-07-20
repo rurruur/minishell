@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 20:30:19 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 00:22:28 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ char	*get_env_key(char *str)
 	key_len = 0;
 	while (str[idx])
 	{
-		if (!ft_isalnum(str[idx]) && str[idx] != '_')
+		if (idx == 1 && ft_isdigit(str[1]))
+		{
+			key_len++;
+			break ;
+		}
+		else if (!ft_isalnum(str[idx]) && str[idx] != '_')
 			break ;
 		key_len++;
 		idx++;
