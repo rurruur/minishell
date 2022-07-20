@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 00:01:26 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 20:30:19 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 char	*get_env_key(char *str);
 char	*get_env_val(t_env *envlst, char *key);
+int		find_env_val(t_env *envlst, char *key);
 int		change_env_val(t_env *envlst, char *key, char *new_val);
 char	**envlst_to_arr(t_env *envlst);
 
@@ -55,6 +56,23 @@ char	*get_env_val(t_env *envlst, char *key)
 		envlst = envlst->next;
 	}
 	return (env_val);
+}
+
+int		find_env_val(t_env *envlst, char *key)
+{
+	int	flag;
+
+	flag = 0;
+	while (envlst)
+	{
+		if (!ft_strcmp(envlst->key, key))
+		{
+			flag = 1;
+			break ;
+		}
+		envlst = envlst->next;
+	}
+	return (flag);
 }
 
 int	change_env_val(t_env *envlst, char *key, char *new_val)

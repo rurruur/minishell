@@ -6,13 +6,12 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:39 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 15:29:25 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 20:33:52 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// $? : return value of previous command
 int		msh_exit(t_token *argv);
 void	_exit_err(int type, char *str);
 

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 00:06:10 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 20:09:19 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ int	msh_cd(t_token *argv, t_env *envlst)
 	char	*old_pwd;
 	char	*path;
 
-	old_pwd = ft_strdup(getcwd(0, MAX_PATH_LEN));
+	old_pwd = getcwd(0, MAX_PATH_LEN);
 	if (argv->next == NULL)
 		path = get_env_val(envlst, "HOME");
 	else
 		path = _cd_get_path(argv->next, envlst);
 	if (chdir(path) == -1)
 	{
-		free(old_pwd);
-		// free(path);
 		errno = NO_EXIST;
 		ft_error(ft_strjoin("cd: ", path));
+		free(old_pwd);
+		free(path);
 	}
 	else
 	{
