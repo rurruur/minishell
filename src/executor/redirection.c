@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:05:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/19 22:50:55 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/20 14:47:16 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	set_infile_redirection(t_token *files)
 	fd = open(files->str, O_RDONLY);
 	if (dup2(fd, STDIN_FILENO < 0))
 		ft_error(files->str);
+	dprintf(g_fd, "infile: %s\n", files->str);
 	close(fd);
 }
 
@@ -45,9 +46,9 @@ static int	set_outfile_redirection(t_token *files)
 	while (files)
 	{
 		if (files->type == T_RDR_OUT)
-			fd = open(files->str, O_WRONLY | O_TRUNC | O_CREAT, 0777);
+			fd = open(files->str, O_WRONLY | O_TRUNC | O_CREAT, 0644);
 		else if (files->type == T_RDR_AP)
-			fd = open(files->str, O_WRONLY | O_APPEND | O_CREAT, 0777);
+			fd = open(files->str, O_WRONLY | O_APPEND | O_CREAT, 0644);
 		if (fd < 0)
 			ft_error(files->str);
 		if (files->next == NULL)
@@ -58,6 +59,7 @@ static int	set_outfile_redirection(t_token *files)
 	if (dup2(fd, STDOUT_FILENO < 0))
 		ft_error("dup2");
 	close(fd);
+	dprintf(g_fd, "outfile: %s\n", files->str);
 	return (1);
 }
 

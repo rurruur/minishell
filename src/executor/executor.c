@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/19 23:30:33 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 14:31:07 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	child_process(t_toklst *list, t_env *envlst)
 	char			**env;
 	enum e_builtin	type;
 
+	dprintf(g_fd, "execute: %s\n", list->cmd->str);
 	set_redirection(list);
 	if (*(list->cmd->str) == '\0')
 	{
@@ -64,7 +65,9 @@ void	executor(t_toklst *list, t_env *envlst)
 		close(list->end[1]);
 		list = list->next;
 	}
+	handle_sig(SIG_WAIT);
 	ft_wait();
+	handle_sig(READLINE);
 	while (tmp)
 	{
 		close(tmp->end[0]);

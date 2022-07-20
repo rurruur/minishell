@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 17:02:57 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/20 13:41:04 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/20 14:24:34 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	handle_sig(enum e_sig_mode mode)
 		signal(SIGINT, ft_exit);
 		signal(SIGQUIT, h_sigquit);
 	}
-	else if (mode == WAIT_HEREDOC)
+	else if (mode == SIG_WAIT)
 	{
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
