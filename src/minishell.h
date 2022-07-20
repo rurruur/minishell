@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/19 23:27:08 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/20 13:35:44 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ enum e_builtin
 enum e_sig_mode
 {
 	READLINE,
-	HEREDOC
+	HEREDOC,
+	WAIT_HEREDOC
 };
 
 enum e_type
@@ -186,7 +187,7 @@ void		destroy_split(char **arr);
 char		*get_valid_cmd_path(char *cmd, t_env *env);
 // heredoc.c
 char		*make_file_name(char *heredoc);
-int			process_heredoc(t_token *heredoc_tok);
+int			process_heredoc(t_token *heredoc_tok, char *filename);
 int			check_heredoc(t_toklst *list);
 void		clear_heredoc(t_toklst *list);
 // error.c

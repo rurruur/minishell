@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/19 23:26:56 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/20 13:47:19 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 enum e_builtin	get_builtin_type(char *cmd)
 {
+	if (ft_strlen(cmd) == 0)
+		return NONE;
 	if (!ft_strcmp(cmd, "cd"))
 		return CD;
 	else if (!ft_strcmp(cmd, "echo"))

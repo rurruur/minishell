@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 17:02:57 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/19 22:50:11 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/20 13:41:04 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 void	h_sigint(int signum);
 void	h_sigquit(int signum);
 void	handle_sig(enum e_sig_mode mode);
+
+static void	ft_exit()
+{
+	rl_on_new_line();
+	rl_redisplay();
+	printf("  \b\b\n");
+	rl_on_new_line();
+	rl_replace_line("", 1);
+	exit(1);
+}
 
 void	handle_sig(enum e_sig_mode mode)
 {
@@ -25,8 +35,13 @@ void	handle_sig(enum e_sig_mode mode)
 	}
 	else if (mode == HEREDOC)
 	{
-		signal(SIGINT, h_sigint);
+		signal(SIGINT, ft_exit);
 		signal(SIGQUIT, h_sigquit);
+	}
+	else if (mode == WAIT_HEREDOC)
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 	}
 }
 
