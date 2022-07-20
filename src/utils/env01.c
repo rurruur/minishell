@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 00:01:36 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 14:15:26 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ void	env_to_str(t_token *pretok, t_env *envlst)
 		idx = -1;
 		while (str[++idx])
 		{
-			if (str[idx] != '\\' && str[idx + 1] == '\'')
+			if (idx == 0 && str[idx] == '\'')
+				sq = -sq;
+			else if (str[idx] != '\\' && str[idx + 1] == '\'')
 				sq = -sq;
 			else if (sq == CLOSED && str[idx] == '$')
 			{

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:39 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 13:36:15 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 14:17:51 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	msh_exit(t_token *argv)
 	alpha = 0;
 	printf("exit\n");
 	if (argv->next == NULL)
-		exit (g_status);
+		exit (0);
 	str = argv->next->str;
 	while (*str)
 	{
@@ -39,6 +39,8 @@ int	msh_exit(t_token *argv)
 		_exit_err(2, str);
 	else if (argv->next->next)
 		_exit_err(1, str);
+	else
+		exit (ft_atoi(argv->next->str));
 	return (1);
 }
 
@@ -46,9 +48,7 @@ void	_exit_err(int type, char *str)
 {
 	ft_putstr_fd("( ༎ຶД༎ຶ): exit: ", STDERR_FILENO);
 	if (type == 1)
-	{
 		ft_putendl_fd(": too many arguments", STDERR_FILENO);
-	}
 	else if (type == 2)
 	{
 		ft_putstr_fd(str, STDERR_FILENO);
