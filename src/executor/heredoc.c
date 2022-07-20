@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 11:58:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/20 14:25:15 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/20 17:43:32 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	process_heredoc(t_token *heredoc_tok, char *filename)
 {
 	char	*line;
 	int		fd;
-	int		line_len;
 
 	handle_sig(HEREDOC);
 	dprintf(g_fd, "heredoc: %s #%s\n", heredoc_tok->str, filename);
@@ -40,8 +39,7 @@ int	process_heredoc(t_token *heredoc_tok, char *filename)
 	while (1)
 	{
 		line = readline("> ");
-		line_len = ft_strlen(line);
-		if (line_len && !ft_strncmp(heredoc_tok->str, line, line_len))
+		if (!ft_strcmp(heredoc_tok->str, line))
 		{
 			free(line);
 			dprintf(g_fd, "bye\n");
@@ -60,6 +58,8 @@ int	check_heredoc(t_toklst *list)
 	int		child;
 	char	*filename;
 
+	dprintf(g_fd, "부모: %d\n", getpid());
+	g_status = 0;
 	while (list)
 	{
 		rdr_in = list->rdr_in;
@@ -74,6 +74,11 @@ int	check_heredoc(t_toklst *list)
 				handle_sig(SIG_WAIT);
 				wait(&g_status);
 				handle_sig(READLINE);
+				if (WEXITSTATUS(g_status) == 1)
+				{
+					g_status = WEXITSTATUS(g_status);
+					return (0);
+				}
 				free(rdr_in->str);
 				rdr_in->str = filename;
 			}

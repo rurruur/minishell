@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 16:21:20 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/19 21:35:16 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/20 17:33:11 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_wait(void)
 	else if (WIFSIGNALED(g_status))
 	{
 		g_status = 128 + WTERMSIG(g_status);
-		dprintf(g_fd, "signal: %d\n", g_status);
+		dprintf(g_fd, "signal: %d(%d)sibal\n", g_status, getpid());
 	}
 	else
 		g_status = 1;

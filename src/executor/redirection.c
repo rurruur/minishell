@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:05:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/20 15:47:07 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/20 17:02:34 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,18 @@
 static void	set_infile_redirection(t_token *files)
 {
 	int			fd;
-	int			exists;
 	struct stat	info;
 
-	exists = 1;
 	while (files)
 	{
-		if (exists && stat(files->str, &info) == -1)
-			exists = 0;
+		if (stat(files->str, &info) == -1)
+		{
+			errno = NO_EXIST;
+			ft_error(files->str);
+		}
 		if (files->next == NULL)
 			break ;
 		files = files->next;
-	}
-	if (!exists)
-	{
-		errno = NO_EXIST;
-		ft_error(files->str);
 	}
 	fd = open(files->str, O_RDONLY);
 	if (dup2(fd, STDIN_FILENO) < 0)
