@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 17:43:13 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 21:29:46 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			add_history(line);
 			toklst = tokenizer(line, NULL, envlst);
+			display_toklst(toklst);
 			if (toklst)
 			{
 				if ((toklst->cmd))
@@ -51,7 +52,7 @@ int	main(int argc, char **argv, char **env)
 				}
 				else
 				{
-					display_toklst(toklst);
+					// display_toklst(toklst);
 					if (check_heredoc(toklst))
 					{
 						// display_toklst(toklst);

@@ -6,33 +6,22 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:11:42 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 15:41:16 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 21:27:07 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	err_syntax(int err_type, char *str);
-void	err_custom(int err_type, char *str);
+void	err_parser(int err_type);
 void	err_alloc(void);
 
-void	err_syntax(int err_type, char *str)
+void	err_parser(int err_type)
 {
 	printf("( ༎ຶД༎ຶ): ");
-	if (err_type == 1)
-		printf("syntax error near unexpected token `%s'\n", str);
-	else if (err_type == 2)
-		printf("syntax error near unexpected token `newline\'\n");
-	g_status = 258;
-}
-
-void	err_custom(int err_type, char *str)
-{
-	printf("( ༎ຶД༎ຶ): ");
-	if (err_type == 0) // quote error
+	if (err_type == ERR_QUOTE)
 		printf("quote is not closed\n");
-	else if (err_type == 1) // 아직 쓰는 경우가 없...어
-		printf("invalid character `%s' is found", str);
+	else if (err_type == ERR_SYNTAX)
+		printf("syntax error\n");
 	g_status = 258;
 }
 

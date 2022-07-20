@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 20:24:23 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 21:46:45 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,4 @@ void	builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd)
 		msh_unset(argv, envlst);
 	else if (cmd == EXPORT)
 		msh_export(argv, envlst);
-	system("leaks minishell > leaks_result; cat leaks_result | grep leaked && rm -rf leaks_result");
 }
