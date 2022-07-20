@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 14:29:55 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 15:49:49 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,8 @@
 
 int		msh_export(t_token *argv, t_env *envlst);
 int		_export_valid(char *str);
+void	_export_error(char *err_msg);
 void	_export_display(t_env *envlst);
-
-static void	error(char *err_msg)
-{
-	ft_putstr_fd("( ༎ຶД༎ຶ): ", STDERR_FILENO);
-	ft_putstr_fd(err_msg, STDERR_FILENO);
-	ft_putendl_fd(": not a valid identifier", STDERR_FILENO);
-	exit (1);
-}
 
 int	msh_export(t_token *argv, t_env *envlst)
 {
@@ -46,7 +39,7 @@ int	msh_export(t_token *argv, t_env *envlst)
 				add_to_envlst(&envlst, init_envlst(env_key, env_val));
 		}
 		else if (key_len == 0)
-			error(double_strjoin("export: `", argv->str, "'"));
+			_export_error(argv->str);
 		argv = argv->next;
 	}
 	return (1);
@@ -81,4 +74,12 @@ void	_export_display(t_env *envlst)
 		printf("%s=\"%s\"\n", envlst->key, envlst->val);
 		envlst = envlst->next;
 	}
+}
+
+void	_export_error(char *err_msg)
+{
+	ft_putstr_fd("( ༎ຶД༎ຶ): export: `", STDERR_FILENO);
+	ft_putstr_fd(err_msg, STDERR_FILENO);
+	ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+	g_status = 1;
 }
