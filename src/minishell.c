@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 14:39:40 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/20 15:50:52 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,18 @@ int	main(int argc, char **argv, char **env)
 				if ((toklst->cmd))
 					type = get_builtin_type(toklst->cmd->str);
 				if (toklst->next == NULL && type)
-					builtin_main(toklst->cmd, envlst, type);
+				{
+					if (check_heredoc(toklst))
+					{
+						int stdin = dup(STDIN_FILENO);
+						int stdout = dup(STDOUT_FILENO);
+						set_redirection(toklst);
+						builtin_main(toklst->cmd, envlst, type);
+						dup2(stdin, STDIN_FILENO);
+						dup2(stdout, STDOUT_FILENO);
+					}
+					clear_heredoc(toklst);
+				}
 				else
 				{
 					display_toklst(toklst);

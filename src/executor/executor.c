@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/20 14:31:07 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/20 15:26:13 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	child_process(t_toklst *list, t_env *envlst)
 	cmd = get_valid_cmd_path(list->cmd->str, envlst);
 	cmd_arr = list_to_arr(list->cmd);
 	env = envlst_to_arr(envlst);
-	close(list->end[0]);
-	close(list->end[1]);
 	if (execve(cmd, cmd_arr, env) == -1)
 	{
 		free(cmd);
