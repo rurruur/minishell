@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 00:03:06 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 16:59:31 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	add_to_strlst(t_token **strlst, t_token *new)
 			*strlst = (*strlst)->next;
 		(*strlst)->next = new;
 		new->prev = (*strlst);
+		new->next = NULL;
 		*strlst = tmp;
 	}
 }
@@ -52,31 +53,44 @@ void	add_to_strlst(t_token **strlst, t_token *new)
 void	del_from_strlst(t_token **strlst)
 {
 	t_token	*del;
-	t_token	*tmp;
 
 	del = (*strlst);
-	if ((*strlst)->prev == NULL)
-	{
-		(*strlst) = (*strlst)->next;
-		(*strlst)->prev = NULL;
-	}	
-	else if ((*strlst)->next == NULL)
-	{
-		(*strlst) = (*strlst)->prev;
-		(*strlst)->next = NULL;
-	}
-	else
-	{
-		(*strlst) = (*strlst)->next;
-		tmp = (*strlst)->prev;
-		(*strlst)->prev = tmp;
-		tmp->next = (*strlst);
-	}
+	(*strlst) = (*strlst)->next;
 	free(del->str);
-	del->next = NULL;
-	del->prev = NULL;
 	free(del);
 }
+
+// void	del_from_strlst(t_token **strlst)
+// {
+// 	t_token	*del;
+// 	// t_token	*tmp;
+
+// 	del = (*strlst);
+// 	if ((*strlst)->prev == NULL)
+// 	{
+// 		printf("in\n");
+// 		(*strlst) = (*strlst)->next;
+// 		(*strlst)->prev = NULL;
+// 	}	
+// 	else if ((*strlst)->next == NULL)
+// 	{
+// 		(*strlst) = (*strlst)->prev;
+// 		(*strlst)->next = NULL;
+// 	}
+// 	else
+// 	{
+// 		// del->prev->next = del->next;
+// 		// del->next->prev = del->prev;
+// 		// (*strlst) = del->next;
+// 		(*strlst) = (*strlst)->next;
+// 		// (*strlst)->prev = NULL;
+// 		// tmp = (*strlst)->prev;
+// 		// (*strlst)->prev = tmp;
+// 		// tmp->next = (*strlst);
+// 	}
+// 	free(del->str);
+// 	free(del);
+// }
 
 void	lst_to_lst(t_token **old, t_token **new)
 {
@@ -84,6 +98,7 @@ void	lst_to_lst(t_token **old, t_token **new)
 
 	tmp = (*old);
 	(*old) = (*old)->next;
+	tmp->prev = NULL;
 	tmp->next = NULL;
 	add_to_strlst(new, tmp);
 }

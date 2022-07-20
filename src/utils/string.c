@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 18:12:05 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 00:01:56 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 17:18:08 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	ft_strcmp(const char *s1, const char *s2)
 	idx = 0;
 	s1_ptr = (unsigned char *)s1;
 	s2_ptr = (unsigned char *)s2;
+	if (s2 == NULL && ft_strlen(s1) == 0)
+		return (0);
 	while ((s1[idx] != '\0' || s2[idx] != '\0'))
 	{
 		if (s1_ptr[idx] != s2_ptr[idx])
