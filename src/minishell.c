@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/19 23:30:42 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 13:57:23 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	main(int argc, char **argv, char **env)
 			toklst = tokenizer(line, NULL, envlst);
 			if (toklst)
 			{
-				type = get_builtin_type(toklst->cmd->str);
+				if ((toklst->cmd))
+					type = get_builtin_type(toklst->cmd->str);
 				if (toklst->next == NULL && type)
 					builtin_main(toklst->cmd, envlst, type);
 				else
