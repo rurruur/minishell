@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 11:58:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/20 14:03:27 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 14:04:08 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ int	process_heredoc(t_token *heredoc_tok, char *filename)
 			dprintf(g_fd, "bye\n");
 			break ;
 		}
-		write(fd, line, line_len);
-		write(fd, "\n", 1);
+		ft_putendl_fd(line, fd);
 		free(line);
 	}
 	close(fd);
