@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/21 17:46:15 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 21:56:25 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,32 @@ void	child_process(t_toklst *list, t_env *envlst)
 	}
 }
 
+static int	get_pipe_count(t_toklst *list)
+{
+	int	count;
+
+	count = 0;
+	while (list)
+	{
+		count++;
+		list = list->next;
+	}
+	return (count);
+}
+
 void	executor(t_toklst *list, t_env *envlst)
 {
 	t_toklst	*tmp;
 	pid_t	child;
 
 	tmp = list;
+	if (get_pipe_count(list) > 250)
+	{
+		// errno = 24;	// Too many open files
+		ft_putendl_fd("( ༎ຶД༎ຶ): pipe: Too many open files", STDERR_FILENO);
+		// ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		return ;
+	}
 	while (list)
 	{
 		if (pipe(list->end) == -1)
