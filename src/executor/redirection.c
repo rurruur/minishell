@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:05:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/20 17:02:34 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 12:33:06 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	set_infile_redirection(t_token *files)
+void	set_infile_redirection(t_token *files)
 {
 	int			fd;
 	struct stat	info;
@@ -35,7 +35,7 @@ static void	set_infile_redirection(t_token *files)
 	close(fd);
 }
 
-static int	set_outfile_redirection(t_token *files)
+int	set_outfile_redirection(t_token *files)
 {
 	int	fd;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 21:26:56 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 12:37:58 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,8 @@ void		free_envlst(t_env *envlst);
 
 /* directory: executor ---------------------------------------------------- */
 // redirection.c
+void		set_infile_redirection(t_token *files);
+int			set_outfile_redirection(t_token *files);
 int			set_file_redirection(t_token *files, enum e_rdr mode);
 void		set_redirection(t_toklst *list);
 // executor.c
@@ -201,7 +203,7 @@ void		ft_wait(void);
 
 /* directory: builtin ----------------------------------------------------- */
 // builtin functions
-enum e_builtin	get_builtin_type(char *cmd);
+enum e_builtin	get_builtin_type(t_token *cmd);
 void		builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd);
 int			msh_cd(t_token *argv, t_env *envlst);
 int			msh_echo(t_token *argv);
