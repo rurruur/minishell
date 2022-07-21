@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 14:37:08 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 18:02:43 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ void	free_envlst(t_env *envlst)
 		tmp = envlst;
 		envlst = envlst->next;
 		free(tmp->key);
-		free(tmp->val);
+		if (tmp->val)
+			free(tmp->val);
 		tmp->key = NULL;
 		tmp->val = NULL;
 		tmp->next = NULL;

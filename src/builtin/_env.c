@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:35 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 00:04:49 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 18:17:57 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	msh_env(t_token *argv, t_env *envlst)
 		return (0);
 	while (envlst)
 	{
-		printf("%s=%s\n", envlst->key, envlst->val);
+		if (envlst->val)
+			printf("%s=%s\n", envlst->key, envlst->val);
 		envlst = envlst->next;
 	}
 	return (1);

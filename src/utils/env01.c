@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 00:13:51 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 18:22:33 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_env	*copy_env(char **env, t_env *envlst)
 		add_to_envlst(&envlst, new);
 		idx++;
 	}
+	change_env_val(envlst, "OLDPWD", NULL);
 	return (envlst);
 }
 

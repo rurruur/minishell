@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 12:54:58 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/21 18:20:26 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	main(int argc, char **argv, char **env)
 		{
 			add_history(line);
 			toklst = tokenizer(line, NULL, envlst);
-			// display_toklst(toklst);
 			if (toklst)
 			{
 				type = get_builtin_type(toklst->cmd);
@@ -46,8 +45,11 @@ int	main(int argc, char **argv, char **env)
 						int stdout = dup(STDOUT_FILENO);
 						set_redirection(toklst);
 						builtin_main(toklst->cmd, envlst, type);
+						// dprintf(g_fd, "builtin out\n");
 						dup2(stdin, STDIN_FILENO);
 						dup2(stdout, STDOUT_FILENO);
+						if (type == EXIT && (g_status == 0 || g_status == 255))
+							break ;
 					}
 				}
 				else

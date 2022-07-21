@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 00:39:15 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 18:23:38 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	pretoknizer(char *line, t_token **pretok, t_env *envlst)
 	if (check_whitespace(line) || !check_quote(line))
 		return (0);
 	(*pretok) = split_tok(line, " |<>");
-	display_strlst(*pretok);
 	env_to_str(*pretok, envlst);
 	trim_pretok(*pretok);
 	if (!(*pretok) || !check_pretok(*pretok))
