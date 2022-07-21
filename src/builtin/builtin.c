@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 18:34:34 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 19:59:26 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd)
 		msh_unset(argv, envlst);
 	else if (cmd == EXPORT)
 		msh_export(argv, envlst);
+	dprintf(g_fd, "g_status: %d\n", g_status);
 }
 
 void	builtin_error(char *err_msg)
