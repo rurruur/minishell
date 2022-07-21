@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 14:15:26 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 00:13:51 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ char	*insert_env(t_env *envlst, char *old, char *str)
 	env_val = get_env_val(envlst, env_key);
 	dollar = 0;
 	while (old[dollar] && old[dollar] != '$')
+		dollar++;
+	if (old[dollar] == '$' && old[dollar + 1] && old[dollar + 1] == '$')
 		dollar++;
 	new = msh_strjoin(ft_strndup(old, dollar), env_val);
 	new = msh_strjoin(new, ft_strdup(old + dollar + key_len + 1));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 14:24:46 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/20 21:26:56 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@
 
 # define CLOSED 1
 # define OPEN -1
+
+# define ERR_QUOTE 0
+# define ERR_SYNTAX 1
+# define ERR_MEM 2
 
 # define MAX_PATH_LEN 4096	// Linux maximum path length
 # define MAX_ERRNO 255
@@ -66,11 +70,11 @@ enum e_type
 {
 	T_ENV,
 	T_OFF,
+	T_PIPE,
 	T_RDR_IN,
 	T_RDR_HD,
 	T_RDR_OUT,
-	T_RDR_AP,
-	T_PIPE
+	T_RDR_AP
 };
 
 enum e_rdr
@@ -118,11 +122,11 @@ char		*insert_env(t_env *envlst, char *old, char *str);
 // env02.c
 char		*get_env_key(char *str);
 char		*get_env_val(t_env *envlst, char *key);
+int			find_env_val(t_env *envlst, char *key);
 int			change_env_val(t_env *envlst, char *key, char *new_val);
 char		**envlst_to_arr(t_env *envlst);
 // error.c
-void		err_syntax(int err_type, char *str);
-void		err_custom(int err_type, char *str);
+void		err_parser(int err_type);
 void		err_alloc(void);
 // signal.c
 void		handle_sig(enum e_sig_mode mode);

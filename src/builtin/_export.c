@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 15:49:49 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/20 20:32:27 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,13 @@ int	msh_export(t_token *argv, t_env *envlst)
 		{
 			env_key = ft_strndup(argv->str, key_len);
 			env_val = ft_strdup(argv->str + key_len + 1);
-			if (get_env_val(envlst, env_key))
-				change_env_val(envlst, env_key, env_val);
-			else
+			if (!find_env_val(envlst, env_key))
 				add_to_envlst(&envlst, init_envlst(env_key, env_val));
+			else
+			{
+				change_env_val(envlst, env_key, env_val);
+				free(env_key);
+			}
 		}
 		else if (key_len == 0)
 			_export_error(argv->str);

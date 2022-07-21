@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 17:27:38 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 17:00:27 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 00:39:15 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ t_toklst	*tokenizer(char *line, t_toklst *toklst, t_env *envlst)
 			tok_to_lst(&pretok, new);
 			add_to_toklst(&toklst, new);
 		}
-		if (pretok && pretok->next)
-			pretok = pretok->next;
+		if (pretok && pretok->type == T_PIPE)
+			del_from_strlst(&pretok);
 	}
 	pretok = NULL;
 	return (toklst);
@@ -43,10 +43,14 @@ int	pretoknizer(char *line, t_token **pretok, t_env *envlst)
 	if (check_whitespace(line) || !check_quote(line))
 		return (0);
 	(*pretok) = split_tok(line, " |<>");
+	display_strlst(*pretok);
 	env_to_str(*pretok, envlst);
 	trim_pretok(*pretok);
 	if (!(*pretok) || !check_pretok(*pretok))
+	{
+		free_strlst(*pretok);
 		return (0);
+	}
 	return (1);
 }
 

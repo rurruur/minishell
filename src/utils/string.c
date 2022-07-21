@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 18:12:05 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 17:18:08 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 00:18:17 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,11 @@ char	*msh_strjoin(char *s1, char *s2)
 	if (!new_str)
 		return (NULL);
 	new_str[0] = '\0';
-	if (total_len == 1)
-		return (new_str);
-	ft_strlcat(new_str, (char *)s1, ft_strlen(s1) + 1);
-	ft_strlcat(new_str, (char *)s2, total_len);
+	if (total_len != 1)
+	{
+		ft_strlcat(new_str, (char *)s1, ft_strlen(s1) + 1);
+		ft_strlcat(new_str, (char *)s2, total_len);
+	}
 	free(s1);
 	free(s2);
 	return (new_str);

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 18:09:44 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 00:41:01 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	check_quote(char *line)
 		line++;
 	}
 	if (!(sq + dq > 0))
-		err_custom(0, NULL);
+		err_parser(ERR_QUOTE);
 	return (sq + dq > 0);
 }
 
@@ -61,19 +61,19 @@ int	check_pretok(t_token *pretok)
 		flag = 0;
 	while (pretok && flag == 1)
 	{	
-		if (pretok->type > T_OFF && (!pretok->next || pretok->next->type > T_OFF))
+		if (pretok->type == T_PIPE && !pretok->next)
+		{
+			flag = 0;
+			break ;
+		}
+		else if (pretok->type > T_PIPE && (!pretok->next || pretok->next->type >= T_PIPE))
 		{
 			flag = 0;
 			break ;
 		}
 		pretok = pretok->next;
 	}
-	if (flag == 0 && pretok->type == T_PIPE)
-		err_syntax(1, "|");
-	else if (flag == 0 && pretok->type != T_PIPE && !pretok->next)
-		err_syntax(2, pretok->str);
-	else if (flag == 0 && pretok->type != T_PIPE)
-		err_syntax(1, pretok->next->str);
-	// 여기 이상해...
+	if (flag != 1)
+		err_parser(ERR_SYNTAX);
 	return (flag);
 }
