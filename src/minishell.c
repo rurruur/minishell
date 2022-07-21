@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 12:45:31 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/21 12:54:58 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **env)
 		{
 			add_history(line);
 			toklst = tokenizer(line, NULL, envlst);
-			display_toklst(toklst);
+			// display_toklst(toklst);
 			if (toklst)
 			{
 				type = get_builtin_type(toklst->cmd);

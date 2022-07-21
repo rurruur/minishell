@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 12:37:58 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/21 12:54:32 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ void		ft_wait(void);
 // builtin functions
 enum e_builtin	get_builtin_type(t_token *cmd);
 void		builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd);
+void		builtin_error(char *err_msg);
 int			msh_cd(t_token *argv, t_env *envlst);
 int			msh_echo(t_token *argv);
 int			msh_env(t_token *argv, t_env *envlst);
