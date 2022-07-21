@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 12:39:20 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/21 12:54:14 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,25 @@ void	builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd)
 		msh_unset(argv, envlst);
 	else if (cmd == EXPORT)
 		msh_export(argv, envlst);
+}
+
+void	builtin_error(char *err_msg)
+{
+	ft_putstr_fd("( ༎ຶД༎ຶ): ", STDERR_FILENO);
+	ft_putstr_fd(err_msg, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	if (errno <= MAX_ERRNO)
+	{
+		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		dprintf(g_fd, "errno: %d\n", errno);
+		g_status = errno;
+		return ;
+	}
+	else if (errno == CMD_NOT_FOUND)
+		ft_putendl_fd("command not found", STDERR_FILENO);
+	else if (errno == IS_DIR)
+		ft_putendl_fd("Is a directory", STDERR_FILENO);
+	else if (errno == NO_EXIST)
+		ft_putendl_fd("No such file or directory", STDERR_FILENO);
+	g_status = errno - MAX_ERRNO;
 }
