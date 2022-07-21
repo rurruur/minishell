@@ -6,44 +6,59 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:39 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 17:17:27 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 22:10:52 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		msh_exit(t_token *argv);
+int		msh_exit(t_token *argv, int type);
+int		_exit_num_check(char *str);
 void	_exit_err(int type, char *str);
 
-int	msh_exit(t_token *argv)
+int		msh_exit(t_token *argv, int type)
 {
-	int	 	alpha;
-	char	*str;
+	int		exit_num;
 
-	alpha = 0;
-	printf("exit\n");
+	exit_num = 0;
+	if (type != EXIT_PIPE)
+		printf("exit\n");
 	if (argv->next == NULL)
 	{
 		g_status = 0;
 		return (1);
 	}
-	str = argv->next->str;
-	while (*str)
+	if (_exit_num_check(argv->next->str))
+		_exit_err(2, argv->next->str);
+	else if (argv->next->next)
+		_exit_err(1, argv->next->str);
+	else
 	{
-		if (ft_isalpha(*str))
-		{
+		// exit_num = ft_atoi(argv->next->str);
+		// if (exit < 0)
+		// 	exit_num += 256;
+		// else
+		// 	exit_num %= 256;
+		(void)exit_num;
+		g_status = 0;
+	}
+	return (1);
+}
+
+int		_exit_num_check(char *str)
+{
+	int alpha;
+
+	alpha = 0;
+	if (*str == '-')
+		str++;
+	while (*str && alpha == 0)
+	{
+		if (!ft_isdigit(*str))
 			alpha = 1;
-			break ;
-		}
 		str++;
 	}
-	if (alpha == 1)
-		_exit_err(2, str);
-	else if (argv->next->next)
-		_exit_err(1, str);
-	else
-		exit (ft_atoi(argv->next->str));
-	return (1);
+	return (alpha);
 }
 
 void	_exit_err(int type, char *str)

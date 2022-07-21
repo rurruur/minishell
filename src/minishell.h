@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 12:54:32 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/21 21:56:20 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ enum e_builtin
 	ECHO,
 	ENV,
 	EXIT,
+	EXIT_PIPE,
 	PWD,
 	UNSET,
 	EXPORT
@@ -203,13 +204,13 @@ void		ft_wait(void);
 
 /* directory: builtin ----------------------------------------------------- */
 // builtin functions
-enum e_builtin	get_builtin_type(t_token *cmd);
+enum e_builtin	get_builtin_type(t_token *cmd, t_toklst *toklst);
 void		builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd);
 void		builtin_error(char *err_msg);
 int			msh_cd(t_token *argv, t_env *envlst);
 int			msh_echo(t_token *argv);
 int			msh_env(t_token *argv, t_env *envlst);
-int			msh_exit(t_token *argv);
+int			msh_exit(t_token *argv, int type);
 int			msh_pwd(t_token *argv);
 int			msh_unset(t_token *argv, t_env *envlst);
 int			msh_export(t_token *argv, t_env *envlst);

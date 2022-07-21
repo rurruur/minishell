@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/21 21:56:25 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/21 22:12:07 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	child_process(t_toklst *list, t_env *envlst)
 		errno = CMD_NOT_FOUND;
 		ft_error("");
 	}
-	type = get_builtin_type(list->cmd);
+	type = get_builtin_type(list->cmd, list);
 	if (type)
 	{
 		builtin_main(list->cmd, envlst, type);

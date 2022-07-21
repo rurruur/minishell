@@ -6,13 +6,13 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 19:59:26 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 21:59:51 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-enum e_builtin	get_builtin_type(t_token *cmd)
+enum e_builtin	get_builtin_type(t_token *cmd, t_toklst *toklst)
 {
 	if (cmd == NULL || ft_strlen(cmd->str) == 0)
 		return NONE;
@@ -22,8 +22,10 @@ enum e_builtin	get_builtin_type(t_token *cmd)
 		return (ECHO);
 	else if (!ft_strcmp(cmd->str, "env"))
 		return (ENV);
-	else if (!ft_strcmp(cmd->str, "exit"))
+	else if (!ft_strcmp(cmd->str, "exit") && !toklst->next)
 		return (EXIT);
+	else if (!ft_strcmp(cmd->str, "exit") && toklst->next)
+		return (EXIT_PIPE);
 	else if (!ft_strcmp(cmd->str, "pwd"))
 		return (PWD);
 	else if (!ft_strcmp(cmd->str, "unset"))
@@ -44,7 +46,9 @@ void	builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd)
 	else if (cmd == ENV)
 		msh_env(argv, envlst);
 	else if (cmd == EXIT)
-		msh_exit(argv);
+		msh_exit(argv, EXIT);
+	else if (cmd == EXIT_PIPE)
+		msh_exit(argv, EXIT_PIPE);
 	else if (cmd == PWD)
 		msh_pwd(argv);
 	else if (cmd == UNSET)
