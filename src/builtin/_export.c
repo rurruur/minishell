@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 20:32:27 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 18:16:47 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ int	msh_export(t_token *argv, t_env *envlst)
 	while (argv)
 	{
 		key_len = _export_valid(argv->str);
-		if (key_len > 0)
+		if (key_len != 0)
 		{
 			env_key = ft_strndup(argv->str, key_len);
-			env_val = ft_strdup(argv->str + key_len + 1);
-			if (!find_env_val(envlst, env_key))
+			if (argv->str[key_len] != '\0')
+				env_val = ft_strdup(argv->str + key_len + 1);
+			else
+				env_val = NULL;
+			if (env_val == NULL || !find_env_val(envlst, env_key))
 				add_to_envlst(&envlst, init_envlst(env_key, env_val));
 			else
 			{
@@ -61,20 +64,17 @@ int	_export_valid(char *str)
 			return (0);
 		idx++;
 	}
-	if (str[idx] == '\0')
-		return (-1);
-	else if (str[idx] == '=')
-		return (idx);
-	else
-		return (0);
+	return (idx);
 }
 
 void	_export_display(t_env *envlst)
 {
 	while (envlst)
 	{
-		printf("declare -x ");
-		printf("%s=\"%s\"\n", envlst->key, envlst->val);
+		printf("declare -x %s", envlst->key);
+		if (envlst->val)
+			printf("=\"%s\"", envlst->val);
+		printf("\n");
 		envlst = envlst->next;
 	}
 }

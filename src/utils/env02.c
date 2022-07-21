@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 00:22:28 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 18:23:10 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*get_env_val(t_env *envlst, char *key)
 		return (ft_itoa(g_status));
 	while (envlst)
 	{
-		if (!ft_strcmp(envlst->key, key))
+		if (!ft_strcmp(envlst->key, key) && envlst->val)
 		{
 			env_val = ft_strdup(envlst->val);
 			break ;
@@ -94,7 +94,8 @@ int	change_env_val(t_env *envlst, char *key, char *new_val)
 		return (0);
 	tmp = envlst->val;
 	envlst->val = new_val;
-	free(tmp);
+	if (tmp)
+		free(tmp);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:39 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 20:33:52 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 17:17:27 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ int	msh_exit(t_token *argv)
 	alpha = 0;
 	printf("exit\n");
 	if (argv->next == NULL)
-		exit (0);
+	{
+		g_status = 0;
+		return (1);
+	}
 	str = argv->next->str;
 	while (*str)
 	{
-		if (ft_isalpha(*str) == 1)
+		if (ft_isalpha(*str))
 		{
 			alpha = 1;
 			break ;
@@ -56,6 +59,5 @@ void	_exit_err(int type, char *str)
 		ft_putstr_fd(str, STDERR_FILENO);
 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
 		g_status = 255;
-		exit (g_status);
 	}
 }

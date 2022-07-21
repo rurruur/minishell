@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 12:54:14 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/21 18:34:34 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ enum e_builtin	get_builtin_type(t_token *cmd)
 
 void	builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd)
 {
+	dprintf(g_fd, "builtin_main in\n");
 	if (cmd == CD)
 		msh_cd(argv, envlst);
 	else if (cmd == ECHO)
