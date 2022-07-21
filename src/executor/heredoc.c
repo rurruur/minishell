@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 11:58:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/20 17:43:32 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 12:28:44 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	process_heredoc(t_token *heredoc_tok, char *filename)
 	int		fd;
 
 	handle_sig(HEREDOC);
-	dprintf(g_fd, "heredoc: %s #%s\n", heredoc_tok->str, filename);
 	fd = open(filename, O_WRONLY | O_CREAT, 0777);
 	while (1)
 	{
@@ -42,14 +41,13 @@ int	process_heredoc(t_token *heredoc_tok, char *filename)
 		if (!ft_strcmp(heredoc_tok->str, line))
 		{
 			free(line);
-			dprintf(g_fd, "bye\n");
 			break ;
 		}
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
 	close(fd);
-	exit(1);
+	exit(0);
 }
 
 int	check_heredoc(t_toklst *list)
@@ -58,7 +56,6 @@ int	check_heredoc(t_toklst *list)
 	int		child;
 	char	*filename;
 
-	dprintf(g_fd, "부모: %d\n", getpid());
 	g_status = 0;
 	while (list)
 	{

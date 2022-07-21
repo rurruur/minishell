@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/20 15:26:13 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/21 12:43:47 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@ void	child_process(t_toklst *list, t_env *envlst)
 	char			**env;
 	enum e_builtin	type;
 
-	dprintf(g_fd, "execute: %s\n", list->cmd->str);
 	set_redirection(list);
+	if (list->cmd->str == NULL)
+		exit(0);
 	if (*(list->cmd->str) == '\0')
 	{
 		errno = CMD_NOT_FOUND;
 		ft_error("");
 	}
-	type = get_builtin_type(list->cmd->str);
+	type = get_builtin_type(list->cmd);
 	if (list->next == NULL && type)
 	{
 		builtin_main(list->cmd, envlst, type);

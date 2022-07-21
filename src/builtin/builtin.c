@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/20 21:46:45 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/21 12:39:20 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-enum e_builtin	get_builtin_type(char *cmd)
+enum e_builtin	get_builtin_type(t_token *cmd)
 {
-	if (ft_strlen(cmd) == 0)
+	if (cmd == NULL || ft_strlen(cmd->str) == 0)
 		return NONE;
-	if (!ft_strcmp(cmd, "cd"))
+	if (!ft_strcmp(cmd->str, "cd"))
 		return (CD);
-	else if (!ft_strcmp(cmd, "echo"))
+	else if (!ft_strcmp(cmd->str, "echo"))
 		return (ECHO);
-	else if (!ft_strcmp(cmd, "env"))
+	else if (!ft_strcmp(cmd->str, "env"))
 		return (ENV);
-	else if (!ft_strcmp(cmd, "exit"))
+	else if (!ft_strcmp(cmd->str, "exit"))
 		return (EXIT);
-	else if (!ft_strcmp(cmd, "pwd"))
+	else if (!ft_strcmp(cmd->str, "pwd"))
 		return (PWD);
-	else if (!ft_strcmp(cmd, "unset"))
+	else if (!ft_strcmp(cmd->str, "unset"))
 		return (UNSET);
-	else if (!ft_strcmp(cmd, "export"))
+	else if (!ft_strcmp(cmd->str, "export"))
 		return (EXPORT);
 	else
 		return (NONE);
