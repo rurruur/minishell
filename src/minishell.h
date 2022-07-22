@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/22 22:07:16 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 00:11:28 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <sys/errno.h>
-# include <string.h>
 # include <limits.h>
 
 # include "../libft/libft.h"
@@ -192,7 +191,6 @@ void		executor(t_toklst *list, t_env *envlst);
 // cmd_utils.c
 int			get_cmd_count(t_token *cmds);
 char		**list_to_arr(t_token *cmds);
-char		*double_strjoin(char *start, char *middle, char *end);
 void		destroy_split(char **arr);
 void		get_valid_cmd_path(char *cmd, t_env *env, char **cmd_path);
 // heredoc.c
@@ -204,6 +202,8 @@ void		clear_heredoc(t_toklst *list);
 void		ft_error(char *err_msg);
 // wait.c
 void		ft_wait(t_toklst *list);
+// double_join.c
+char		*double_strjoin(char *start, char *middle, char *end);
 
 /* directory: builtin ----------------------------------------------------- */
 // builtin functions

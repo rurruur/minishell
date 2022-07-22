@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:06:23 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/22 22:07:25 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 00:13:38 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,19 @@ char	**list_to_arr(t_token *cmds)
 
 	count = get_cmd_count(cmds);
 	arr = (char **)malloc(sizeof(char *) * (count + 1));
+	if (!arr)
+		ft_error("malloc");
 	arr[count] = NULL;
 	count = 0;
 	while (cmds)
 	{
-		arr[count++] = ft_strdup(cmds->str);
+		arr[count] = ft_strdup(cmds->str);
+		if (!arr[count])
+			ft_error("malloc");
+		count++;
 		cmds = cmds->next;
 	}
 	return (arr);
-}
-
-char	*double_strjoin(char *start, char *middle, char *end)
-{
-	char	*tmp;
-	char	*result;
-
-	tmp = ft_strjoin(start, middle);
-	result = ft_strjoin(tmp, end);
-	free(tmp);
-	return (result);
 }
 
 void	destroy_split(char **arr)
@@ -63,22 +57,9 @@ void	destroy_split(char **arr)
 	free(arr);
 }
 
-void	get_valid_cmd_path(char *cmd, t_env *env, char **cmd_path)
+static void	validate_path(char *path, struct stat stat_result, char *cmd)
 {
-	struct stat	stat_result;
-	char		**path;
-	int			i;
-
-	path = ft_split(get_env_val(env, "PATH"), ':');
-	i = -1;
-	while (path[++i])
-	{
-		*cmd_path = double_strjoin(path[i], "/", cmd);
-		if (stat(*cmd_path, &stat_result) != -1)
-			break ;
-		free(*cmd_path);
-	}
-	if (!path[i])
+	if (!path)
 	{
 		errno = CMD_NOT_FOUND;
 		ft_error(cmd);
@@ -88,5 +69,27 @@ void	get_valid_cmd_path(char *cmd, t_env *env, char **cmd_path)
 		errno = IS_DIR;
 		ft_error(cmd);
 	}
+}
+
+void	get_valid_cmd_path(char *cmd, t_env *env, char **cmd_path)
+{
+	struct stat	stat_result;
+	char		**path;
+	int			i;
+
+	path = ft_split(get_env_val(env, "PATH"), ':');
+	if (!path)
+		ft_error("malloc");
+	i = -1;
+	while (path[++i])
+	{
+		*cmd_path = double_strjoin(path[i], "/", cmd);
+		if (!(*cmd_path))
+			ft_error("malloc");
+		if (stat(*cmd_path, &stat_result) != -1)
+			break ;
+		free(*cmd_path);
+	}
+	validate_path(path[i], stat_result, cmd);
 	destroy_split(path);
 }
