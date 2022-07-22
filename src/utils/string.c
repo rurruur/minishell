@@ -6,16 +6,11 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 18:12:05 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 00:18:17 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 00:13:23 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-int		ft_strcmp(const char *s1, const char *s2);
-char	*ft_strndup(char *str, int n);
-char	*msh_strjoin(char *s1, char *s2);
-void	free_strarr(char **str);
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

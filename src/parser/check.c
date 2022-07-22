@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/22 14:49:18 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 00:21:17 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,9 @@ int	check_quote(char *line)
 	dq = CLOSED;
 	while (*line)
 	{
-		if (ft_strncmp(line, "\\\\", 2) == 0)
-		{
-			line += 2;
-			continue ;
-		}
-		else if (ft_strncmp(line, "\\'", 2) == 0 || ft_strncmp(line, "\\\"", 2) == 0)
+		if (ft_strncmp(line, "\\\\", 2) == 0 || \
+			ft_strncmp(line, "\\'", 2) == 0 || \
+			ft_strncmp(line, "\\\"", 2) == 0)
 		{
 			line += 2;
 			continue ;
@@ -67,15 +64,10 @@ int	check_pretok(t_token *pretok)
 	while (pretok && flag == 1)
 	{	
 		if (pretok->type == T_PIPE && !pretok->next)
-		{
 			flag = 0;
-			break ;
-		}
-		else if (pretok->type > T_PIPE && (!pretok->next || pretok->next->type >= T_PIPE))
-		{
+		else if (pretok->type > T_PIPE && \
+				(!pretok->next || pretok->next->type >= T_PIPE))
 			flag = 0;
-			break ;
-		}
 		pretok = pretok->next;
 	}
 	if (flag != 1)
