@@ -3,15 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/21 22:53:31 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/22 22:06:12 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../minishell.h"
+
+static void	validate_cmd(char *cmd)
+{
+	if (cmd == NULL)
+		exit(0);
+	if (*(cmd) == '\0')
+	{
+		errno = CMD_NOT_FOUND;
+		ft_error("");
+	}
+}
 
 void	child_process(t_toklst *list, t_env *envlst)
 {
@@ -20,22 +30,15 @@ void	child_process(t_toklst *list, t_env *envlst)
 	char			**env;
 	enum e_builtin	type;
 
-	// dprintf(g_fd, "child process\n");
 	set_redirection(list);
-	if (list->cmd->str == NULL)
-		exit(0);
-	if (*(list->cmd->str) == '\0')
-	{
-		errno = CMD_NOT_FOUND;
-		ft_error("");
-	}
+	validate_cmd(list->cmd->str);
 	type = get_builtin_type(list->cmd, list);
 	if (type)
 	{
 		builtin_main(list->cmd, envlst, type);
 		exit(0);
 	}
-	cmd = get_valid_cmd_path(list->cmd->str, envlst);
+	get_valid_cmd_path(list->cmd->str, envlst, &cmd);
 	cmd_arr = list_to_arr(list->cmd);
 	env = envlst_to_arr(envlst);
 	if (execve(cmd, cmd_arr, env) == -1)
@@ -63,14 +66,12 @@ static int	get_pipe_count(t_toklst *list)
 void	executor(t_toklst *list, t_env *envlst)
 {
 	t_toklst	*tmp;
-	pid_t	child;
+	pid_t		child;
 
 	tmp = list;
-	if (get_pipe_count(list) > 250)
+	if (get_pipe_count(list) > 251)
 	{
-		// errno = 24;	// Too many open files
 		ft_putendl_fd("( ༎ຶД༎ຶ): pipe: Too many open files", STDERR_FILENO);
-		// ft_putendl_fd(strerror(errno), STDERR_FILENO);
 		return ;
 	}
 	while (list)
@@ -85,12 +86,5 @@ void	executor(t_toklst *list, t_env *envlst)
 		close(list->end[1]);
 		list = list->next;
 	}
-	handle_sig(SIG_WAIT);
-	ft_wait();
-	handle_sig(READLINE);
-	while (tmp)
-	{
-		close(tmp->end[0]);
-		tmp = tmp->next;
-	}
+	ft_wait(tmp);
 }

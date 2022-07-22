@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 21:59:51 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/22 20:50:14 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ enum e_builtin	get_builtin_type(t_token *cmd, t_toklst *toklst)
 
 void	builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd)
 {
-	dprintf(g_fd, "builtin_main in\n");
 	if (cmd == CD)
 		msh_cd(argv, envlst);
 	else if (cmd == ECHO)
@@ -55,7 +54,6 @@ void	builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd)
 		msh_unset(argv, envlst);
 	else if (cmd == EXPORT)
 		msh_export(argv, envlst);
-	dprintf(g_fd, "g_status: %d\n", g_status);
 }
 
 void	builtin_error(char *err_msg)
@@ -66,7 +64,6 @@ void	builtin_error(char *err_msg)
 	if (errno <= MAX_ERRNO)
 	{
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		dprintf(g_fd, "errno: %d\n", errno);
 		g_status = errno;
 		return ;
 	}
