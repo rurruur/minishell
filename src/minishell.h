@@ -191,7 +191,6 @@ void		executor(t_toklst *list, t_env *envlst);
 // cmd_utils.c
 int			get_cmd_count(t_token *cmds);
 char		**list_to_arr(t_token *cmds);
-char		*double_strjoin(char *start, char *middle, char *end);
 void		destroy_split(char **arr);
 void		get_valid_cmd_path(char *cmd, t_env *env, char **cmd_path);
 // heredoc.c
@@ -203,6 +202,8 @@ void		clear_heredoc(t_toklst *list);
 void		ft_error(char *err_msg);
 // wait.c
 void		ft_wait(t_toklst *list);
+// double_join.c
+char		*double_strjoin(char *start, char *middle, char *end);
 
 /* directory: builtin ----------------------------------------------------- */
 // builtin functions
