@@ -6,14 +6,15 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 18:12:05 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 00:51:17 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 01:24:00 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 int		ft_strcmp(const char *s1, const char *s2);
-char	*ft_strndup(char *str, int n);
+char	*msh_strdup(char *s1);
+char	*msh_strndup(char *str, int n);
 char	*msh_strjoin(char *s1, char *s2);
 
 int	ft_strcmp(const char *s1, const char *s2)
@@ -36,7 +37,27 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-char	*ft_strndup(char *str, int n)
+char	*msh_strdup(char *s1)
+{
+	unsigned int	idx;
+	unsigned int	src_len;
+	char			*dupstr;
+
+	src_len = ft_strlen(s1);
+	dupstr = (char *)malloc((src_len + 1) * sizeof(char));
+	if (!(dupstr))
+		err_alloc();
+	idx = 0;
+	while (idx < src_len)
+	{
+		dupstr[idx] = s1[idx];
+		idx++;
+	}
+	dupstr[idx] = '\0';
+	return (dupstr);
+}
+
+char	*msh_strndup(char *str, int n)
 {
 	int		idx;
 	int		src_len;

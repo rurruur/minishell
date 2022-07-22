@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 00:52:58 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 01:24:10 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,10 @@ void		handle_sig(enum e_sig_mode mode);
 void		h_sigint(int signum);
 void		h_sigquit(int signum);
 // string.c
-char		*ft_strndup(char *str, int n);
-char		*msh_strjoin(char *s1, char *s2);
 int			ft_strcmp(const char *s1, const char *s2);
+char		*msh_strdup(char *s1);
+char		*msh_strndup(char *str, int n);
+char		*msh_strjoin(char *s1, char *s2);
 
 /* directory: parser ----------------------------------------------------- */
 // check.c

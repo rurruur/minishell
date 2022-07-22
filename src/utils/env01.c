@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 00:52:56 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 01:25:15 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ t_env	*copy_env(char **env, t_env *envlst)
 		delim = 0;
 		while (env[idx][delim] != '=')
 			delim++;
-		new = init_envlst(ft_strndup(env[idx], delim), \
-						ft_strdup(env[idx] + delim + 1));
+		new = init_envlst(msh_strndup(env[idx], delim), \
+						msh_strdup(env[idx] + delim + 1));
 		add_to_envlst(&envlst, new);
 		idx++;
 	}
@@ -47,7 +47,7 @@ void	env_to_str(t_token *pretok, t_env *envlst)
 	while (pretok)
 	{
 		sq = CLOSED;
-		str = ft_strdup(pretok->str);
+		str = msh_strdup(pretok->str);
 		idx = -1;
 		while (str[++idx])
 		{
@@ -87,8 +87,8 @@ char	*insert_env(t_env *envlst, char *old, char *str)
 		dollar++;
 	if (old[dollar] == '$' && old[dollar + 1] && old[dollar + 1] == '$')
 		dollar++;
-	new = msh_strjoin(ft_strndup(old, dollar), env_val);
-	new = msh_strjoin(new, ft_strdup(old + dollar + key_len + 1));
+	new = msh_strjoin(msh_strndup(old, dollar), env_val);
+	new = msh_strjoin(new, msh_strdup(old + dollar + key_len + 1));
 	free(old);
 	free(env_key);
 	return (new);

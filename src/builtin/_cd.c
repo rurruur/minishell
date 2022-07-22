@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 00:45:26 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 01:28:49 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ int	_cd_env(char *str, t_env *envlst)
 	if (str == NULL || (str[0] == '~' && str[1] == '\0'))
 	{
 		path = get_env_val(envlst, "HOME");
-		err_msg = ft_strdup("HOME");
+		err_msg = msh_strdup("HOME");
 	}
 	else
 	{
 		path = get_env_val(envlst, "OLDPWD");
-		err_msg = ft_strdup("OLDPWD");
+		err_msg = msh_strdup("OLDPWD");
 	}
 	if (path && chdir(path) != -1)
 	{
@@ -106,9 +106,9 @@ int	_cd_str(char *str, int type)
 
 	path = NULL;
 	if (type == T_OFF)
-		path = ft_strdup(str);
+		path = msh_strdup(str);
 	else if (type == T_ENV)
-		path = ft_strdup(str);
+		path = msh_strdup(str);
 	if (chdir(path) == -1)
 		_cd_error(path, 2);
 	else

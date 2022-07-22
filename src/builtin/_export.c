@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 01:09:36 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 01:24:35 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void	_export_add(char *str, int key_len, t_env *envlst)
 	char	*env_key;
 	char	*env_val;
 
-	env_key = ft_strndup(str, key_len);
+	env_key = msh_strndup(str, key_len);
 	if (str[key_len] != '\0')
-		env_val = ft_strdup(str + key_len + 1);
+		env_val = msh_strdup(str + key_len + 1);
 	else
 		env_val = NULL;
 	if (env_val == NULL || !find_env_val(envlst, env_key))
