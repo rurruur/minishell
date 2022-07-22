@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 18:02:43 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 00:26:55 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	add_to_envlst(t_env **envlst, t_env *new)
 void	del_from_envlst(t_env **envlst)
 {
 	t_env	*del;
-	t_env	*tmp;
 
 	del = (*envlst);
 	if ((*envlst)->prev == NULL)
@@ -66,10 +65,9 @@ void	del_from_envlst(t_env **envlst)
 	}
 	else
 	{
-		tmp = (*envlst)->prev;
-		(*envlst) = (*envlst)->next;
-		(*envlst)->prev = tmp;
-		tmp->next = (*envlst);
+		del->prev->next = del->next;
+		del->next->prev = del->prev;
+		(*envlst) = del->next;
 	}
 	free(del->key);
 	free(del->val);

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 18:56:57 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 18:16:25 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 00:52:05 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	display_toklst(t_toklst *toklst)
 		display_strlst(toklst->rdr_in);
 		printf(" >/>> : ");
 		display_strlst(toklst->rdr_out);
-		printf("______________________________\n");
+		printf("_______________________________\n");
 		toklst = toklst->next;
 		idx++;
 	}

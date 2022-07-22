@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 18:23:10 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 00:52:44 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*get_env_key(char *str);
 char	*get_env_val(t_env *envlst, char *key);
 int		find_env_val(t_env *envlst, char *key);
 int		change_env_val(t_env *envlst, char *key, char *new_val);
-char	**envlst_to_arr(t_env *envlst);
 
 char	*get_env_key(char *str)
 {
@@ -63,7 +62,7 @@ char	*get_env_val(t_env *envlst, char *key)
 	return (env_val);
 }
 
-int		find_env_val(t_env *envlst, char *key)
+int	find_env_val(t_env *envlst, char *key)
 {
 	int	flag;
 
@@ -97,28 +96,4 @@ int	change_env_val(t_env *envlst, char *key, char *new_val)
 	if (tmp)
 		free(tmp);
 	return (1);
-}
-
-char	**envlst_to_arr(t_env *envlst)
-{
-	char	**arr;
-	int		size;
-	t_env	*tmp;
-
-	tmp = envlst;
-	size = 0;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		size++;
-	}
-	arr = (char **)malloc(sizeof(char *) * (size + 1));
-	arr[size] = NULL;
-	size = 0;
-	while (envlst)
-	{
-		arr[size++] = double_strjoin(envlst->key, "=", envlst->val);
-		envlst = envlst->next;
-	}
-	return (arr);
 }

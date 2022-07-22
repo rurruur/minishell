@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 18:22:33 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 00:52:56 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_env	*copy_env(char **env, t_env *envlst);
 void	env_to_str(t_token *pretok, t_env *envlst);
 char	*insert_env(t_env *envlst, char *old, char *str);
+char	**envlst_to_arr(t_env *envlst);
 
 t_env	*copy_env(char **env, t_env *envlst)
 {
@@ -28,7 +29,8 @@ t_env	*copy_env(char **env, t_env *envlst)
 		delim = 0;
 		while (env[idx][delim] != '=')
 			delim++;
-		new = init_envlst(ft_strndup(env[idx], delim), ft_strdup(env[idx] + delim + 1));
+		new = init_envlst(ft_strndup(env[idx], delim), \
+						ft_strdup(env[idx] + delim + 1));
 		add_to_envlst(&envlst, new);
 		idx++;
 	}
@@ -90,4 +92,30 @@ char	*insert_env(t_env *envlst, char *old, char *str)
 	free(old);
 	free(env_key);
 	return (new);
+}
+
+char	**envlst_to_arr(t_env *envlst)
+{
+	char	**arr;
+	int		size;
+	t_env	*tmp;
+
+	tmp = envlst;
+	size = 0;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		size++;
+	}
+	arr = (char **)malloc(sizeof(char *) * (size + 1));
+	if (!arr)
+		err_alloc();
+	arr[size] = NULL;
+	size = 0;
+	while (envlst)
+	{
+		arr[size++] = double_strjoin(envlst->key, "=", envlst->val);
+		envlst = envlst->next;
+	}
+	return (arr);
 }

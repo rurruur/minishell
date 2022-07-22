@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/22 22:07:16 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 00:52:58 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <sys/stat.h>
 # include <sys/errno.h>
 # include <string.h>
-# include <limits.h>
 
 # include "../libft/libft.h"
 
@@ -39,6 +38,7 @@
 # define ERR_SYNTAX 1
 # define ERR_MEM 2
 
+# define LLONG_MAX 9223372036854775807
 # define MAX_PATH_LEN 4096	// Linux maximum path length
 # define MAX_ERRNO 255
 # define CMD_NOT_FOUND 382
@@ -123,12 +123,12 @@ void		display_envlst(t_env *envlst);
 t_env		*copy_env(char **env, t_env *envlst);
 void		env_to_str(t_token *pretok, t_env *envlst);
 char		*insert_env(t_env *envlst, char *old, char *str);
+char		**envlst_to_arr(t_env *envlst);
 // env02.c
 char		*get_env_key(char *str);
 char		*get_env_val(t_env *envlst, char *key);
 int			find_env_val(t_env *envlst, char *key);
 int			change_env_val(t_env *envlst, char *key, char *new_val);
-char		**envlst_to_arr(t_env *envlst);
 // error.c
 void		err_parser(int err_type);
 void		err_alloc(void);
@@ -136,11 +136,10 @@ void		err_alloc(void);
 void		handle_sig(enum e_sig_mode mode);
 void		h_sigint(int signum);
 void		h_sigquit(int signum);
-// utils_str.c
+// string.c
 char		*ft_strndup(char *str, int n);
 char		*msh_strjoin(char *s1, char *s2);
 int			ft_strcmp(const char *s1, const char *s2);
-void		free_strarr(char **str);
 
 /* directory: parser ----------------------------------------------------- */
 // check.c

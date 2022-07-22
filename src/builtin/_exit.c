@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:39 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/22 17:24:57 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 00:33:59 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		_exit_num_check(char *str);
 void	_exit_err(int type, char *str);
 int		_exit_status(char *str);
 
-int		msh_exit(t_token *argv, int type)
+int	msh_exit(t_token *argv, int type)
 {
 	if (type != EXIT_PIPE)
 		printf("exit\n");
@@ -32,9 +32,9 @@ int		msh_exit(t_token *argv, int type)
 	return (1);
 }
 
-int		_exit_num_check(char *str)
+int	_exit_num_check(char *str)
 {
-	int alpha;
+	int	alpha;
 	int	len;
 
 	alpha = 0;
@@ -48,7 +48,7 @@ int		_exit_num_check(char *str)
 		str++;
 		len++;
 	}
-	if (alpha == 1 && len > 19) // LLONG MAX
+	if (alpha == 1 && len > 19)
 		alpha = -1;
 	return (alpha);
 }
@@ -69,12 +69,10 @@ void	_exit_err(int type, char *str)
 	}
 }
 
-// 9223372036854775807
-int		_exit_status(char *str)
+int	_exit_status(char *str)
 {
 	unsigned long long	num;
 	int					sign;
-	int					exit_status;
 
 	num = 0;
 	sign = 1;
@@ -83,20 +81,17 @@ int		_exit_status(char *str)
 		sign = -1;
 		str++;
 	}
-	while (ft_isdigit(*str) == 1 && *str != '\0')
+	while (*str != '\0' && ft_isdigit(*str) == 1)
 	{
 		num += (*str) - '0';
 		if (ft_isdigit(*(str + 1)) == 1 && *(str + 1) != '\0')
 			num *= 10;
 		str++;
 	}
-	if ((sign == 1 && num > LLONG_MAX) ||\
-		(sign == -1 && num - 1 > LLONG_MAX))
+	if ((sign == 1 && num > LLONG_MAX) || (sign == -1 && num - 1 > LLONG_MAX))
 	{
 		_exit_err(2, str);
-		exit_status = 255;
+		return (255);
 	}
-	else
-		exit_status = (sign * num) & 255;
-	return (exit_status);
+	return ((sign * num) & 255);
 }
