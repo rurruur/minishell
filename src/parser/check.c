@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 00:41:01 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/22 14:49:18 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,12 @@ int	check_quote(char *line)
 	dq = CLOSED;
 	while (*line)
 	{
-		if (ft_strncmp(line, "\\'", 2) == 0 || ft_strncmp(line, "\\\"", 2) == 0)
+		if (ft_strncmp(line, "\\\\", 2) == 0)
+		{
+			line += 2;
+			continue ;
+		}
+		else if (ft_strncmp(line, "\\'", 2) == 0 || ft_strncmp(line, "\\\"", 2) == 0)
 		{
 			line += 2;
 			continue ;

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 21:54:19 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/22 14:56:02 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	main(int argc, char **argv, char **env)
 						int stdout = dup(STDOUT_FILENO);
 						set_redirection(toklst);
 						builtin_main(toklst->cmd, envlst, type);
-						// dprintf(g_fd, "builtin out\n");
 						dup2(stdin, STDIN_FILENO);
 						dup2(stdout, STDOUT_FILENO);
 						if (type == EXIT && (g_status == 0 || g_status == 255))
@@ -71,7 +70,10 @@ int	main(int argc, char **argv, char **env)
 			free(line);
 		}
 		else
+		{
+			printf("exit\n");
 			break ;
+		}
 	}
 	close(g_fd);
 	free_envlst(envlst);
