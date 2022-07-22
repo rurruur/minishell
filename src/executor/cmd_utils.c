@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:06:23 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/18 17:29:31 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/22 22:07:25 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,31 +63,30 @@ void	destroy_split(char **arr)
 	free(arr);
 }
 
-char	*get_valid_cmd_path(char *cmd, t_env *env)
+void	get_valid_cmd_path(char *cmd, t_env *env, char **cmd_path)
 {
 	struct stat	stat_result;
-	char		*cmd_path;
 	char		**path;
 	int			i;
-	
-	path = ft_split(get_env_val(env, "PATH"), ':');	// free?
+
+	path = ft_split(get_env_val(env, "PATH"), ':');
 	i = -1;
 	while (path[++i])
 	{
-		cmd_path = double_strjoin(path[i], "/", cmd);
-		if (stat(cmd_path, &stat_result) != -1)
+		*cmd_path = double_strjoin(path[i], "/", cmd);
+		if (stat(*cmd_path, &stat_result) != -1)
 			break ;
-		free(cmd_path);
+		free(*cmd_path);
 	}
-	if (!path[i]) {
+	if (!path[i])
+	{
 		errno = CMD_NOT_FOUND;
 		ft_error(cmd);
 	}
-	if (stat_result.st_mode == 0040000)	// 필요없을듯??
+	if (stat_result.st_mode == 0040000)
 	{
 		errno = IS_DIR;
 		ft_error(cmd);
 	}
 	destroy_split(path);
-	return (cmd_path);
 }

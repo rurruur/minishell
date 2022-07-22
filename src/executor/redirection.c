@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:05:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/21 12:33:06 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/22 21:17:15 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,10 @@ void	set_infile_redirection(t_token *files)
 	fd = open(files->str, O_RDONLY);
 	if (dup2(fd, STDIN_FILENO) < 0)
 		ft_error(files->str);
-	dprintf(g_fd, "infile: %s\n", files->str);
 	close(fd);
 }
 
-int	set_outfile_redirection(t_token *files)
+void	set_outfile_redirection(t_token *files)
 {
 	int	fd;
 
@@ -47,17 +46,14 @@ int	set_outfile_redirection(t_token *files)
 			fd = open(files->str, O_WRONLY | O_APPEND | O_CREAT, 0644);
 		if (fd < 0)
 			ft_error(files->str);
-		dprintf(g_fd, "next outfile: %p\n", files->next);
 		if (files->next == NULL)
 			break ;
 		close(fd);
 		files = files->next;
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
-		ft_error("dup2");
+		ft_error(files->str);
 	close(fd);
-	dprintf(g_fd, "outfile: %s\n", files->str);
-	return (1);
 }
 
 void	set_redirection(t_toklst *list)
@@ -66,7 +62,6 @@ void	set_redirection(t_toklst *list)
 	{
 		if (dup2(list->prev->end[0], STDIN_FILENO) < 0)
 			ft_error("dup2");
-		dprintf(g_fd, "stdin\n");
 	}
 	if (list->rdr_in)
 		set_infile_redirection(list->rdr_in);
@@ -74,7 +69,6 @@ void	set_redirection(t_toklst *list)
 	{
 		if (dup2(list->end[1], STDOUT_FILENO) < 0)
 			ft_error("dup2");
-		dprintf(g_fd, "stdout\n");
 	}
 	if (list->rdr_out)
 		set_outfile_redirection(list->rdr_out);

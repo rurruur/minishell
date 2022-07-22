@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:07:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/18 21:22:34 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/22 21:34:07 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	ft_error(char *err_msg)
 	if (errno <= MAX_ERRNO)
 	{
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
-		dprintf(g_fd, "errno: %d\n", errno);
 		exit(errno);
 	}
 	else if (errno == CMD_NOT_FOUND)

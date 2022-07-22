@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/22 16:54:57 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/22 22:07:16 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@
 # define IS_DIR 381
 # define NO_EXIST 256
 
-int	g_fd;
+# define CONTINUE 1
+# define STOP 0
+
 int	g_status;
 
 enum e_builtin
@@ -181,7 +183,7 @@ void		free_envlst(t_env *envlst);
 /* directory: executor ---------------------------------------------------- */
 // redirection.c
 void		set_infile_redirection(t_token *files);
-int			set_outfile_redirection(t_token *files);
+void		set_outfile_redirection(t_token *files);
 int			set_file_redirection(t_token *files, enum e_rdr mode);
 void		set_redirection(t_toklst *list);
 // executor.c
@@ -192,7 +194,7 @@ int			get_cmd_count(t_token *cmds);
 char		**list_to_arr(t_token *cmds);
 char		*double_strjoin(char *start, char *middle, char *end);
 void		destroy_split(char **arr);
-char		*get_valid_cmd_path(char *cmd, t_env *env);
+void		get_valid_cmd_path(char *cmd, t_env *env, char **cmd_path);
 // heredoc.c
 char		*make_file_name(char *heredoc);
 int			process_heredoc(t_token *heredoc_tok, char *filename);
@@ -201,7 +203,7 @@ void		clear_heredoc(t_toklst *list);
 // error.c
 void		ft_error(char *err_msg);
 // wait.c
-void		ft_wait(void);
+void		ft_wait(t_toklst *list);
 
 /* directory: builtin ----------------------------------------------------- */
 // builtin functions
