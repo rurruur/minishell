@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 18:12:05 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 00:18:17 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 00:51:17 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strndup(char *str, int n);
 char	*msh_strjoin(char *s1, char *s2);
-void	free_strarr(char **str);
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
@@ -49,7 +48,7 @@ char	*ft_strndup(char *str, int n)
 	else
 		dupstr = (char *)malloc((n + 1) * sizeof(char));
 	if (!(dupstr))
-		return (0);
+		err_alloc();
 	idx = 0;
 	while (idx < src_len && idx < n)
 	{
@@ -74,7 +73,7 @@ char	*msh_strjoin(char *s1, char *s2)
 	total_len = ft_strlen(s1) + ft_strlen(s2) + 1;
 	new_str = (char *)malloc(total_len * sizeof(char));
 	if (!new_str)
-		return (NULL);
+		err_alloc();
 	new_str[0] = '\0';
 	if (total_len != 1)
 	{
@@ -84,19 +83,4 @@ char	*msh_strjoin(char *s1, char *s2)
 	free(s1);
 	free(s2);
 	return (new_str);
-}
-
-void	free_strarr(char **str)
-{
-	int	idx;
-
-	idx = 0;
-	if (!str)
-		return ;
-	while (str[idx])
-	{
-		free(str[idx]);
-		idx++;
-	}
-	free(str);
 }

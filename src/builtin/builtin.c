@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/22 20:50:14 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 00:42:54 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 enum e_builtin	get_builtin_type(t_token *cmd, t_toklst *toklst)
 {
 	if (cmd == NULL || ft_strlen(cmd->str) == 0)
-		return NONE;
+		return (NONE);
 	if (!ft_strcmp(cmd->str, "cd"))
 		return (CD);
 	else if (!ft_strcmp(cmd->str, "echo"))

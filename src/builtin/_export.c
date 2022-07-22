@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 21:00:05 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 00:48:42 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 int		msh_export(t_token *argv, t_env *envlst);
 int		_export_valid(char *str);
+void	_export_add(char *str, int key_len, t_env *envlst);
 void	_export_error(char *err_msg);
 void	_export_display(t_env *envlst);
 
 int	msh_export(t_token *argv, t_env *envlst)
 {
 	int		key_len;
-	char	*env_key;
-	char	*env_val;
 
 	if (argv->next == NULL)
 		_export_display(envlst);
@@ -30,20 +29,7 @@ int	msh_export(t_token *argv, t_env *envlst)
 	{
 		key_len = _export_valid(argv->str);
 		if (key_len > 0)
-		{
-			env_key = ft_strndup(argv->str, key_len);
-			if (argv->str[key_len] != '\0')
-				env_val = ft_strdup(argv->str + key_len + 1);
-			else
-				env_val = NULL;
-			if (env_val == NULL || !find_env_val(envlst, env_key))
-				add_to_envlst(&envlst, init_envlst(env_key, env_val));
-			else
-			{
-				change_env_val(envlst, env_key, env_val);
-				free(env_key);
-			}
-		}
+			_export_add(argv->str, key_len, envlst);
 		else if (key_len == 0)
 			_export_error(argv->str);
 		argv = argv->next;
@@ -67,6 +53,25 @@ int	_export_valid(char *str)
 		idx++;
 	}
 	return (idx);
+}
+
+void	_export_add(char *str, int key_len, t_env *envlst)
+{
+	char	*env_key;
+	char	*env_val;
+
+	env_key = ft_strndup(str, key_len);
+	if (str[key_len] != '\0')
+		env_val = ft_strdup(str + key_len + 1);
+	else
+		env_val = NULL;
+	if (env_val == NULL || !find_env_val(envlst, env_key))
+		add_to_envlst(&envlst, init_envlst(env_key, env_val));
+	else
+	{
+		change_env_val(envlst, env_key, env_val);
+		free(env_key);
+	}
 }
 
 void	_export_display(t_env *envlst)

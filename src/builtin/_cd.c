@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/21 20:55:37 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 00:45:26 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int		msh_cd(t_token *argv, t_env *envlst);
 int		_cd_move(t_token *argv, t_env *envlst);
+void	_cd_error(char *str, int type);
 int		_cd_env(char *str, t_env *envlst);
-int		_cd_str(char *str, int type);
+int		_cd_str(char *err_msg, int type);
 
 int	msh_cd(t_token *argv, t_env *envlst)
 {
@@ -32,7 +33,7 @@ int	msh_cd(t_token *argv, t_env *envlst)
 	return (1);
 }
 
-int _cd_move(t_token *argv, t_env *envlst)
+int	_cd_move(t_token *argv, t_env *envlst)
 {
 	char	*str;
 	int		type;
@@ -57,43 +58,51 @@ int _cd_move(t_token *argv, t_env *envlst)
 	return (flag);
 }
 
-int		_cd_env(char *str, t_env *envlst)
+void	_cd_error(char *err_msg, int type)
+{
+	if (type == 1)
+	{
+		ft_putstr_fd("( ༎ຶД༎ຶ): cd: ", STDERR_FILENO);
+		ft_putstr_fd(err_msg, STDERR_FILENO);
+		ft_putendl_fd(" not set", STDERR_FILENO);
+	}
+	else if (type == 2)
+	{
+		errno = NO_EXIST;
+		builtin_error(ft_strjoin("cd: ", err_msg));
+	}
+	g_status = 1;
+}
+
+int	_cd_env(char *str, t_env *envlst)
 {
 	char	*path;
 	char	*err_msg;
 
-	path = NULL;
-	err_msg = NULL;
 	if (str == NULL || (str[0] == '~' && str[1] == '\0'))
 	{
 		path = get_env_val(envlst, "HOME");
 		err_msg = ft_strdup("HOME");
 	}
-	else if (str[0] == '-' && str[1] == '\0')
+	else
 	{
 		path = get_env_val(envlst, "OLDPWD");
 		err_msg = ft_strdup("OLDPWD");
 	}
-	if (path)
+	if (path && chdir(path) != -1)
 	{
-		chdir(path);
 		g_status = 0;
 		free(path);
 	}
 	else
-	{
-		g_status = 1;
-		ft_putstr_fd("( ༎ຶД༎ຶ): cd: ", STDERR_FILENO);
-		ft_putstr_fd(err_msg, STDERR_FILENO);
-		ft_putendl_fd(" not set", STDERR_FILENO);
-	}
+		_cd_error(err_msg, 1);
 	free(err_msg);
 	return (g_status);
 }
 
-int		_cd_str(char *str, int type)
+int	_cd_str(char *str, int type)
 {
-	char *path;
+	char	*path;
 
 	path = NULL;
 	if (type == T_OFF)
@@ -101,11 +110,7 @@ int		_cd_str(char *str, int type)
 	else if (type == T_ENV)
 		path = ft_strdup(str);
 	if (chdir(path) == -1)
-	{
-		errno = NO_EXIST;
-		builtin_error(ft_strjoin("cd: ", path));
-		g_status = 1;
-	}
+		_cd_error(path, 2);
 	else
 		g_status = 0;
 	free(path);
