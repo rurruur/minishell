@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:16:27 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 21:29:07 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/22 15:49:39 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,9 @@ void	cnt_tok_len(char *line, int *len, int quote)
 		(*len)++;
 		while (line[*len] != *line)
 		{
-			if (line[*len] == '\\' && ft_strchr(QUOTE, line[*len + 1]))
+			if (ft_strncmp(line + (*len), "\\\\", 2) == 0)
+				(*len)++;
+			else if (line[*len] == '\\' && ft_strchr(QUOTE, line[*len + 1]))
 				(*len)++;
 			(*len)++;
 		}
@@ -109,7 +111,9 @@ void	cnt_tok_len(char *line, int *len, int quote)
 	{
 		while (line[*len] != '\0' && !ft_strchr(DELIM_WITH_QUOTE, line[*len]))
 		{
-			if (line[*len] == '\\' && ft_strchr(QUOTE, line[*len + 1]))
+			if (ft_strncmp(line + *len, "\\\\", 2) == 0)
+				(*len)++;
+			else if (line[*len] == '\\' && ft_strchr(QUOTE, line[*len + 1]))
 				(*len)++;
 			(*len)++;
 		}

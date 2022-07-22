@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 13:58:07 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/17 14:13:54 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/22 15:54:23 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,12 @@ int	cnt_trimmed_len(char *str)
 			del_quote_or_escape(&str, &dq, &sq, &len);
 		else if (*str == '\'')
 			del_quote_or_escape(&str, &sq, &dq, &len);
+		else if (ft_strncmp(str, "\\\\", 2) == 0)
+		{
+			str++;
+			*str = '\0';
+			len++;
+		}
 		else if (*str == '\\')
 			del_quote_or_escape(&str, &dq, &sq, &len);
 		else
@@ -87,13 +93,10 @@ void	del_quote_or_escape(char **str, int *q1, int *q2, int *len)
 {
 	if (**str == '\\')
 	{
-		if (*q1 == CLOSED && *q2 == CLOSED && \
-			(*(*str + 1) == '\0' || !ft_strchr(QUOTE, *(*str + 1))))
-			;
+		if (*q1 == CLOSED && *q2 == CLOSED && *(*str + 1) != '\0')
+			(**str) = '\0';
 		else if (*q1 == OPEN || *q2 == OPEN)
 			(*len)++;
-		else
-			(**str) = '\0';
 		(*len)++;
 		(*str)++;
 		return ;
