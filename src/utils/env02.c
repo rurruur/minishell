@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 02:24:13 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 00:52:44 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 01:25:18 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*get_env_key(char *str)
 	}
 	if (str[1] == '?')
 		key_len = 1;
-	env_key = ft_strndup(str + 1, key_len);
+	env_key = msh_strndup(str + 1, key_len);
 	return (env_key);
 }
 
@@ -54,7 +54,7 @@ char	*get_env_val(t_env *envlst, char *key)
 	{
 		if (!ft_strcmp(envlst->key, key) && envlst->val)
 		{
-			env_val = ft_strdup(envlst->val);
+			env_val = msh_strdup(envlst->val);
 			break ;
 		}
 		envlst = envlst->next;

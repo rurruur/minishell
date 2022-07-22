@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 18:16:27 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/22 15:49:39 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 01:22:17 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	parse_delim(char **line, char *delim, t_token **strlst)
 
 void	assort_delim(t_token **new, char **line, int flag)
 {
-	(*new) = init_strlst(ft_strndup(*line, flag));
+	(*new) = init_strlst(msh_strndup(*line, flag));
 	if (flag == 2)
 	{
 		if (**line == '<')
@@ -87,7 +87,7 @@ char	*make_tok(char **line)
 		cnt_tok_len(*line, &len, 0);
 	else
 		cnt_tok_len(*line, &len, 1);
-	str = ft_strndup(*line, len);
+	str = msh_strndup(*line, len);
 	(*line) += len;
 	return (str);
 }
