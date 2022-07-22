@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 11:58:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/22 21:06:47 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 00:02:05 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@ char	*make_file_name(char *heredoc)
 	struct stat	info;
 
 	file_name = ft_strjoin("/tmp/", heredoc);
+	if (!file_name)
+		ft_error("malloc");
 	while (!stat(file_name, &info))
 	{
 		new_name = ft_strjoin(file_name, "_");
+		if (!new_name)
+			ft_error("malloc");
 		free(file_name);
 		file_name = new_name;
 	}
