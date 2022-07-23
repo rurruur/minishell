@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 23:31:55 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/24 00:59:31 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,18 @@
 # define VALID 1
 # define INVALID 0
 
+# define SUCCESS 1
+# define FAILURE 0
+
 # define ERR_QUOTE 0
 # define ERR_SYNTAX 1
-# define ERR_MEM 2
+
+# define CD_NOT_SET 1
+# define CD_NOT_FOUND 2
+# define CD_NOT_DIR 3
 
 # define LLONG_MAX 9223372036854775807
-# define MAX_PATH_LEN 4096	// Linux maximum path length
+# define MAX_PATH_LEN 4096
 # define MAX_ERRNO 255
 # define CMD_NOT_FOUND 382
 # define IS_DIR 381
@@ -113,6 +119,7 @@ typedef struct s_toklst
 	t_token			*rdr_out;
 	int				end[2];
 	t_env			*envlst;
+	char			*home;
 	struct s_toklst	*prev;
 	struct s_toklst	*next;
 }					t_toklst;
