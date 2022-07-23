@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/22 21:59:54 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 15:49:31 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ static int	single_builtin(t_toklst *toklst, t_env *envlst, enum e_builtin type)
 	builtin_main(toklst->cmd, envlst, type);
 	dup2(stdin, STDIN_FILENO);
 	dup2(stdout, STDOUT_FILENO);
-	if (type == EXIT && (g_status == 0 || g_status == 255))
+	if (type == EXIT && (g_status >= 0 && g_status <= 255))
 		return (STOP);
+	g_status = g_status & 255;
 	return (CONTINUE);
 }
 
