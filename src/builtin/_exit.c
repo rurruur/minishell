@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:39 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 15:49:56 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 16:25:38 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	msh_exit(t_token *argv, int type)
 		_exit_err(1, argv->next->str, type);
 	else
 		g_status = _exit_status(argv->next->str, type);
+	if (type == EXIT_PIPE)
+		exit(g_status);
 	return (1);
 }
 
