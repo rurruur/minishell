@@ -6,11 +6,12 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/23 15:15:54 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 16:17:02 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <string.h>
 
 static void	validate_cmd(char *cmd)
 {
@@ -50,7 +51,7 @@ void	child_process(t_toklst *list, t_env *envlst)
 	}
 }
 
-static int	get_pipe_count(t_toklst *list)
+int	get_pipe_count(t_toklst *list)
 {
 	int	count;
 
@@ -79,6 +80,7 @@ void	executor(t_toklst *list, t_env *envlst)
 		if (pipe(list->end) == -1)
 			ft_error("pipe");
 		child = fork();
+		list->pid = child;
 		if (child == -1)
 			ft_error("fork");
 		if (child == 0)

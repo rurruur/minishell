@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 15:28:58 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 15:58:39 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_token
 
 typedef struct s_toklst
 {
+	pid_t			pid;
 	t_token			*cmd;
 	t_token			*rdr_in;
 	t_token			*rdr_out;
@@ -188,6 +189,7 @@ int				set_file_redirection(t_token *files, enum e_rdr mode);
 void			set_redirection(t_toklst *list);
 // executor.c
 void			child_process(t_toklst *list, t_env *envlst);
+int				get_pipe_count(t_toklst *list);
 void			executor(t_toklst *list, t_env *envlst);
 // cmd_utils.c
 int				get_cmd_count(t_token *cmds);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/22 21:59:54 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 16:04:11 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	process_input(char *line, t_env *envlst)
 	toklst = tokenizer(line, NULL, envlst);
 	if (toklst && check_heredoc(toklst))
 	{
+		display_toklst(toklst);
 		type = get_builtin_type(toklst->cmd, toklst);
 		if (toklst->next == NULL && type)
 		{
