@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 14:59:47 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 15:28:58 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ char			**list_to_arr(t_token *cmds);
 void			destroy_split(char **arr);
 void			get_valid_cmd_path(char *cmd, t_env *env, char **cmd_path);
 // heredoc.c
-char			*make_file_name(char *heredoc);
+char			*make_file_name(int num);
 int				process_heredoc(t_token *heredoc_tok, char *filename);
 int				check_heredoc(t_toklst *list);
 void			clear_heredoc(t_toklst *list);

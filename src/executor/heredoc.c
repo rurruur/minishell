@@ -3,32 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/17 11:58:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/23 00:02:05 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 15:29:03 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*make_file_name(char *heredoc)
+char	*make_file_name(int num)
 {
 	char		*file_name;
-	char		*new_name;
+	char		*num_str;
 	struct stat	info;
 
-	file_name = ft_strjoin("/tmp/", heredoc);
+	num_str = ft_itoa(num);
+	file_name = ft_strjoin("/tmp/", num_str);
 	if (!file_name)
 		ft_error("malloc");
 	while (!stat(file_name, &info))
 	{
-		new_name = ft_strjoin(file_name, "_");
-		if (!new_name)
-			ft_error("malloc");
+		free(num_str);
+		num_str = ft_itoa(++num);
 		free(file_name);
-		file_name = new_name;
+		file_name = ft_strjoin("/tmp/", num_str);
+		if (!file_name)
+			ft_error("malloc");
 	}
+	free(num_str);
 	return (file_name);
 }
 
@@ -63,7 +66,7 @@ static int	check_cmd_heredoc(t_token *rdr_in)
 	{
 		if (rdr_in->type == T_RDR_HD)
 		{
-			filename = make_file_name(rdr_in->str);
+			filename = make_file_name(0);
 			child = fork();
 			if (child == 0)
 				process_heredoc(rdr_in, filename);
