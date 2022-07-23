@@ -6,12 +6,11 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/23 16:17:02 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 17:06:07 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <string.h>
 
 static void	validate_cmd(char *cmd)
 {
@@ -64,10 +63,21 @@ int	get_pipe_count(t_toklst *list)
 	return (count);
 }
 
+void	fork_child(t_toklst *list, t_env *envlst)
+{
+	pid_t		child;
+
+	child = fork();
+	list->pid = child;
+	if (child == -1)
+		ft_error("fork");
+	if (child == 0)
+		child_process(list, envlst);
+}
+
 void	executor(t_toklst *list, t_env *envlst)
 {
 	t_toklst	*tmp;
-	pid_t		child;
 
 	tmp = list;
 	if (get_pipe_count(list) > 251)
@@ -77,14 +87,11 @@ void	executor(t_toklst *list, t_env *envlst)
 	}
 	while (list)
 	{
+		list->pid = 0;
 		if (pipe(list->end) == -1)
 			ft_error("pipe");
-		child = fork();
-		list->pid = child;
-		if (child == -1)
-			ft_error("fork");
-		if (child == 0)
-			child_process(list, envlst);
+		if (list->cmd != NULL)
+			fork_child(list, envlst);
 		close(list->end[1]);
 		list = list->next;
 	}

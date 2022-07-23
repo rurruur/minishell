@@ -6,7 +6,7 @@
 /*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 15:58:39 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 16:49:41 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <sys/errno.h>
-# include <string.h>
 
 # include "../libft/libft.h"
 

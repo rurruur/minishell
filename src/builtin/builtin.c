@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 00:42:54 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 16:43:45 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ enum e_builtin	get_builtin_type(t_token *cmd, t_toklst *toklst)
 		return (ECHO);
 	else if (!ft_strcmp(cmd->str, "env"))
 		return (ENV);
-	else if (!ft_strcmp(cmd->str, "exit") && !toklst->next)
+	else if (!ft_strcmp(cmd->str, "exit") && !(toklst->prev) && !(toklst->next))
 		return (EXIT);
-	else if (!ft_strcmp(cmd->str, "exit") && toklst->next)
+	else if (!ft_strcmp(cmd->str, "exit") && (toklst->prev || toklst->next))
 		return (EXIT_PIPE);
 	else if (!ft_strcmp(cmd->str, "pwd"))
 		return (PWD);

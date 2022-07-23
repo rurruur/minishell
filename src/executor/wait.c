@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 16:21:20 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/23 16:18:53 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 17:04:53 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,33 @@ static t_toklst	*get_last_cmd(t_toklst *list)
 	return (list);
 }
 
+static void	set_status(int status)
+{
+	if (WIFEXITED(status))
+		g_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		g_status = 128 + WTERMSIG(status);
+	else
+		g_status = 1;
+}
+
 void	ft_wait(t_toklst *list)
 {
 	pid_t		pid;
 	int			cmd_count;
 	t_toklst	*last_cmd;
+	int			status;
 
-	// display_toklst(list);
 	cmd_count = get_pipe_count(list);
-	g_status = 0;
 	last_cmd = get_last_cmd(list);
 	handle_sig(SIG_WAIT);
 	pid = 0;
 	while (pid != -1)
 	{
-		pid = wait(&g_status);
+		pid = wait(&status);
 		if (pid != last_cmd->pid)
 			continue ;
-		if (WIFEXITED(g_status))
-		{
-			if (WEXITSTATUS(g_status))
-				g_status = WEXITSTATUS(g_status);
-		}
-		else if (WIFSIGNALED(g_status))
-			g_status = 128 + WTERMSIG(g_status);
-		else
-			g_status = 1;
+		set_status(status);
 	}
 	handle_sig(READLINE);
 	while (list)
