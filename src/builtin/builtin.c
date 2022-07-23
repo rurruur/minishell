@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 16:43:45 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 22:52:52 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd)
 	else if (cmd == EXIT_PIPE)
 		msh_exit(argv, EXIT_PIPE);
 	else if (cmd == PWD)
-		msh_pwd(argv);
+		msh_pwd();
 	else if (cmd == UNSET)
 		msh_unset(argv, envlst);
 	else if (cmd == EXPORT)

@@ -6,19 +6,19 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 16:03:27 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 22:49:58 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		msh_cd(t_token *argv, t_env *envlst);
+void	msh_cd(t_token *argv, t_env *envlst);
 int		_cd_move(t_token *argv, t_env *envlst);
 void	_cd_error(char *str, int type);
 int		_cd_env(char *str, t_env *envlst);
 int		_cd_str(char *err_msg, int type);
 
-int	msh_cd(t_token *argv, t_env *envlst)
+void	msh_cd(t_token *argv, t_env *envlst)
 {
 	char	*old_pwd;
 
@@ -30,7 +30,6 @@ int	msh_cd(t_token *argv, t_env *envlst)
 		change_env_val(envlst, "OLDPWD", old_pwd);
 		change_env_val(envlst, "PWD", getcwd(0, MAX_PATH_LEN));
 	}
-	return (1);
 }
 
 int	_cd_move(t_token *argv, t_env *envlst)

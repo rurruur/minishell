@@ -6,19 +6,19 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 01:24:35 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 22:50:20 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		msh_export(t_token *argv, t_env *envlst);
+void	msh_export(t_token *argv, t_env *envlst);
 int		_export_valid(char *str);
 void	_export_add(char *str, int key_len, t_env *envlst);
 void	_export_error(char *err_msg);
 void	_export_display(t_env *envlst);
 
-int	msh_export(t_token *argv, t_env *envlst)
+void	msh_export(t_token *argv, t_env *envlst)
 {
 	int		key_len;
 
@@ -34,7 +34,6 @@ int	msh_export(t_token *argv, t_env *envlst)
 			_export_error(argv->str);
 		argv = argv->next;
 	}
-	return (1);
 }
 
 int	_export_valid(char *str)
