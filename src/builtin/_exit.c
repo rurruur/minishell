@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:39 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 00:33:59 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 15:49:56 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int		msh_exit(t_token *argv, int type);
 int		_exit_num_check(char *str);
-void	_exit_err(int type, char *str);
-int		_exit_status(char *str);
+void	_exit_err(int type, char *str, int exit_type);
+int		_exit_status(char *str, int exit_type);
 
 int	msh_exit(t_token *argv, int type)
 {
@@ -24,11 +24,11 @@ int	msh_exit(t_token *argv, int type)
 	if (argv->next == NULL)
 		g_status = 0;
 	else if (_exit_num_check(argv->next->str) != 0)
-		_exit_err(2, argv->next->str);
+		_exit_err(2, argv->next->str, type);
 	else if (argv->next->next)
-		_exit_err(1, argv->next->str);
+		_exit_err(1, argv->next->str, type);
 	else
-		g_status = _exit_status(argv->next->str);
+		g_status = _exit_status(argv->next->str, type);
 	return (1);
 }
 
@@ -53,13 +53,16 @@ int	_exit_num_check(char *str)
 	return (alpha);
 }
 
-void	_exit_err(int type, char *str)
+void	_exit_err(int type, char *str, int exit_type)
 {
 	ft_putstr_fd("( ༎ຶД༎ຶ): exit: ", STDERR_FILENO);
 	if (type == 1)
 	{
 		ft_putendl_fd(": too many arguments", STDERR_FILENO);
-		g_status = 1;
+		if (exit_type == EXIT_PIPE)
+			g_status = 1;
+		else
+			g_status = 257;
 	}
 	else if (type == 2)
 	{
@@ -69,7 +72,7 @@ void	_exit_err(int type, char *str)
 	}
 }
 
-int	_exit_status(char *str)
+int	_exit_status(char *str, int exit_type)
 {
 	unsigned long long	num;
 	int					sign;
@@ -90,7 +93,7 @@ int	_exit_status(char *str)
 	}
 	if ((sign == 1 && num > LLONG_MAX) || (sign == -1 && num - 1 > LLONG_MAX))
 	{
-		_exit_err(2, str);
+		_exit_err(2, str, exit_type);
 		return (255);
 	}
 	return ((sign * num) & 255);

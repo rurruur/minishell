@@ -23,8 +23,9 @@ static int	single_builtin(t_toklst *toklst, t_env *envlst, enum e_builtin type)
 	builtin_main(toklst->cmd, envlst, type);
 	dup2(stdin, STDIN_FILENO);
 	dup2(stdout, STDOUT_FILENO);
-	if (type == EXIT && (g_status == 0 || g_status == 255))
+	if (type == EXIT && (g_status >= 0 && g_status <= 255))
 		return (STOP);
+	g_status = g_status & 255;
 	return (CONTINUE);
 }
 

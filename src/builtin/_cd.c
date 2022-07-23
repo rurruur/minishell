@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _cd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 14:57:08 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 16:03:27 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	_cd_move(t_token *argv, t_env *envlst)
 	type = argv->next->type;
 	if (ft_strchr("~-", str[0]) && str[1] == '\0')
 		flag = _cd_env(str, envlst);
+	else if (ft_strcmp(str, "--") == 0)
+		flag = _cd_env(NULL, envlst);
 	else if (type == T_ENV && str[0] == '\0')
 		flag = _cd_env(NULL, envlst);
 	else if (type == T_ENV && str[0] != '\0')
@@ -60,22 +62,14 @@ int	_cd_move(t_token *argv, t_env *envlst)
 
 void	_cd_error(char *err_msg, int type)
 {
-	char	*err_msg2;
-
+	ft_putstr_fd("( ༎ຶД༎ຶ): cd: ", STDERR_FILENO);
+	ft_putstr_fd(err_msg, STDERR_FILENO);
 	if (type == 1)
-	{
-		ft_putstr_fd("( ༎ຶД༎ຶ): cd: ", STDERR_FILENO);
-		ft_putstr_fd(err_msg, STDERR_FILENO);
 		ft_putendl_fd(" not set", STDERR_FILENO);
-	}
 	else if (type == 2)
-	{
-		errno = NO_EXIST;
-		err_msg2 = ft_strjoin("cd: ", err_msg);
-		// 널가드해라
-		builtin_error(err_msg2);
-		free(err_msg2);
-	}
+		ft_putendl_fd(": No such file or directory", STDERR_FILENO);
+	else if (type == 3)
+		ft_putendl_fd(": Not a directory", STDERR_FILENO);
 	g_status = 1;
 }
 
@@ -96,6 +90,8 @@ int	_cd_env(char *str, t_env *envlst)
 	}
 	if (path && chdir(path) != -1)
 	{
+		if (str && str[0] == '-' && str[1] == '\0')
+			printf("%s\n", path);
 		g_status = 0;
 		free(path);
 	}
@@ -107,7 +103,8 @@ int	_cd_env(char *str, t_env *envlst)
 
 int	_cd_str(char *str, int type)
 {
-	char	*path;
+	char		*path;
+	struct stat	stat_result;
 
 	path = NULL;
 	if (type == T_OFF)
@@ -115,7 +112,12 @@ int	_cd_str(char *str, int type)
 	else if (type == T_ENV)
 		path = msh_strdup(str);
 	if (chdir(path) == -1)
-		_cd_error(path, 2);
+	{
+		if (stat(path, &stat_result) != -1 && stat_result.st_mode != 0040000)
+			_cd_error(path, 3);
+		else
+			_cd_error(path, 2);
+	}
 	else
 		g_status = 0;
 	free(path);
