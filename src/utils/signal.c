@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 17:02:57 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/23 00:34:15 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 15:02:36 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ void	h_sigint(int signum);
 void	h_sigquit(int signum);
 void	handle_sig(enum e_sig_mode mode);
 
-static void	ft_exit()
+static void	ft_exit(int signum)
 {
+	(void)signum;
 	rl_on_new_line();
 	rl_redisplay();
 	printf("  \b\b\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:06:23 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/23 01:24:41 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 15:13:48 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,11 @@ void	get_valid_cmd_path(char *cmd, t_env *env, char **cmd_path)
 	char		**path;
 	int			i;
 
+	if (ft_strlen(cmd) > 2 && cmd[0] == '.' && cmd[1] == '/')
+	{
+		*cmd_path = cmd;
+		return ;
+	}
 	path = ft_split(get_env_val(env, "PATH"), ':');
 	if (!path)
 		ft_error("malloc");

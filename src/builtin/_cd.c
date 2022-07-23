@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   _cd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 01:28:49 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/23 14:57:08 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int	_cd_move(t_token *argv, t_env *envlst)
 
 void	_cd_error(char *err_msg, int type)
 {
+	char	*err_msg2;
+
 	if (type == 1)
 	{
 		ft_putstr_fd("( ༎ຶД༎ຶ): cd: ", STDERR_FILENO);
@@ -69,7 +71,10 @@ void	_cd_error(char *err_msg, int type)
 	else if (type == 2)
 	{
 		errno = NO_EXIST;
-		builtin_error(ft_strjoin("cd: ", err_msg));
+		err_msg2 = ft_strjoin("cd: ", err_msg);
+		// 널가드해라
+		builtin_error(err_msg2);
+		free(err_msg2);
 	}
 	g_status = 1;
 }
