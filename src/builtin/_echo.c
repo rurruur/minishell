@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/24 01:39:55 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/24 17:15:34 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	msh_echo(t_token *argv)
 			ft_putstr_fd(" ", STDOUT_FILENO);
 	}
 	if (n_opt == 0)
-		ft_putstr_fd("\n", STDOUT_FILENO);;
+		ft_putstr_fd("\n", STDOUT_FILENO);
 }
 
 int	_echo_opt(char *str)
