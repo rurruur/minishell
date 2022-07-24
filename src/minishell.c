@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/24 00:58:45 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/24 17:08:14 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	main(int argc, char **argv, char **env)
 		}
 		else
 		{
-			printf("exit\n");
+			ft_putendl_fd("exit", STDOUT_FILENO);
 			break ;
 		}
 	}

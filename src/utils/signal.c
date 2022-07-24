@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 17:02:57 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/23 15:02:36 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/24 17:03:37 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	ft_exit(int signum)
 	(void)signum;
 	rl_on_new_line();
 	rl_redisplay();
-	printf("  \b\b\n");
+	ft_putstr_fd("  \b\b\n", STDOUT_FILENO);
 	rl_on_new_line();
 	rl_replace_line("", 1);
 	exit(1);
@@ -52,7 +52,7 @@ void	h_sigint(int signum)
 		return ;
 	rl_on_new_line();
 	rl_redisplay();
-	printf("  \b\b\n");
+	ft_putstr_fd("  \b\b\n", STDOUT_FILENO);
 	rl_on_new_line();
 	rl_replace_line("", 1);
 	rl_redisplay();
@@ -64,5 +64,5 @@ void	h_sigquit(int signum)
 		return ;
 	rl_on_new_line();
 	rl_redisplay();
-	printf("  \b\b");
+	ft_putstr_fd("  \b\b", STDOUT_FILENO);
 }

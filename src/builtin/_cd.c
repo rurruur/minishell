@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/24 15:25:54 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/24 16:15:50 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	_cd_old(t_env *envlst)
 	path = get_env_val(envlst, "OLDPWD");
 	if (path && chdir(path) != -1)
 	{
-		// printf("%s\n", path);
 		ft_putendl_fd(path, STDOUT_FILENO);
 		free(path);
 	}
