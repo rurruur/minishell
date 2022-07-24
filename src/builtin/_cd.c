@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/24 16:15:50 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/24 21:46:05 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,26 @@
 
 void	msh_cd(t_token *argv, t_env *envlst);
 int		_cd_old(t_env *envlst);
-int		_cd_home(char *str, t_env *envlst, char *home);
+int		_cd_home(char *str, t_env *envlst);
 int		_cd_str(char *err_msg, int type);
 void	_cd_error(char *str, int type);
 
 void	msh_cd(t_token *argv, t_env *envlst)
 {
 	int		flag;
-	char	home[12] = "/Users/jrim";
 
 	flag = SUCCESS;
 	if (argv->next == NULL)
-		flag = _cd_home(NULL, envlst, home);
+		flag = _cd_home(NULL, envlst);
 	else
 	{
 		argv = argv->next;
 		if (ft_strcmp(argv->str, "-") == 0)
 			flag = _cd_old(envlst);
 		else if (argv->str[0] == '~' || ft_strcmp(argv->str, "--") == 0)
-			flag = _cd_home(argv->str, envlst, home);
+			flag = _cd_home(argv->str, envlst);
 		else if (argv->type == T_ENV && argv->str[0] == '\0')
-			flag = _cd_home(NULL, envlst, home);
+			flag = _cd_home(NULL, envlst);
 		else if ((argv->type == T_ENV && argv->str[0] != '\0') || \
 					argv->type == T_OFF)
 			flag = _cd_str(argv->str, argv->type);
@@ -62,21 +61,21 @@ int	_cd_old(t_env *envlst)
 	return (SUCCESS);
 }
 
-int	_cd_home(char *str, t_env *envlst, char *home)
+int	_cd_home(char *str, t_env *envlst)
 {
 	char	*path;
 
-	path = NULL;
-	if (str == NULL || ft_strcmp(str, "--") == 0)
-		path = get_env_val(envlst, "HOME");
-	else if (home && str[0] == '~' && str[1] == '\0')
-		path = msh_strdup(home);
-	else if (home && str[0] == '~' && str[1] != '\0')
-		path = msh_strjoin(msh_strdup(home), msh_strdup(str + 1));
-	if (path && chdir(path) != -1)
-		free(path);
-	else
+	path = get_env_val(envlst, "HOME");
+	if (!path)
+	{
 		_cd_error("HOME", CD_NOT_SET);
+		return (FAILURE);
+	}
+	if (str && str[0] == '~' && str[1] != '\0')
+		path = msh_strjoin(path, msh_strdup(str + 1));
+	if (chdir(path) == -1)
+		_cd_error(path, CD_NOT_FOUND);
+	free(path);
 	if (g_status != 0)
 		return (FAILURE);
 	return (SUCCESS);
