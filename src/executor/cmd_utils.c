@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:06:23 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/23 15:13:48 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/24 15:34:29 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	get_valid_cmd_path(char *cmd, t_env *env, char **cmd_path)
 	char		**path;
 	int			i;
 
-	if (ft_strlen(cmd) > 2 && cmd[0] == '.' && cmd[1] == '/')
+	if (ft_strrchr(cmd, '/'))
 	{
 		*cmd_path = cmd;
 		return ;
