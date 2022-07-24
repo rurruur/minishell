@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/24 00:58:02 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/24 15:25:54 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int	_cd_old(t_env *envlst)
 	path = get_env_val(envlst, "OLDPWD");
 	if (path && chdir(path) != -1)
 	{
-		printf("%s\n", path);
+		// printf("%s\n", path);
+		ft_putendl_fd(path, STDOUT_FILENO);
 		free(path);
 	}
 	else
@@ -99,10 +100,10 @@ int	_cd_str(char *str, int type)
 		else
 			_cd_error(path, CD_NOT_FOUND);
 	}
-	else
-		g_status = 0;
 	free(path);
-	return (g_status);
+	if (g_status != 0)
+		return (FAILURE);
+	return (SUCCESS);
 }
 
 void	_cd_error(char *err_msg, int type)

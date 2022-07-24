@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:11:42 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 00:49:15 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/24 15:54:03 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,17 @@ void	err_alloc(void);
 
 void	err_parser(int err_type)
 {
-	printf("( ༎ຶД༎ຶ): ");
+	ft_putstr_fd("( ༎ຶД༎ຶ): ", STDERR_FILENO);
 	if (err_type == ERR_QUOTE)
-		printf("quote is not closed\n");
+		ft_putendl_fd("quote is not closed\n", STDERR_FILENO);
 	else if (err_type == ERR_SYNTAX)
-		printf("syntax error\n");
+		ft_putendl_fd("syntax error\n", STDERR_FILENO);
 	g_status = 258;
 }
 
 void	err_alloc(void)
 {
-	printf("( ༎ຶД༎ຶ): cannot allocate memory\n");
+	ft_putendl_fd("( ༎ຶД༎ຶ): Cannot allocate memory", STDERR_FILENO);
 	g_status = 12;
 	exit(g_status);
 }

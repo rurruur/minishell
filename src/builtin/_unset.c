@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 22:50:54 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/24 15:27:09 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	msh_unset(t_token *argv, t_env *envlst)
 	argv = argv->next;
 	while (argv)
 	{
-		if (_unset_valid(argv->str))
+		if (_unset_valid(argv->str) == VALID)
 			_unset_env(argv->str, envlst);
 		else
 		{
@@ -37,14 +37,14 @@ void	msh_unset(t_token *argv, t_env *envlst)
 int	_unset_valid(char *str)
 {
 	if (!ft_isalpha(*str) && *str != '_')
-		return (0);
+		return (INVALID);
 	while (*str)
 	{
 		if (!ft_isalnum(*str) && *str != '_')
-			return (0);
+			return (INVALID);
 		str++;
 	}
-	return (1);
+	return (VALID);
 }
 
 void	_unset_env(char *key, t_env *envlst)

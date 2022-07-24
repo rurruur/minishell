@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:39 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 23:32:21 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/24 16:05:36 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ int		_exit_status(char *str);
 void	msh_exit(t_token *argv, int type)
 {
 	if (type != EXIT_PIPE)
-		printf("exit\n");
+		ft_putendl_fd("exit", STDOUT_FILENO);
 	if (argv->next == NULL)
+	{
 		g_status = 0;
+		exit(g_status);
+	}
 	else if (_exit_num_check(argv->next->str) != VALID)
 		_exit_err(1, argv->next->str);
 	else if (argv->next->next)

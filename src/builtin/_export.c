@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 22:50:20 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/24 15:33:12 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,18 @@ void	_export_display(t_env *envlst)
 {
 	while (envlst)
 	{
-		printf("declare -x %s", envlst->key);
+		ft_putstr_fd("declare -x ", STDOUT_FILENO);
+		ft_putstr_fd(envlst->key, STDOUT_FILENO);
+		// printf("declare -x %s", envlst->key);
 		if (envlst->val)
-			printf("=\"%s\"", envlst->val);
-		printf("\n");
+		{
+			ft_putstr_fd("=\"", STDOUT_FILENO);
+			ft_putstr_fd(envlst->val, STDOUT_FILENO);
+			ft_putstr_fd("\"", STDOUT_FILENO);
+			// printf("=\"%s\"", envlst->val);
+		}
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		// printf("\n");
 		envlst = envlst->next;
 	}
 }
