@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 16:49:41 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/24 16:40:11 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # include "../libft/libft.h"
 
-# define PRMPT "\033[0;33m( ´Д`)>\033[0;37m "
+# define PRMPT "gumshell> "
 # define WH_SPACE " \f\n\r\t\v"
 # define DELIM_WITH_QUOTE " <>|'\""
 # define QUOTE "'\""
@@ -206,6 +206,8 @@ void			ft_error(char *err_msg);
 void			ft_wait(t_toklst *list);
 // double_join.c
 char			*double_strjoin(char *start, char *middle, char *end);
+// termios_utils.c
+void			set_termios(void);
 
 /* directory: builtin ----------------------------------------------------- */
 // builtin functions
