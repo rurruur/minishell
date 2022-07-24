@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 14:44:00 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/23 00:21:17 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/24 16:18:15 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	check_whitespace(char *line)
 	while (*line)
 	{
 		if (!ft_strchr(WH_SPACE, *line))
-			return (0);
+			return (INVALID);
 		line++;
 	}
-	return (1);
+	return (VALID);
 }
 
 int	check_quote(char *line)
@@ -58,19 +58,19 @@ int	check_pretok(t_token *pretok)
 {
 	int	flag;
 
-	flag = 1;
+	flag = VALID;
 	if (pretok->type == T_PIPE)
-		flag = 0;
-	while (pretok && flag == 1)
+		flag = INVALID;
+	while (pretok && flag == VALID)
 	{	
 		if (pretok->type == T_PIPE && !pretok->next)
-			flag = 0;
+			flag = INVALID;
 		else if (pretok->type > T_PIPE && \
 				(!pretok->next || pretok->next->type >= T_PIPE))
-			flag = 0;
+			flag = INVALID;
 		pretok = pretok->next;
 	}
-	if (flag != 1)
+	if (flag != VALID)
 		err_parser(ERR_SYNTAX);
 	return (flag);
 }

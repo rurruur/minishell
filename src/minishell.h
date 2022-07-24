@@ -33,12 +33,21 @@
 # define CLOSED 1
 # define OPEN -1
 
+# define VALID 1
+# define INVALID 0
+
+# define SUCCESS 1
+# define FAILURE 0
+
 # define ERR_QUOTE 0
 # define ERR_SYNTAX 1
-# define ERR_MEM 2
+
+# define CD_NOT_SET 1
+# define CD_NOT_FOUND 2
+# define CD_NOT_DIR 3
 
 # define LLONG_MAX 9223372036854775807
-# define MAX_PATH_LEN 4096	// Linux maximum path length
+# define MAX_PATH_LEN 4096
 # define MAX_ERRNO 255
 # define CMD_NOT_FOUND 382
 # define IS_DIR 381
@@ -110,6 +119,7 @@ typedef struct s_toklst
 	t_token			*rdr_out;
 	int				end[2];
 	t_env			*envlst;
+	char			*home;
 	struct s_toklst	*prev;
 	struct s_toklst	*next;
 }					t_toklst;
@@ -214,12 +224,12 @@ void			set_termios(void);
 enum e_builtin	get_builtin_type(t_token *cmd, t_toklst *toklst);
 void			builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd);
 void			builtin_error(char *err_msg);
-int				msh_cd(t_token *argv, t_env *envlst);
-int				msh_echo(t_token *argv);
-int				msh_env(t_token *argv, t_env *envlst);
-int				msh_exit(t_token *argv, int type);
-int				msh_pwd(t_token *argv);
-int				msh_unset(t_token *argv, t_env *envlst);
-int				msh_export(t_token *argv, t_env *envlst);
+void			msh_cd(t_token *argv, t_env *envlst);
+void			msh_echo(t_token *argv);
+void			msh_env(t_token *argv, t_env *envlst);
+void			msh_exit(t_token *argv, int type);
+void			msh_pwd(void);
+void			msh_unset(t_token *argv, t_env *envlst);
+void			msh_export(t_token *argv, t_env *envlst);
 
 #endif
