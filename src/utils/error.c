@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/16 15:11:42 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/25 10:26:11 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/25 12:35:32 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	err_parser(int err_type)
 {
 	ft_putstr_fd("gumshell: ", STDERR_FILENO);
 	if (err_type == ERR_QUOTE)
-		ft_putendl_fd("quote is not closed\n", STDERR_FILENO);
+		ft_putendl_fd("quote is not closed", STDERR_FILENO);
 	else if (err_type == ERR_SYNTAX)
-		ft_putendl_fd("syntax error\n", STDERR_FILENO);
+		ft_putendl_fd("syntax error", STDERR_FILENO);
 	g_status = 258;
 }
 

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:52 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/24 21:46:05 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/25 10:41:01 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	_cd_str(char *str, int type)
 
 void	_cd_error(char *err_msg, int type)
 {
-	ft_putstr_fd("( ༎ຶД༎ຶ): cd: ", STDERR_FILENO);
+	ft_putstr_fd("gumshell: cd: ", STDERR_FILENO);
 	ft_putstr_fd(err_msg, STDERR_FILENO);
 	if (type == CD_NOT_SET)
 		ft_putendl_fd(" not set", STDERR_FILENO);

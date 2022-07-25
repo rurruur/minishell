@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 00:30:47 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/24 00:49:30 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/17 16:29:43 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_toklst	*init_toklst(t_env *envlst)
 	new->rdr_in = NULL;
 	new->rdr_out = NULL;
 	new->envlst = envlst;
-	new->home = get_env_val(envlst, "HOME");
 	new->prev = NULL;
 	new->next = NULL;
 	return (new);
@@ -61,7 +60,6 @@ void	free_toklst(t_toklst *toklst)
 		free_strlst(tmp->cmd);
 		free_strlst(tmp->rdr_in);
 		free_strlst(tmp->rdr_out);
-		free(tmp->home);
 		free(tmp);
 		tmp = NULL;
 	}
