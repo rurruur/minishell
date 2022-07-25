@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 23:03:49 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/24 00:58:30 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/25 10:26:03 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	executor(t_toklst *list, t_env *envlst)
 	tmp = list;
 	if (get_pipe_count(list) > 251)
 	{
-		ft_putendl_fd("( ༎ຶД༎ຶ): pipe: Too many open files", STDERR_FILENO);
+		ft_putendl_fd("gumshell: pipe: Too many open files", STDERR_FILENO);
 		return ;
 	}
 	while (list)

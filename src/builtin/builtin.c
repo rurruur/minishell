@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:35:25 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/24 00:58:24 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/25 10:25:56 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	builtin_main(t_token *argv, t_env *envlst, enum e_builtin cmd)
 
 void	builtin_error(char *err_msg)
 {
-	ft_putstr_fd("( ༎ຶД༎ຶ): ", STDERR_FILENO);
+	ft_putstr_fd("gumshell: ", STDERR_FILENO);
 	ft_putstr_fd(err_msg, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	if (errno <= MAX_ERRNO)

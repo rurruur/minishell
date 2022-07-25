@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/18 15:07:02 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/22 21:34:07 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/25 10:26:00 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_error(char *err_msg)
 {
-	ft_putstr_fd("( ༎ຶД༎ຶ): ", STDERR_FILENO);
+	ft_putstr_fd("gumshell: ", STDERR_FILENO);
 	ft_putstr_fd(err_msg, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	if (errno <= MAX_ERRNO)

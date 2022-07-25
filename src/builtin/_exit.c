@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:39 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/24 16:05:36 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/25 10:25:50 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	_exit_num_check(char *str)
 
 void	_exit_err(int type, char *str)
 {
-	ft_putstr_fd("( ༎ຶД༎ຶ): exit: ", STDERR_FILENO);
+	ft_putstr_fd("gumshell: exit: ", STDERR_FILENO);
 	if (type == 1)
 	{
 		ft_putstr_fd(str, STDERR_FILENO);
