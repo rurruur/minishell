@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/24 15:27:09 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/25 10:25:53 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	msh_unset(t_token *argv, t_env *envlst)
 			_unset_env(argv->str, envlst);
 		else
 		{
-			ft_putstr_fd("( ༎ຶД༎ຶ): unset: `", STDERR_FILENO);
+			ft_putstr_fd("gumshell: unset: `", STDERR_FILENO);
 			ft_putstr_fd(argv->str, STDERR_FILENO);
 			ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 			g_status = 1;

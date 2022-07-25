@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:23 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/24 17:08:14 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/25 10:42:23 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static int	single_builtin(t_toklst *toklst, t_env *envlst, enum e_builtin type)
 	int	stdin;
 	int	stdout;
 
+	if (!check_infiles(toklst->rdr_in) || !check_outfiles(toklst->rdr_out))
+		return (CONTINUE);
 	stdin = dup(STDIN_FILENO);
 	stdout = dup(STDOUT_FILENO);
 	set_redirection(toklst);

@@ -6,7 +6,7 @@
 /*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 18:36:53 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/24 16:15:43 by jrim             ###   ########.fr       */
+/*   Updated: 2022/07/25 10:25:46 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	_export_display(t_env *envlst)
 
 void	_export_error(char *err_msg)
 {
-	ft_putstr_fd("( ༎ຶД༎ຶ): export: `", STDERR_FILENO);
+	ft_putstr_fd("gumshell: export: `", STDERR_FILENO);
 	ft_putstr_fd(err_msg, STDERR_FILENO);
 	ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 	g_status = 1;

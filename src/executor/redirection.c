@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: nakkim <nakkim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:05:18 by nakkim            #+#    #+#             */
-/*   Updated: 2022/07/22 21:17:15 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/23 18:10:27 by nakkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,9 @@
 void	set_infile_redirection(t_token *files)
 {
 	int			fd;
-	struct stat	info;
 
 	while (files)
 	{
-		if (stat(files->str, &info) == -1)
-		{
-			errno = NO_EXIST;
-			ft_error(files->str);
-		}
 		if (files->next == NULL)
 			break ;
 		files = files->next;
@@ -40,17 +34,16 @@ void	set_outfile_redirection(t_token *files)
 
 	while (files)
 	{
-		if (files->type == T_RDR_OUT)
-			fd = open(files->str, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-		else if (files->type == T_RDR_AP)
-			fd = open(files->str, O_WRONLY | O_APPEND | O_CREAT, 0644);
-		if (fd < 0)
-			ft_error(files->str);
 		if (files->next == NULL)
 			break ;
-		close(fd);
 		files = files->next;
 	}
+	if (files->type == T_RDR_OUT)
+		fd = open(files->str, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	else
+		fd = open(files->str, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	if (fd < 0)
+		ft_error(files->str);
 	if (dup2(fd, STDOUT_FILENO) < 0)
 		ft_error(files->str);
 	close(fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nakkim <nakkim@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: jrim <jrim@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 15:59:19 by jrim              #+#    #+#             */
-/*   Updated: 2022/07/24 16:40:11 by nakkim           ###   ########.fr       */
+/*   Updated: 2022/07/25 12:41:37 by jrim             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ typedef struct s_toklst
 	t_token			*rdr_out;
 	int				end[2];
 	t_env			*envlst;
-	char			*home;
 	struct s_toklst	*prev;
 	struct s_toklst	*next;
 }					t_toklst;
@@ -132,6 +131,7 @@ void			display_envlst(t_env *envlst);
 // env01.c
 t_env			*copy_env(char **env, t_env *envlst);
 void			env_to_str(t_token *pretok, t_env *envlst);
+void			skip_quote(char *str, int *idx, int *sq);
 char			*insert_env(t_env *envlst, char *old, char *str);
 char			**envlst_to_arr(t_env *envlst);
 // env02.c
@@ -191,6 +191,11 @@ void			del_from_envlst(t_env **envlst);
 void			free_envlst(t_env *envlst);
 
 /* directory: executor ---------------------------------------------------- */
+// check_files.c
+void			check_files(t_toklst *list);
+int				check_infiles(t_token *files);
+int				check_outfiles(t_token *files);
+char			**get_env_path(t_env *env, char *cmd);
 // redirection.c
 void			set_infile_redirection(t_token *files);
 void			set_outfile_redirection(t_token *files);
@@ -212,12 +217,11 @@ int				check_heredoc(t_toklst *list);
 void			clear_heredoc(t_toklst *list);
 // error.c
 void			ft_error(char *err_msg);
+void			ft_file_error(char *err_msg);
 // wait.c
 void			ft_wait(t_toklst *list);
 // double_join.c
 char			*double_strjoin(char *start, char *middle, char *end);
-// termios_utils.c
-void			set_termios(void);
 
 /* directory: builtin ----------------------------------------------------- */
 // builtin functions
